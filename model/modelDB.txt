@@ -1,0 +1,24 @@
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY,
+    image TEXT NULL,
+    email TEXT,
+    password TEXT,
+    postId TEXT NULL,
+    role TEXT,
+    Ban INTEGER
+);
+
+CREATE TABLE post (
+    id INTEGER PRIMARY KEY,
+    author TEXT,
+    image TEXT NULL,
+    comment TEXT NULL,
+    authorComment TEXT NULL,
+    hidden INTEGER,
+    like TEXT NULL,
+    dislike TEXT NULL,
+    report TEXT NULL,
+    category TEXT,
+    Ban INTEGER
+);
+
