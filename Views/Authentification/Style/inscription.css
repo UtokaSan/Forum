@@ -9,6 +9,7 @@ body {
     align-content: center;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 
 
@@ -23,26 +24,37 @@ body {
     border-radius: 5vw;
     justify-items: center;
     color: darkred;
-    width: 30vw;
+    height: 100vh;
     margin-top: 10vh;
     margin-right: auto;
     margin-left: auto;
+    overflow: hidden;
+    padding: 0;
+}
+
+.informations{
+    margin: 0 auto;
+    max-width: 80%;
+
 }
 
 .id{
     position: relative;
     left: 25%;
     font-size: large;
+    text-align: center;
 }
 #login input {
-    width: 20vw;
     padding: 10px;
     border: 1px solid #ea5353;
     border-radius: 4px;
     background-color: rgba(87, 87, 87, 0.68);
     color: darkred;
     position: relative;
-left: 15%;
+    left: 15%;
+    width: 90%;
+    margin: 5px auto;
+    text-align: center;
 }
 
 #login input:hover {
