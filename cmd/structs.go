@@ -8,6 +8,7 @@ type User struct {
 }
 
 type Post struct {
+	ID          int
 	Photo       string
 	Texte       string
 	Hidden      int

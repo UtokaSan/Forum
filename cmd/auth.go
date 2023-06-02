@@ -21,6 +21,4 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 	//} else {
 	//	fmt.Println("don't exist")
 	//}
-	readUser()
-	deleteUser(1)
 }
