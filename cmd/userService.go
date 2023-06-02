@@ -13,32 +13,36 @@ func createUser(user User) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	createUser := `INSERT INTO users (id, nom, email, password) VALUES (?, ?, ?, ?)`
-	_, errCreate := db.Exec(createUser, user.ID, user.Username, user.Email, user.Password)
+	createUser := `INSERT INTO users (id, image, nom, email, password) VALUES (?, ?, ?, ?, ?)`
+	_, errCreate := db.Exec(createUser, user.ID, user.Image, user.Username, user.Email, user.Password)
 	if errCreate != nil {
 		fmt.Println(err)
 	}
 	fmt.Println("User created successfully")
 }
-func readUser() {
+func readUser() []User {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "SELECT id, nom, email, password FROM users"
+	query := "SELECT id, image, nom, email, password FROM users"
 	rows, err := db.Query(query)
 	if err != nil {
 		fmt.Println(err)
 	}
+	var tab []User
 	for rows.Next() {
 		var user User
-		err := rows.Scan(&user.ID, &user.Username, &user.Email, &user.Password)
+		err := rows.Scan(&user.ID, &user.Image, &user.Username, &user.Email, &user.Password)
 		if err != nil {
 			fmt.Println(err)
 		}
+		result := append(tab, user)
 		fmt.Println("Id : " + strconv.Itoa(user.ID) + " Username : " + user.Username + " Email : " + user.Email + " Password : " + user.Password)
+		return result
 	}
+	return tab
 }
 
 func updateUser(user User) {
@@ -47,8 +51,8 @@ func updateUser(user User) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "UPDATE users SET nom = ?, email = ?, password = ? WHERE ID = ?"
-	_, err = db.Exec(query, user.Username, user.Email, user.Password)
+	query := "UPDATE users SET nom = ?, image = ?, email = ?, password = ? WHERE ID = ?"
+	_, err = db.Exec(query, user.Username, user.Image, user.Email, user.Password)
 	if err != nil {
 		fmt.Println(err)
 	}
