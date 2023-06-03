@@ -26,15 +26,20 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 	for _, user := range readUser() {
 		if user.Email == userLogin.Email && userLogin.Password == user.Password {
 			claim := token.Claims.(jwt.MapClaims)
-			claim["sub"] = user.Username
+			claim["user-id"] = user.ID
 			claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
 			tokenStr, err := token.SignedString([]byte("token-user"))
 			if err != nil {
 				fmt.Println(err)
 				return
 			}
-			fmt.Println(tokenStr)
-			r.Header.Set("Authorization", "Bearer "+tokenStr)
+			cookie := http.Cookie{
+				Name:    "jwtToken",
+				Value:   tokenStr,
+				Expires: time.Now().Add(time.Hour * 24),
+				Path:    "/",
+			}
+			http.SetCookie(w, &cookie)
 			w.WriteHeader(http.StatusOK)
 		} else {
 			w.WriteHeader(http.StatusUnauthorized)
