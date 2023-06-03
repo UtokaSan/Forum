@@ -5,15 +5,17 @@ import (
 	"net/http"
 )
 
-const port = ":8080"
+const port = ":3000"
 
 func Runner() {
 	server := http.NewServeMux()
 	// server.HandleFunc("/index", indexhandler)
 	fs := http.FileServer(http.Dir("templates/assets"))
 	server.Handle("/assets/", http.StripPrefix("/assets", fs))
-	fmt.Println("(http://localhost:8080", port)
-	err := http.ListenAndServe(port, server)
+	fmt.Println("\n\033[34m[http://127.0.0.1:3000]\033[32m \033[4mServer run on port", port[1:], ".\033[0m")
+
+	err := http.ListenAndServe("127.0.0.1:3000", server)
+
 	if err != nil {
 		fmt.Println("error :", err)
 		return
