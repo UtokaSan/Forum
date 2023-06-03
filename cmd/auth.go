@@ -11,13 +11,17 @@ import (
 )
 
 func loginPost(w http.ResponseWriter, r *http.Request) {
-	token := jwt.New(jwt.SigningMethodHS256)
 	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	var userLogin Login
+	err = json.Unmarshal(body, &userLogin)
+	token := jwt.New(jwt.SigningMethodHS256)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	var userLogin Login
 	err = json.Unmarshal(body, &userLogin)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
