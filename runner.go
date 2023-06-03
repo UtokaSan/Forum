@@ -1,4 +1,4 @@
-package Forum
+package main
 
 import "Forum/cmd"
 
