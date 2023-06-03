@@ -1,0 +1,211 @@
+body {
+    background: black;
+}
+
+.rectangle2 {
+    width: 1909px;
+    height: 910px;
+    border: 2px solid #7E001A;
+    box-sizing: border-box;
+}
+
+img {
+    position: fixed;
+    left: 600px;
+    width: 500px;
+    height: 800px;
+    top: 60px;
+}
+
+.ipv4-list {
+    position: fixed;
+    bottom: 10px;
+    right: 30px;
+    padding: 10px;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.ipv4-column {
+    margin-left: 40px;
+    text-align: right;
+}
+
+.ipv4-column ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ipv4-column ul li {
+    direction: rtl;
+}
+
+.ipv4-column:nth-child(3) ul li {
+    color: #177C90;
+}
+
+.rectangle {
+    position: absolute;
+    top: 700px;
+    width: 15px;
+    height: 200px;
+    border: 2px solid #7E001A;
+    right: 1600px;
+    left: 1890px;
+}
+
+.rectangle3 {
+    position: absolute;
+    top: 56px;
+    width: 505px;
+    height: 812px;
+    border: 2px solid #4D5351;
+    left: 597px;
+}
+.rectangle4 {
+    position: absolute;
+    top: 701px;
+    width: 20px;
+    height: 91px;
+    background-color: #7E001A;
+    left: 1890px;
+}
+
+.img1{
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    left: 90px;
+    top: 400px;
+}
+.rectangle5 {
+    position: absolute;
+    top: 580px;
+    width: 19px;
+    height: 100px;
+    background-color: #7E001A;
+    left: 500px;
+}
+.rectangle6 {
+    position: absolute;
+    top: 450px;
+    width: 15px;
+    height: 350px;
+    border: 2px solid #7E001A;
+    right: 1600px;
+    left: 500px;
+}
+.ipv5-list {
+    position: fixed;
+    bottom: 0;
+    left: 30px;
+    display: flex;
+    color: white;
+    top: 850px;
+}
+
+.ipv5-column {
+    margin-left: 40px;
+}
+
+.ipv5-column ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+#title {
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+#login {
+    font-size: 2vh;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-width: 3px;
+    justify-items: center;
+    color: darkred;
+    width: 30vw;
+    margin-top: 10vh;
+    margin-right: auto;
+    margin-left: auto;
+    top: 50px;
+    position: absolute;
+    left: 1250px;
+}
+.id{
+    position: relative;
+    left: 25%;
+    font-size: large;
+}
+#login input {
+    width: 20vw;
+    padding: 10px;
+    border: 1px solid #ea5353;
+    border-radius: 4px;
+    background-color: rgba(87, 87, 87, 0.68);
+    color: darkred;
+    position: relative;
+    left: 15%;
+}
+#login input:hover {
+    background-color: rgba(245, 245, 245, 0.19);
+}
+#login input::placeholder{
+    color: rgba(234, 83, 83, 0.8);
+}
+#login input:focus{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+#informations {
+    justify-content: space-between;
+}
+#identifiant{
+    margin-right: auto;
+    margin-left: auto;
+}
+#mailAdress {
+    margin-right: auto;
+    margin-left: auto;
+}
+#connexion {
+    background-color: black;
+    color: red;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    margin-top: 3vh;
+    width: 10vw;
+    position: relative;
+    left: 32.5%;
+    border-radius: 3vw;
+}
+#connexion:hover {
+    background-color: red;
+    color: black;
+}
+a {
+    color: darkred;
+    text-decoration: underline;
+    cursor: grabbing;
+}
+.creation{
+    position: relative;
+    left: 15%;
+    margin-bottom: 5vh;
+}
