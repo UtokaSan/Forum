@@ -6,7 +6,8 @@ form.addEventListener('submit', function(event) {
     const formData = new FormData(form);
     const payload = {
         email: formData.get('email'),
-        password: formData.get('password')
+        password: formData.get('password'),
+        saveinfo: formData.get('saveinfo')
     };
     fetch(url, {
         method: 'POST',

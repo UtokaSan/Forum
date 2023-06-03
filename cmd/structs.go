@@ -23,4 +23,5 @@ type Post struct {
 type Login struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
+	SaveInfo string `json:"saveinfo"`
 }

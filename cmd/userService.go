@@ -20,7 +20,7 @@ func createUser(user User) {
 	}
 	fmt.Println("User created successfully")
 }
-func readUser() []User {
+func readUsers() []User {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
 		fmt.Println(err)
@@ -70,4 +70,19 @@ func deleteUser(idOfUser int) {
 		fmt.Println(err)
 	}
 	fmt.Println("User delete successfully")
+}
+
+func readUser(id int) {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	query := "SELECT id, nom, email, password FROM users WHERE id = ?"
+	row := db.QueryRow(query, id)
+	var user User
+	err = row.Scan(&user.ID, &user.Username, &user.Email, &user.Password)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
