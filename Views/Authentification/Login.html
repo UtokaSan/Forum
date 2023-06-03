@@ -1,11 +1,125 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Title</title>
     <link rel="stylesheet" type="text/css" href="Style/login.css">
-    <title>Login guez</title>
 </head>
 <body>
+<div class="rectangle2"></div>
+<div class="rectangle"></div>
+<div class="rectangle3"></div>
+<div class="rectangle4"></div>
+<div class="rectangle5"></div>
+<div class="rectangle6"></div>
+<img src="assets/img/carte.jpg" alt="Image">
+<img class="img1" src="assets/img/vidéo.gif" alt="GIF">
+<div class="ipv4-list">
+    <div class="ipv4-column">
+        <ul>
+            <li>192.168.0.1</li>
+            <li>10.0.0.1</li>
+            <li>172.16.0.1</li>
+            <li>192.168.1.1</li>
+            <li>192.0.2.1</li>
+            <li>198.51.100.1</li>
+            <li>203.0.113.1</li>
+            <li>192.168.2.1</li>
+            <li>10.0.0.2</li>
+            <li>172.16.0.2</li>
+        </ul>
+    </div>
+    <div class="ipv4-column">
+        <ul>
+            <li>10.10.0.1</li>
+            <li>172.31.0.1</li>
+            <li>192.168.10.1</li>
+            <li>10.1.0.1</li>
+            <li>192.168.3.1</li>
+            <li>203.0.113.2</li>
+            <li>10.0.0.3</li>
+            <li>172.16.0.3</li>
+            <li>192.168.4.1</li>
+            <li>10.0.0.4</li>
+        </ul>
+    </div>
+    <div class="ipv4-column">
+        <ul>
+            <li>172.16.0.4</li>
+            <li>192.168.5.1</li>
+            <li>10.0.0.5</li>
+            <li>172.16.0.5</li>
+            <li>192.168.6.1</li>
+            <li>10.0.0.6</li>
+            <li>172.16.0.6</li>
+            <li>192.168.7.1</li>
+            <li>10.0.0.7</li>
+            <li>172.16.0.7</li>
+        </ul>
+    </div>
+    <div class="ipv4-column">
+        <ul>
+            <li>192.168.8.1</li>
+            <li>10.0.0.8</li>
+            <li>172.16.0.8</li>
+            <li>192.168.9.1</li>
+            <li>10.0.0.9</li>
+            <li>172.16.0.9</li>
+            <li>192.168.10.1</li>
+            <li>10.0.0.10</li>
+            <li>172.16.0.10</li>
+            <li>192.168.11.1</li>
+        </ul>
+    </div>
+    <div class="ipv4-column">
+        <ul>
+            <li>10.0.0.11</li>
+            <li>172.16.0.11</li>
+            <li>192.168.12.1</li>
+            <li>10.0.0.12</li>
+            <li>172.16.0.12</li>
+            <li>192.168.13.1</li>
+            <li>10.0.0.13</li>
+            <li>172.16.0.13</li>
+            <li>192.168.14.1</li>
+            <li>10.0.0.14</li>
+        </ul>
+    </div>
+    <div class="ipv4-column">
+        <ul>
+            <li>172.16.0.14</li>
+            <li>192.168.15.1</li>
+            <li>10.0.0.15</li>
+            <li>172.16.0.15</li>
+            <li>192.168.16.1</li>
+            <li>10.0.0.16</li>
+            <li>172.16.0.16</li>
+            <li>192.168.17.1</li>
+            <li>10.0.0.17</li>
+            <li>172.16.0.17</li>
+        </ul>
+    </div>
+</div>
+<div class="ipv5-list">
+    <div class="ipv5-column">
+        <ul>
+            <li>192.168.0.1</li>
+            <li>10.0.0.1</li>
+        </ul>
+    </div>
+    <div class="ipv5-column">
+        <ul>
+            <li>172.16.0.1</li>
+            <li>192.168.1.1</li>
+        </ul>
+    </div>
+    <div class="ipv5-column">
+        <ul>
+            <li>10.10.0.1</li>
+            <li>172.31.0.1</li>
+        </ul>
+    </div>
+</div>
 <div id="login">
     <h1 id="title">
         Connection
@@ -19,19 +133,20 @@
         <input type="text" id="mailAdress" placeholder="Adresse mail">
         <br>
         <div id="identifiant">
-          <p class="id">  Entrez votre mot de passe :</p>
-
+            <p class="id">  Entrez votre mot de passe :</p>
         </div>
         <input type="password" id="password" placeholder="mot de passe">
         <br>
         <button id="connexion">Connexion</button>
         <br>
+        <input type="checkbox" id="saveinfo" style="width: 20px; height: 20px; background-color: black; border: 2px solid red;">
+        <label for="saveinfo" style="color: #7E001A;margin-left: 15%">Se souvenir de moi ?</label>
+        <br>
         <br>
         <div class="creation">
-        Vous ne possedez pas de compte ?<a href="Inscription.html"> Créez en un !  </a>
+            Vous ne possedez pas de compte ?<a href="Inscription.html"> Créez en un !  </a>
         </div>
-        </div>
-
+    </div>
 </div>
 </body>
 </html>
