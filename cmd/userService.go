@@ -13,13 +13,15 @@ func createUser(user User) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	createUser := `INSERT INTO users (id, image, nom, email, password) VALUES (?, ?, ?, ?, ?)`
-	_, errCreate := db.Exec(createUser, user.ID, user.Image, user.Username, user.Email, user.Password)
+	createUser := `INSERT INTO users ( nom, email, password) VALUES (?, ?, ?)`
+	_, errCreate := db.Exec(createUser, user.Username, user.Email, user.Password)
 	if errCreate != nil {
 		fmt.Println(err)
+		return
 	}
 	fmt.Println("User created successfully")
 }
+
 func readUser() []User {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
@@ -36,6 +38,7 @@ func readUser() []User {
 		var user User
 		err := rows.Scan(&user.ID, &user.Image, &user.Username, &user.Email, &user.Password)
 		if err != nil {
+			fmt.Println("test si vide : ")
 			fmt.Println(err)
 		}
 		result := append(tab, user)
@@ -43,6 +46,34 @@ func readUser() []User {
 		return result
 	}
 	return tab
+}
+
+func readOneUserByEmailOrPseudo(identifiant string) User {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println("err 0")
+		fmt.Println(err)
+	}
+	defer db.Close()
+
+	query := "SELECT id, nom, email, password FROM users WHERE email = ? OR nom = ?"
+
+	rows, err := db.Query(query, identifiant, identifiant)
+	if err != nil {
+		fmt.Println("err 1")
+		fmt.Println(err)
+	}
+	var user User
+
+	if rows.Next() {
+		err := rows.Scan(&user.ID, &user.Username, &user.Email, &user.Password)
+		if err != nil {
+			fmt.Println("err 2")
+			fmt.Println(err)
+		}
+	}
+
+	return user
 }
 
 func updateUser(user User) {
@@ -58,6 +89,7 @@ func updateUser(user User) {
 	}
 	fmt.Println("User update successfully")
 }
+
 func deleteUser(idOfUser int) {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
