@@ -6,8 +6,6 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/gorilla/sessions"
 	_ "github.com/mattn/go-sqlite3"
-	"golang.org/x/crypto/bcrypt"
-
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -15,6 +13,7 @@ import (
 
 func loginPost(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
+	fmt.Println(readUsers())
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -29,25 +28,32 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+	users := readUsers()
 	userFound := false
-	for _, user := range readUsers() {
-		if user.Email == userLogin.Email && bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userLogin.Password)) == nil {
-			claim := token.Claims.(jwt.MapClaims)
-			claim["user-id"] = user.ID
-			claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
-			tokenStr, err := token.SignedString([]byte("token-user"))
-			if err != nil {
-				fmt.Println(err)
-				return
+	for _, user := range users {
+		if user.Email == userLogin.Email && user.Password == userLogin.Password {
+			if user.Ban == 1 {
+				claim := token.Claims.(jwt.MapClaims)
+				claim["user-id"] = user.ID
+				claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
+				tokenStr, err := token.SignedString([]byte("token-user"))
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+				cookieOrSession(w, r, userLogin.SaveInfo, tokenStr)
+				w.WriteHeader(http.StatusOK)
+				userFound = true
+				break
+			} else {
+				w.WriteHeader(http.StatusForbidden)
 			}
-			cookieOrSession(w, r, userLogin.SaveInfo, tokenStr)
-			w.WriteHeader(http.StatusOK)
-			userFound = true
-			break
 		}
 	}
 	if !userFound {
 		w.WriteHeader(http.StatusUnauthorized)
+	} else {
+		w.WriteHeader(http.StatusOK)
 	}
 }
 

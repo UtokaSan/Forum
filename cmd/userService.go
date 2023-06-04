@@ -38,11 +38,10 @@ func readUsers() []User {
 		if err != nil {
 			fmt.Println(err)
 		}
-		result := append(tab, user)
+		tab = append(tab, user)
 		fmt.Println("Id : " + strconv.Itoa(user.ID) + " Username : " + user.Username +
 			" Email : " + user.Email + " Password : " + user.Password + " Role : " + user.Role + " " +
 			"Ban : " + strconv.Itoa(user.Ban))
-		return result
 	}
 	return tab
 }
