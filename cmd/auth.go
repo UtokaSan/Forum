@@ -6,6 +6,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/gorilla/sessions"
 	_ "github.com/mattn/go-sqlite3"
+	"golang.org/x/crypto/bcrypt"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -13,7 +14,6 @@ import (
 
 func loginPost(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
-	fmt.Println(readUsers())
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -29,9 +29,8 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	users := readUsers()
-	userFound := false
 	for _, user := range users {
-		if user.Email == userLogin.Email && user.Password == userLogin.Password {
+		if user.Email == userLogin.Email && bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userLogin.Password)) == nil {
 			if user.Ban == 1 {
 				claim := token.Claims.(jwt.MapClaims)
 				claim["user-id"] = user.ID
@@ -43,18 +42,14 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 				}
 				cookieOrSession(w, r, userLogin.SaveInfo, tokenStr)
 				w.WriteHeader(http.StatusOK)
-				userFound = true
-				break
+				return
 			} else {
 				w.WriteHeader(http.StatusForbidden)
+				return
 			}
 		}
 	}
-	if !userFound {
-		w.WriteHeader(http.StatusUnauthorized)
-	} else {
-		w.WriteHeader(http.StatusOK)
-	}
+	w.WriteHeader(http.StatusUnauthorized)
 }
 
 func cookieOrSession(w http.ResponseWriter, r *http.Request, userlogin string, tokenStr string) {
