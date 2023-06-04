@@ -13,7 +13,7 @@ func createUser(user User) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	createUser := `INSERT INTO users (id, image, nom, email, password) VALUES (?, ?, ?, ?, ?)`
+	createUser := `INSERT INTO users (id, image, nom, email, password, role, ban) VALUES (?, ?, ?, ?, ?, ?, ?)`
 	_, errCreate := db.Exec(createUser, user.ID, user.Image, user.Username, user.Email, user.Password)
 	if errCreate != nil {
 		fmt.Println(err)
@@ -26,7 +26,7 @@ func readUsers() []User {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "SELECT id, image, nom, email, password FROM users"
+	query := "SELECT id, image, nom, email, password, role, ban FROM users"
 	rows, err := db.Query(query)
 	if err != nil {
 		fmt.Println(err)
@@ -34,12 +34,14 @@ func readUsers() []User {
 	var tab []User
 	for rows.Next() {
 		var user User
-		err := rows.Scan(&user.ID, &user.Image, &user.Username, &user.Email, &user.Password)
+		err := rows.Scan(&user.ID, &user.Image, &user.Username, &user.Email, &user.Password, &user.Role, &user.Ban)
 		if err != nil {
 			fmt.Println(err)
 		}
 		result := append(tab, user)
-		fmt.Println("Id : " + strconv.Itoa(user.ID) + " Username : " + user.Username + " Email : " + user.Email + " Password : " + user.Password)
+		fmt.Println("Id : " + strconv.Itoa(user.ID) + " Username : " + user.Username +
+			" Email : " + user.Email + " Password : " + user.Password + " Role : " + user.Role + " " +
+			"Ban : " + strconv.Itoa(user.Ban))
 		return result
 	}
 	return tab
@@ -51,8 +53,8 @@ func updateUser(user User) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "UPDATE users SET nom = ?, image = ?, email = ?, password = ? WHERE ID = ?"
-	_, err = db.Exec(query, user.Username, user.Image, user.Email, user.Password)
+	query := "UPDATE users SET nom = ?, image = ?, email = ?, password = ?, role = ?, ban = ? WHERE ID = ?"
+	_, err = db.Exec(query, user.Username, user.Image, user.Email, user.Password, user.Role, user.Ban)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -78,10 +80,10 @@ func readUser(id int) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "SELECT id, nom, email, password FROM users WHERE id = ?"
+	query := "SELECT id, nom, email, password, role, ban FROM users WHERE id = ?"
 	row := db.QueryRow(query, id)
 	var user User
-	err = row.Scan(&user.ID, &user.Username, &user.Email, &user.Password)
+	err = row.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.Role, &user.Ban)
 	if err != nil {
 		fmt.Println(err)
 	}

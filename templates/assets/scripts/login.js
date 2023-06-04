@@ -7,13 +7,14 @@ form.addEventListener('submit', function(event) {
     const payload = {
         email: formData.get('email'),
         password: formData.get('password'),
-        saveinfo: formData.get('saveinfo')
+        saveinfo: formData.get('saveinfo'),
     };
     fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(payload)
     })
         .then(response => {

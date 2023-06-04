@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/gorilla/sessions"
-	_ "github.com/gorilla/sessions"
 	_ "github.com/mattn/go-sqlite3"
+	"golang.org/x/crypto/bcrypt"
 
 	"io/ioutil"
 	"net/http"
@@ -25,14 +25,13 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	err = json.Unmarshal(body, &userLogin)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	userFound := false
 	for _, user := range readUsers() {
-		if user.Email == userLogin.Email && userLogin.Password == user.Password {
+		if user.Email == userLogin.Email && bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userLogin.Password)) == nil {
 			claim := token.Claims.(jwt.MapClaims)
 			claim["user-id"] = user.ID
 			claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
