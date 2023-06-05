@@ -28,17 +28,25 @@ header{
     display: flex;
 }
 
-.underPageContent {
-    flex: 1;
+.underPageContentFirst {
+    flex: 0.75;
 }
+.underPageContentSecond  {
+    flex: 1.50;
+}
+.underPageContentThird{
+    flex: 0.75;
+}
+
 .discussion{
     border-left-width: 4px;
     border-right-width: 4px;
     border-left: red;
     border-right: red;
+    border-right-width: 10px ;
 }
 
-.underPageContent input{
+.underPageContentSecond input{
     width: 95%;
     height: 4vh;
     padding: 10px;
@@ -49,6 +57,6 @@ header{
     position: relative;
 }
 
-.underPageContent input:hover{
+.underPageContentSecond input:hover{
 
 }
