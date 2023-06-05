@@ -4,29 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31a8765e-7bff-4741-958f-a2767d070f36" name="Changes" comment="feat: finish Register V0.1&#10;&#10;I have finish to crypt, and ban jordan, and add to db.">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="31a8765e-7bff-4741-958f-a2767d070f36" name="Changes" comment="feat: finish Register V0.1&#10;&#10;I have finish to crypt, and ban jordan, and add to db and remove asset don't use.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/1_BARRACUDA-150x150.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/Capture.PNG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/f1200045a13252cfac1fcc67e2acdc49.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/hauora_sans/ttf/Hauora-Bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/hauora_sans/ttf/Hauora-ExtraBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/hauora_sans/ttf/Hauora-ExtraLight.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/hauora_sans/ttf/Hauora-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/hauora_sans/ttf/Hauora-Medium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/hauora_sans/ttf/Hauora-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/hauora_sans/ttf/Hauora-SemiBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/logo/logo_add_channel.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/logo/logo_created_something.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/logo/logo_history.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/minecraft-desktop-icon-25.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/minecraft_survival_games__the_citadel_by_skysworld_d8yz3si-fullview.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/parket13.webp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/userController.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/userController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/dbConnection.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/forum.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/forum.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum.db" beforeDir="false" afterPath="$PROJECT_DIR$/forum.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +87,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: finish Register V0.1&#10;&#10;I have finish to crypt, and ban jordan, and add to db." />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: finish Register V0.1&#10;&#10;I have finish to crypt, and ban jordan, and add to db." />
+    <MESSAGE value="feat: finish Register V0.1&#10;&#10;I have finish to crypt, and ban jordan, and add to db and remove asset don't use." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: finish Register V0.1&#10;&#10;I have finish to crypt, and ban jordan, and add to db and remove asset don't use." />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

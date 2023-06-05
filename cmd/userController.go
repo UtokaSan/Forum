@@ -3,9 +3,12 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/gorilla/sessions"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"strings"
+	"time"
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -16,8 +19,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}
-
-	// Second part on program
 
 	var userSend, errStr = changeRegisterToUser(user)
 
@@ -38,9 +39,8 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	//Create User
-
 	createUser(userSend)
+	createAToken(w, r, userSend)
 	w.WriteHeader(http.StatusCreated)
 	_, err = fmt.Fprintln(w, "creation of account successful")
 	if err != nil {
@@ -61,7 +61,7 @@ func userAlreadyExist(user User) bool {
 	userDBEmail := readOneUserByEmailOrPseudo(user.Email).Email
 	userDBUsername := readOneUserByEmailOrPseudo(user.Username).Username
 
-	fmt.Println("userDBEmail : " + userDBEmail + "| userDBUsername : " + userDBUsername)
+	//fmt.Println("userDBEmail : " + userDBEmail + "| userDBUsername : " + userDBUsername)
 
 	if userDBUsername == "" && userDBEmail == "" {
 		return false
@@ -81,4 +81,26 @@ func changeRegisterToUser(user Register) (User, string) {
 	userSend.Username = user.Nom
 
 	return userSend, ""
+}
+
+func createAToken(w http.ResponseWriter, r *http.Request, user User) {
+	token := jwt.New(jwt.SigningMethodHS256)
+	claim := token.Claims.(jwt.MapClaims)
+	claim["user-id"] = user.ID
+	claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
+	tokenStr, err := token.SignedString([]byte("token-user"))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	var store = sessions.NewCookieStore([]byte("secret-key"))
+	session, err := store.Get(r, "session-login")
+	if err != nil {
+		fmt.Println(err)
+	}
+	session.Values["jwtToken"] = tokenStr
+	err = session.Save(r, w)
+
+	return
 }
