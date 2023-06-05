@@ -6,6 +6,8 @@ type User struct {
 	Username string
 	Email    string
 	Password string
+	Role     string
+	Ban      int
 }
 
 type Post struct {
@@ -23,6 +25,8 @@ type Post struct {
 type Login struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
+	SaveInfo string `json:"saveinfo"`
+	JwtToken string `json:"jwtToken"`
 }
 
 type Register struct {

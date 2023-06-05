@@ -10,6 +10,7 @@ const port = ":3000"
 func Runner() {
 	server := http.NewServeMux()
 	server.HandleFunc("/", indexHandlers)
+	//server.HandleFunc("/register", registerHandlers)
 	server.HandleFunc("/api/login", loginPost)
 	server.HandleFunc("/api/register", CreateUser)
 	fs := http.FileServer(http.Dir("templates/assets"))

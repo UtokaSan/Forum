@@ -22,13 +22,13 @@ func createUser(user User) {
 	fmt.Println("User created successfully")
 }
 
-func readUser() []User {
+func readUsers() []User {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "SELECT id, image, nom, email, password FROM users"
+	query := "SELECT id, image, nom, email, password, role, ban FROM users"
 	rows, err := db.Query(query)
 	if err != nil {
 		fmt.Println(err)
@@ -36,14 +36,14 @@ func readUser() []User {
 	var tab []User
 	for rows.Next() {
 		var user User
-		err := rows.Scan(&user.ID, &user.Image, &user.Username, &user.Email, &user.Password)
+		err := rows.Scan(&user.ID, &user.Image, &user.Username, &user.Email, &user.Password, &user.Role, &user.Ban)
 		if err != nil {
-			fmt.Println("test si vide : ")
 			fmt.Println(err)
 		}
-		result := append(tab, user)
-		fmt.Println("Id : " + strconv.Itoa(user.ID) + " Username : " + user.Username + " Email : " + user.Email + " Password : " + user.Password)
-		return result
+		tab = append(tab, user)
+		fmt.Println("Id : " + strconv.Itoa(user.ID) + " Username : " + user.Username +
+			" Email : " + user.Email + " Password : " + user.Password + " Role : " + user.Role + " " +
+			"Ban : " + strconv.Itoa(user.Ban))
 	}
 	return tab
 }
@@ -82,8 +82,8 @@ func updateUser(user User) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "UPDATE users SET nom = ?, image = ?, email = ?, password = ? WHERE ID = ?"
-	_, err = db.Exec(query, user.Username, user.Image, user.Email, user.Password)
+	query := "UPDATE users SET nom = ?, image = ?, email = ?, password = ?, role = ?, ban = ? WHERE ID = ?"
+	_, err = db.Exec(query, user.Username, user.Image, user.Email, user.Password, user.Role, user.Ban)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -102,4 +102,19 @@ func deleteUser(idOfUser int) {
 		fmt.Println(err)
 	}
 	fmt.Println("User delete successfully")
+}
+
+func readUser(id int) {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	query := "SELECT id, nom, email, password, role, ban FROM users WHERE id = ?"
+	row := db.QueryRow(query, id)
+	var user User
+	err = row.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.Role, &user.Ban)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
