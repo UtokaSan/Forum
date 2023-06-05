@@ -228,3 +228,23 @@ a {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.square2 {
+    width: 15px;
+    height: 15px;
+    border: 2px solid #590806;
+    position: absolute;
+    top: 670px;
+    left: 1889px;
+}
+
+.dot2 {
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
