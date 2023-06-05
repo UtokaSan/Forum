@@ -128,20 +128,15 @@ img {
 #login {
     font-size: 2vh;
     font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    border-style: solid;
     border-width: 3px;
-    justify-items: center;
     color: darkred;
-    width: 30vw;
-    margin-top: 10vh;
-    margin-right: auto;
-    margin-left: auto;
-    top: 20px;
+    top: 50px;
     position: absolute;
-    left: 1250px;
+    left: 1200px;
+    justify-items: center;
 }
+
+
 .informations{
     margin: 0 auto;
     max-width: 80%;
