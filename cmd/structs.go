@@ -30,7 +30,7 @@ type Login struct {
 }
 
 type Register struct {
-	Nom      string `json:"name"`
+	Nom      string `json:"pseudo"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }

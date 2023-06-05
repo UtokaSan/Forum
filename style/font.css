@@ -1,9 +1,0 @@
-@font-face {
-    font-family: 'Hauora';
-    src: url('../assets/fonts/hauora_sans/ttf/Hauora-Bold.ttf') format('truetype');
-    src: url('../assets/fonts/hauora_sans/ttf/Hauora-ExtraBold.ttf') format('truetype');
-    src: url('../assets/fonts/hauora_sans/ttf/Hauora-ExtraLight.ttf') format('truetype');
-    src: url('../assets/fonts/hauora_sans/ttf/Hauora-Light.ttf') format('truetype');
-    src: url('../assets/fonts/hauora_sans/ttf/Hauora-Medium.ttf') format('truetype');
-    /* Autres formats de police peuvent être spécifiés ici */
-}

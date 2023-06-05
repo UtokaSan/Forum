@@ -12,10 +12,13 @@ import (
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
+
 	var user Register
 	err := json.NewDecoder(r.Body).Decode(&user)
+	fmt.Println("mince -1")
 
 	if err != nil {
+		fmt.Println("mince 0")
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}
@@ -23,6 +26,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	var userSend, errStr = changeRegisterToUser(user)
 
 	if errStr != "" {
+		println("mince 1")
 		w.WriteHeader(http.StatusUnauthorized)
 		_, err := fmt.Fprintln(w, err)
 		if err != nil {
@@ -39,7 +43,9 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	createUser(userSend)
+	fmt.Println("mince 999")
+
+	//createUser(userSend)
 	createAToken(w, r, userSend)
 	w.WriteHeader(http.StatusCreated)
 	_, err = fmt.Fprintln(w, "creation of account successful")
@@ -71,6 +77,7 @@ func userAlreadyExist(user User) bool {
 
 func changeRegisterToUser(user Register) (User, string) {
 	if strings.Contains(strings.ToUpper(user.Nom), strings.ToUpper("Jordan")) && strings.Contains(strings.ToUpper(user.Email), strings.ToUpper("Jordan")) {
+		fmt.Println("MERDE")
 		return User{}, "OOHH no, Sorry you can't create a Account 😉"
 	}
 
@@ -79,6 +86,11 @@ func changeRegisterToUser(user Register) (User, string) {
 	userSend.Email = user.Email
 	userSend.Password = cryptPassword(user.Password)
 	userSend.Username = user.Nom
+
+	fmt.Println(userSend)
+	fmt.Println("user.Email : " + user.Email)
+	fmt.Println("user.Nom : " + user.Nom)
+	fmt.Println(user.Password)
 
 	return userSend, ""
 }
