@@ -10,7 +10,18 @@ func indexHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		errorHandler(w, r, http.StatusNotFound)
 	} else {
-		t, err := template.ParseFiles("templates/index.html")
+		t, err := template.ParseFiles("templates/Login.html")
+		if err != nil {
+			fmt.Println(err)
+		}
+		t.Execute(w, r)
+	}
+}
+func registerHandlers(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/register" {
+		errorHandler(w, r, http.StatusNotFound)
+	} else {
+		t, err := template.ParseFiles("templates/Inscription.html")
 		if err != nil {
 			fmt.Println(err)
 		}

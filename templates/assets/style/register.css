@@ -119,11 +119,11 @@ img {
     margin: 0;
 }
 
-
 #title {
     align-content: center;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 #login {
     font-size: 2vh;
@@ -138,17 +138,21 @@ img {
     margin-top: 10vh;
     margin-right: auto;
     margin-left: auto;
-    top: 50px;
+    top: 20px;
     position: absolute;
     left: 1250px;
+}
+.informations{
+    margin: 0 auto;
+    max-width: 80%;
 }
 .id{
     position: relative;
     left: 25%;
     font-size: large;
+    text-align: center;
 }
 #login input {
-    width: 20vw;
     padding: 10px;
     border: 1px solid #ea5353;
     border-radius: 4px;
@@ -156,6 +160,9 @@ img {
     color: darkred;
     position: relative;
     left: 15%;
+    width: 90%;
+    margin: 5px auto;
+    text-align: center;
 }
 #login input:hover {
     background-color: rgba(245, 245, 245, 0.19);
