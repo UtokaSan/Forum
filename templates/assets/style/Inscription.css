@@ -126,7 +126,7 @@ img {
     text-align: center;
 }
 #login {
-    font-size: 2vh;
+    font-size: 1vh;
     font-weight: bold;
     border-width: 3px;
     color: darkred;
@@ -135,6 +135,7 @@ img {
     left: 1200px;
     justify-items: center;
 }
+
 
 
 .informations {
