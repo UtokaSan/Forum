@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31a8765e-7bff-4741-958f-a2767d070f36" name="Changes" comment="feat: finish Register V0.1&#10;&#10;I have finish to crypt, and ban jordan, and add to db and remove asset don't use.">
+    <list default="true" id="31a8765e-7bff-4741-958f-a2767d070f36" name="Changes" comment="fix: finish Register V1 (add token)&#10;&#10;Add token to register">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/userController.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/userController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forum.db" beforeDir="false" afterPath="$PROJECT_DIR$/forum.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/forum.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/forum.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +85,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: finish Register V0.1&#10;&#10;I have finish to crypt, and ban jordan, and add to db." />
     <MESSAGE value="feat: finish Register V0.1&#10;&#10;I have finish to crypt, and ban jordan, and add to db and remove asset don't use." />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: finish Register V0.1&#10;&#10;I have finish to crypt, and ban jordan, and add to db and remove asset don't use." />
+    <MESSAGE value="fix: finish Register V1 (add token)&#10;&#10;Add token to register" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: finish Register V1 (add token)&#10;&#10;Add token to register" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
