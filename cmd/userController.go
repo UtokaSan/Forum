@@ -70,7 +70,6 @@ func userAlreadyExist(user User) bool {
 }
 
 func changeRegisterToUser(user Register) (User, string) {
-
 	if strings.Contains(strings.ToUpper(user.Nom), strings.ToUpper("Jordan")) && strings.Contains(strings.ToUpper(user.Email), strings.ToUpper("Jordan")) {
 		return User{}, "OOHH no, Sorry you can't create a Account 😉"
 	}
