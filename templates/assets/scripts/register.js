@@ -3,12 +3,13 @@ const form = document.querySelector('form');
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     const url = 'api/register';
-    const formData = new FormData(form);
     const dataUser = {
-        pseudo: formData.get('pseudo'),
-        email: formData.get('mailAdress'),
-        password: formData.get('password'),
+        pseudo: document.getElementById("pseudo").value ,
+        email: document.getElementById("mailAdress").value,
+        password: document.getElementById("password").value,
     };
+    console.log("dataUser")
+    console.log(dataUser)
     fetch(url, {
         method: 'POST',
         headers: {
@@ -16,10 +17,11 @@ form.addEventListener('submit', function(event) {
         },
         body: JSON.stringify(dataUser)
     })
+        .then(response => response.json())
         .then(response => {
-            console.log(response.body)
+            console.log("response")
             if (!response.ok) {
-                    alert(response.body)
+                    alert(response.message)
             } else {
                 console.log("user logged")
             }

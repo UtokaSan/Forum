@@ -12,43 +12,29 @@ import (
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-
 	var user Register
 	err := json.NewDecoder(r.Body).Decode(&user)
-	fmt.Println("mince -1")
 
 	if err != nil {
-		fmt.Println("mince 0")
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		createErrorMessage("bug with request", 500, w)
 		return
 	}
 
 	var userSend, errStr = changeRegisterToUser(user)
-
 	if errStr != "" {
-		println("mince 1")
-		w.WriteHeader(http.StatusUnauthorized)
-		_, err := fmt.Fprintln(w, err)
-		if err != nil {
-			return
-		}
+		createErrorMessage(errStr, 403, w)
+		return
 	}
 
 	if userAlreadyExist(userSend) {
-		fmt.Println("Error Account already Create please change the email or password")
-		w.WriteHeader(http.StatusInternalServerError)
-		_, err := fmt.Fprintln(w, "Error Account already Create please change the email or password")
-		if err != nil {
-			return
-		}
+		createErrorMessage("Compte déjà existant", 403, w)
+		return
 	}
 
-	fmt.Println("mince 999")
-
-	//createUser(userSend)
+	createUser(userSend)
 	createAToken(w, r, userSend)
-	w.WriteHeader(http.StatusCreated)
-	_, err = fmt.Fprintln(w, "creation of account successful")
+
+	_, err = w.Write(createSuccessfulMessage("compte bien créer", 201, w))
 	if err != nil {
 		return
 	}
@@ -67,8 +53,6 @@ func userAlreadyExist(user User) bool {
 	userDBEmail := readOneUserByEmailOrPseudo(user.Email).Email
 	userDBUsername := readOneUserByEmailOrPseudo(user.Username).Username
 
-	//fmt.Println("userDBEmail : " + userDBEmail + "| userDBUsername : " + userDBUsername)
-
 	if userDBUsername == "" && userDBEmail == "" {
 		return false
 	}
@@ -76,8 +60,7 @@ func userAlreadyExist(user User) bool {
 }
 
 func changeRegisterToUser(user Register) (User, string) {
-	if strings.Contains(strings.ToUpper(user.Nom), strings.ToUpper("Jordan")) && strings.Contains(strings.ToUpper(user.Email), strings.ToUpper("Jordan")) {
-		fmt.Println("MERDE")
+	if strings.Contains(strings.ToUpper(user.Nom), strings.ToUpper("Jordan")) || strings.Contains(strings.ToUpper(user.Email), strings.ToUpper("Jordan")) {
 		return User{}, "OOHH no, Sorry you can't create a Account 😉"
 	}
 
@@ -86,11 +69,6 @@ func changeRegisterToUser(user Register) (User, string) {
 	userSend.Email = user.Email
 	userSend.Password = cryptPassword(user.Password)
 	userSend.Username = user.Nom
-
-	fmt.Println(userSend)
-	fmt.Println("user.Email : " + user.Email)
-	fmt.Println("user.Nom : " + user.Nom)
-	fmt.Println(user.Password)
 
 	return userSend, ""
 }
@@ -102,17 +80,61 @@ func createAToken(w http.ResponseWriter, r *http.Request, user User) {
 	claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
 	tokenStr, err := token.SignedString([]byte("token-user"))
 	if err != nil {
-		fmt.Println(err)
+		createErrorMessage("Bug avec le token d'authentification", 500, w)
 		return
 	}
 
 	var store = sessions.NewCookieStore([]byte("secret-key"))
 	session, err := store.Get(r, "session-login")
 	if err != nil {
-		fmt.Println(err)
+		createErrorMessage("Bug avec le token authentication", 500, w)
+		return
 	}
 	session.Values["jwtToken"] = tokenStr
 	err = session.Save(r, w)
 
 	return
+}
+
+func createErrorMessage(message string, code int, w http.ResponseWriter) {
+	fmt.Println("mince : " + message)
+
+	errorMessage := responseRegister{
+		Message: message,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+
+	jsonData, err := json.Marshal(errorMessage)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	_, err = w.Write(jsonData)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	return
+}
+
+func createSuccessfulMessage(message string, code int, w http.ResponseWriter) []byte {
+	fmt.Println("successfully : " + message)
+
+	errorMessage := responseRegister{
+		Message: message,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+
+	jsonData, err := json.Marshal(errorMessage)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return nil
+	}
+
+	return jsonData
 }
