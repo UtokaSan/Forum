@@ -39,6 +39,9 @@ type AdminPanel struct {
 	PostArchived    []map[string]interface{} `json:"postArchived"`
 }
 
+type AdminPanelChange struct {
+}
+
 type Register struct {
 	Nom      string `json:"pseudo"`
 	Email    string `json:"email"`
