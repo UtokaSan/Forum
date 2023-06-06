@@ -57,6 +57,26 @@ header{
     position: relative;
 }
 
-.underPageContentSecond input:hover{
-
+.categories {
+    display: flex;
+    position: relative;
+    top: 5vw;
+    left: 20%;
+    gap: 5%;
 }
+
+.categories button {
+    background-color: #ddd;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.categories button.active {
+    background-color: #000000;
+    color: red;
+    border-color: #0e0e4d;
+    border-width: 5px;
+}
+
