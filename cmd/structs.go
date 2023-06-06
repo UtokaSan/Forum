@@ -38,3 +38,13 @@ type AdminPanel struct {
 	PostHidden      []map[string]interface{} `json:"postHidden"`
 	PostArchived    []map[string]interface{} `json:"postArchived"`
 }
+
+type Register struct {
+	Nom      string `json:"pseudo"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type responseRegister struct {
+	Message string `json:"message"`
+}

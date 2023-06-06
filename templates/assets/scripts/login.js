@@ -14,7 +14,6 @@ form.addEventListener('submit', function(event) {
         headers: {
             'Content-Type': 'application/json'
         },
-        credentials: 'include',
         body: JSON.stringify(payload)
     })
         .then(response => {

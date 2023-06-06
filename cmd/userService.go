@@ -17,6 +17,7 @@ func createUser(user User) {
 	_, errCreate := db.Exec(createUser, user.Image, user.Username, user.Email, user.Password)
 	if errCreate != nil {
 		fmt.Println(err)
+		return
 	}
 	fmt.Println("User created successfully")
 }
@@ -44,6 +45,34 @@ func readUsers() []User {
 			"Ban : " + strconv.Itoa(user.Ban))
 	}
 	return tab
+}
+
+func readOneUserByEmailOrPseudo(identifiant string) User {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println("err 0")
+		fmt.Println(err)
+	}
+	defer db.Close()
+
+	query := "SELECT id, nom, email, password FROM users WHERE email = ? OR nom = ?"
+
+	rows, err := db.Query(query, identifiant, identifiant)
+	if err != nil {
+		fmt.Println("err 1")
+		fmt.Println(err)
+	}
+	var user User
+
+	if rows.Next() {
+		err := rows.Scan(&user.ID, &user.Username, &user.Email, &user.Password)
+		if err != nil {
+			fmt.Println("err 2")
+			fmt.Println(err)
+		}
+	}
+
+	return user
 }
 
 func updateUser(user User) {

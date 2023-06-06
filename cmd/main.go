@@ -10,8 +10,10 @@ const port = ":3001"
 func Runner() {
 	server := http.NewServeMux()
 	server.HandleFunc("/", indexHandlers)
+	server.HandleFunc("/register", registerHandlers)
 	server.HandleFunc("/api/login", loginPost)
 	server.HandleFunc("/api/take-ban", adminPanel)
+	server.HandleFunc("/api/register", CreateUser)
 	fs := http.FileServer(http.Dir("templates/assets"))
 	server.Handle("/assets/", http.StripPrefix("/assets", fs))
 	fmt.Println("(http://localhost:8080", port)
