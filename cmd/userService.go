@@ -13,8 +13,8 @@ func createUser(user User) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	createUser := `INSERT INTO users (image, nom, email, password, role, ban) VALUES (?, ?, ?, ?, ?, ?)`
-	_, errCreate := db.Exec(createUser, user.Image, user.Username, user.Email, user.Password)
+	createUser := `INSERT INTO users (nom, email, password, role, ban) VALUES (?, ?, ?, 1, 0)`
+	_, errCreate := db.Exec(createUser, user.Username, user.Email, user.Password)
 	if errCreate != nil {
 		fmt.Println(err)
 		return
