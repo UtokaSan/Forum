@@ -123,31 +123,30 @@ img {
     align-content: center;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 #login {
-    font-size: 2vh;
+    font-size: 1vh;
     font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    border-style: solid;
     border-width: 3px;
-    justify-items: center;
     color: darkred;
-    width: 30vw;
-    margin-top: 10vh;
-    margin-right: auto;
-    margin-left: auto;
     top: 50px;
     position: absolute;
-    left: 1250px;
+    left: 1200px;
+    justify-items: center;
+}
+
+.informations {
+    margin: 0 auto;
+    max-width: 80%;
 }
 .id{
     position: relative;
     left: 25%;
     font-size: large;
+    text-align: center;
 }
 #login input {
-    width: 20vw;
     padding: 10px;
     border: 1px solid #ea5353;
     border-radius: 4px;
@@ -155,6 +154,9 @@ img {
     color: darkred;
     position: relative;
     left: 15%;
+    width: 90%;
+    margin: 5px auto;
+    text-align: center;
 }
 #login input:hover {
     background-color: rgba(245, 245, 245, 0.19);
@@ -207,4 +209,43 @@ a {
     position: relative;
     left: 15%;
     margin-bottom: 5vh;
+}
+.square2 {
+    width: 15px;
+    height: 15px;
+    border: 2px solid #590806;
+    position: absolute;
+    top: 670px;
+    left: 1889px;
+}
+
+.dot2 {
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.square {
+    width: 15px;
+    height: 15px;
+    border: 2px solid #590806;
+    position: absolute;
+    top: 420px;
+    left: 500px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
