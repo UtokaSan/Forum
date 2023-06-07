@@ -32,6 +32,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	createUser(userSend)
+
 	createAToken(w, r, userSend)
 
 	_, err = w.Write(createSuccessfulMessage("compte bien créer", 201, w))
@@ -76,9 +77,11 @@ func changeRegisterToUser(user Register) (User, string) {
 func createAToken(w http.ResponseWriter, r *http.Request, user User) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claim := token.Claims.(jwt.MapClaims)
+	fmt.Println(user.ID)
 	claim["user-id"] = user.ID
 	claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
 	tokenStr, err := token.SignedString([]byte("token-user"))
+	fmt.Println(tokenStr)
 	if err != nil {
 		createErrorMessage("Bug avec le token d'authentification", 500, w)
 		return
