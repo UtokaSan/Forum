@@ -17,6 +17,7 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	var userLogin Login
 	err = json.Unmarshal(body, &userLogin)
 	token := jwt.New(jwt.SigningMethodHS256)

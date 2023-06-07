@@ -29,6 +29,18 @@ func registerHandlers(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func adminHandlers(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/admin" {
+		errorHandler(w, r, http.StatusNotFound)
+	} else {
+		t, err := template.ParseFiles("templates/Admin.html")
+		if err != nil {
+			fmt.Println(err)
+		}
+		t.Execute(w, r)
+	}
+}
+
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	w.WriteHeader(status)
 	if status == http.StatusNotFound {
