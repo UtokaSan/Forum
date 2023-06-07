@@ -33,7 +33,12 @@ fetch("/api/catch-info-admin", {
 })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        const select = document.querySelector("#deban-user")
+        for (let i = 0; i < data.ban.length; i++) {
+            const option = document.createElement("option")
+            option.text = data.ban[i].username;
+            select.appendChild(option)
+        }
     })
     .catch(error => {
         console.error("Erreur lors de la mise à jour :", error);
