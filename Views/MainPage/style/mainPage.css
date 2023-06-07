@@ -33,35 +33,54 @@ header{
 }
 .underPageContentSecond  {
     flex: 1.50;
+    min-height: 100vh;
 }
 .underPageContentThird{
     flex: 0.75;
 }
 
-.discussion{
-    border-left-width: 4px;
-    border-right-width: 4px;
-    border-left: red;
-    border-right: red;
-    border-right-width: 10px ;
+.discussion {
+    margin-top: 10vh;
+    position: relative;
 }
+
+.discussion::before,
+.discussion::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(80, 0, 0, 0.5);
+}
+
+.discussion::before {
+    left: -4px;
+    box-shadow: -4px 0 10px rgb(255, 0, 0);
+}
+
+.discussion::after {
+    right: -4px;
+    box-shadow: 4px 0 10px rgb(255, 0, 0);
+}
+
+
 
 .underPageContentSecond input{
     width: 95%;
-    height: 4vh;
+    height: 2vh;
     padding: 10px;
     border: 1px solid #ea5353;
     border-radius: 5vw;
     background-color: rgba(87, 87, 87, 0.68);
     color: darkred;
-    position: relative;
 }
 
 .categories {
     display: flex;
-    position: relative;
     top: 5vw;
-    left: 20%;
+    margin-left: 20%;
+    margin-bottom: 5%;
     gap: 5%;
 }
 
@@ -71,6 +90,8 @@ header{
     color: black;
     padding: 10px 20px;
     cursor: pointer;
+    border-radius: 1vh;
+
 }
 
 .categories button.active {
