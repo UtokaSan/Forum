@@ -248,3 +248,28 @@ a {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.rectangle7 {
+    position: absolute;
+    top: 50px;
+    width: 400px;
+    height: 350px;
+    border: 2px solid #7E001A;
+    right: 1600px;
+    left: 50px;
+}
+
+.img2 {
+    position: fixed;
+    left: 50px;
+    width: 400px;
+    height: 400px;
+    top: 30px;
+}
+
+.img3 {
+    position: fixed;
+    left: 99px;
+    width: 300px;
+    height: 300px;
+    top: 75px;
+}

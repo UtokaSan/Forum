@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration</title>
+</head>
+<body>
+  <form onsubmit="submitForm(event)">
+    <h1>Role</h1>
+    <select id = "role-user">
+      <option value="">Sélectionner un rôle</option>
+      <option value="Guest">Guest</option>
+      <option value="Moderator">Moderator</option>
+      <option value="Admin">Admin</option>
+    </select>
+    <h1>Ban</h1>
+    <select id = "deban-user">
+      <option value="">Sélectionner un utilisateur</option>
+    </select>
+
+    <button type="submit">Appliquer</button>
+  </form>
+<script src = "assets/scripts/admin.js"></script>
+</body>
+</html>
