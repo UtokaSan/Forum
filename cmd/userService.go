@@ -81,8 +81,8 @@ func updateUser(user User) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "UPDATE users SET nom = ?, image = ?, email = ?, password = ?, role = ?, ban = ?, report = ? WHERE ID = ?"
-	_, err = db.Exec(query, user.Username, user.Image, user.Email, user.Password, user.Role, user.Ban, user.Report)
+	query := "UPDATE users SET  nom = ?, image = ?, email = ?, password = ?, role = ?, ban = ?, report = ? WHERE nom = ?"
+	_, err = db.Exec(query, user.Username, user.Image, user.Email, user.Password, user.Role, user.Ban, user.Report, user.Username)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -123,7 +123,7 @@ func takeUsersBan() []map[string]interface{} {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "SELECT * FROM users WHERE ban = 0"
+	query := "SELECT * FROM users WHERE ban = 1"
 	rows, err := db.Query(query)
 	var result []map[string]interface{}
 	for rows.Next() {

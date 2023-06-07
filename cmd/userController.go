@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
@@ -137,4 +138,18 @@ func createSuccessfulMessage(message string, code int, w http.ResponseWriter) []
 	}
 
 	return jsonData
+}
+
+func updateUserBan(user User) {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	query := "UPDATE users SET  nom = ?, ban = ? WHERE nom = ?"
+	_, err = db.Exec(query, user.Username, user.Ban, user.Username)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("User ban update successfully")
 }

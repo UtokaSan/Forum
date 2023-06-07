@@ -32,7 +32,7 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 	users := readUsers()
 	for _, user := range users {
 		if user.Email == userLogin.Email && bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userLogin.Password)) == nil {
-			if user.Ban == 1 {
+			if user.Ban == 0 {
 				claim := token.Claims.(jwt.MapClaims)
 				claim["user-id"] = user.ID
 				claim["exp"] = time.Now().Add(time.Hour * 24).Unix()

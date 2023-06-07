@@ -21,12 +21,13 @@ func Runner() {
 }
 
 func routes(server *http.ServeMux) {
-	server.HandleFunc("/", indexHandlers)
+	server.HandleFunc("/", rootHandler)
+	server.HandleFunc("/login", loginHandlers)
 	server.HandleFunc("/register", registerHandlers)
 	server.HandleFunc("/admin", adminHandlers)
 	server.HandleFunc("/api/login", loginPost)
 	server.HandleFunc("/api/take-ban", adminPanel)
 	server.HandleFunc("/api/register", CreateUser)
-	server.HandleFunc("/api/adminPanel", adminPanel)
+	server.HandleFunc("/api/adminpanel", adminPanel)
 	server.HandleFunc("/api/catch-info-admin", sendInfoAdmin)
 }
