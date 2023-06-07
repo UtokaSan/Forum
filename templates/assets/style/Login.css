@@ -4,7 +4,7 @@ body {
 
 .rectangle2 {
     width: 1909px;
-    height: 950px;
+    height: 910px;
     border: 2px solid #7E001A;
     box-sizing: border-box;
 }
@@ -271,5 +271,5 @@ a {
     left: 99px;
     width: 300px;
     height: 300px;
-    top: 75px;
+    top: 72px;
 }
