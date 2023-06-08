@@ -2,12 +2,34 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/golang-jwt/jwt/v5"
 	"html/template"
 	"net/http"
 )
 
-func indexHandlers(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	takeCookie, err := r.Cookie("jwtToken")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+	token, err := jwt.Parse(takeCookie.Value, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Méthode de signature inattendue : %v", token.Header["alg"])
+		}
+		return []byte("token-user"), nil
+	})
+	if err != nil || !token.Valid {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+	if token.Valid {
+		http.Redirect(w, r, "/admin", http.StatusSeeOther)
+	}
+}
+
+func loginHandlers(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/login" {
 		errorHandler(w, r, http.StatusNotFound)
 	} else {
 		t, err := template.ParseFiles("templates/Login.html")

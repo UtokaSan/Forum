@@ -30,4 +30,17 @@ func adminPanel(w http.ResponseWriter, r *http.Request) {
 	}
 	var change AdminPanelChange
 	err = json.Unmarshal(body, &change)
+	fmt.Println(string(body[2:12]))
+	if string(body[2:12]) == "deban-user" {
+		updateUserBan(User{
+			Username: change.DebanUser,
+			Ban:      0,
+		})
+	} else if string(body[2:11]) == "user-role" {
+		updateUser(User{
+			Role: "admin",
+		})
+	} else {
+		fmt.Println("Nique ta mere jordan")
+	}
 }
