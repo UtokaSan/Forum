@@ -6,16 +6,21 @@
 </head>
 <body>
   <form onsubmit="submitForm(event)">
-    <h1>Role</h1>
-    <select id = "role-user">
-      <option value="">Sélectionner un rôle</option>
-      <option value="Guest">Guest</option>
-      <option value="Moderator">Moderator</option>
-      <option value="Admin">Admin</option>
+    <h1>Mettre Admin</h1>
+    <select id = "role-admin-user" class = "allRole">
+      <option value="">Select a user</option>
+    </select>
+    <h1>Mettre Modo</h1>
+    <select id = "role-modo-user" class = "allRole">
+      <option value="">Select a user</option>
     </select>
     <h1>Ban</h1>
     <select id = "deban-user">
-      <option value="">Sélectionner un utilisateur</option>
+      <option value="">Select a user</option>
+    </select>
+    <h1>Supprimer un Post</h1>
+    <select id = "delete-post">
+      <option value = "">Select a Post</option>
     </select>
 
     <button type="submit">Appliquer</button>
