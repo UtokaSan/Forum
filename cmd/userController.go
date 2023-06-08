@@ -153,3 +153,17 @@ func updateUserBan(user User) {
 	}
 	fmt.Println("User ban update successfully")
 }
+
+func updateuserRole(user User) {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	query := "UPDATE users SET  nom = ?, role = ? WHERE nom = ?"
+	_, err = db.Exec(query, user.Username, user.Role, user.Username)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("User ban update successfully")
+}

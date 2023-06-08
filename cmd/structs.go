@@ -40,6 +40,7 @@ type AdminPanel struct {
 }
 
 type AdminPanelChange struct {
+	Key           string `json:"key"`
 	DebanUser     string `json:"deban-user"`
 	RoleAdminUser string `json:"role-admin-user"`
 	RoleModoUser  string `json:"role-modo-user"`

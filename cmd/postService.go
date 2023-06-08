@@ -54,19 +54,6 @@ func updatePost(post Post) {
 	}
 	fmt.Println("User update successfully")
 }
-func deletePost(idOfUser int) {
-	db, err := sql.Open("sqlite3", "./forum.db")
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer db.Close()
-	query := "DELETE FROM posts WHERE id = ?"
-	_, err = db.Exec(query, idOfUser)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("User delete successfully")
-}
 
 func takePostHidden() []map[string]interface{} {
 	db, err := sql.Open("sqlite3", "./forum.db")

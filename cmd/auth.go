@@ -35,6 +35,7 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 			if user.Ban == 0 {
 				claim := token.Claims.(jwt.MapClaims)
 				claim["user-id"] = user.ID
+				claim["user-role"] = user.Role
 				claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
 				tokenStr, err := token.SignedString([]byte("token-user"))
 				if err != nil {

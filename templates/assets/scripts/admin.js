@@ -1,15 +1,13 @@
 function submitForm (event) {
     event.preventDefault();
     // Faire pour tous les users
-    const selectRole = document.querySelector("#role-user").value;
     const selectBanUser = document.querySelector("#deban-user").value;
+    const selectRoleAdmin = document.querySelector("#role-admin-user").value;
+    const selectRoleModo = document.querySelector("#role-modo-user".value);
     let formData = {}
-    if (selectRole !== "") {
-        formData["user-role"] = selectRole
-    }
-    if (selectBanUser !== "") {
-        formData["deban-user"] = selectBanUser
-    }
+    selectBanUser !== "" ? formData["deban-user"] = selectBanUser : null
+    selectRoleModo !== "" ? formData["role-modo-user"] = selectRoleModo : null;
+    selectRoleAdmin !== "" ? formData["role-admin-user"] = selectRoleAdmin : null;
     fetch("/api/adminpanel", {
         method: "POST",
         headers: {
