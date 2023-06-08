@@ -1,0 +1,52 @@
+body {
+    background-color: black;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    color: white;
+}
+
+select, button {
+    color: black;
+}
+
+.rectangle {
+    position: absolute;
+    top: 310px;
+    width: 400px;
+    height: 350px;
+    border: 2px solid #7E001A;
+    left: 730px;
+}
+
+.img2 {
+    position: fixed;
+    left: 50px;
+    width: 200px;
+    height: 200px;
+    top: 30px;
+}
+
+.img3 {
+    position: fixed;
+    left: 60px;
+    width: 180px;
+    height: 180px;
+    top: 37px;
+}
+
+.rectangle1 {
+    position: absolute;
+    top: 310px;
+    width: 400px;
+    height: 350px;
+    border: 2px solid #7E001A;
+    left: 730px;
+}
