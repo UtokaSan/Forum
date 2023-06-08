@@ -3,52 +3,39 @@ package cmd
 import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
-	_ "github.com/gorilla/sessions"
+	"github.com/gorilla/sessions"
 	"net/http"
 )
 
 func authUserSecurity(w http.ResponseWriter, r *http.Request) {
-	authHeader := r.Header.Get("Authorization")
-	if authHeader == "" {
-		// Gérer le cas où le jeton Bearer n'est pas présent dans l'en-tête
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
+	const secretToken = "token-user"
+	//tokenJWT := getSession(r)
+	//tokenUnscript := checkJWT(secretToken, tokenJWT)
 
-	// Extraire le jeton Bearer du header (il sera dans le format "Bearer <token>")
-	bearerToken := authHeader[len("Bearer "):]
+}
 
-	fmt.Println(bearerToken)
+func getSession(r *http.Request) string {
+	var store = sessions.NewCookieStore([]byte("secret-key"))
+	session, _ := store.Get(r, "session-login")
 
-	// JWT à décoder
-	// Clé secrète utilisée pour signer le JWT
-	secretKey := []byte("token-user")
+	return session.Values["jwtToken"].(string)
+}
 
-	// Parsage du JWT
-	token, err := jwt.Parse(bearerToken, func(token *jwt.Token) (interface{}, error) {
-		return secretKey, nil
+func checkJWT(secretToken string, tokenJWT string) *jwt.Token {
+	token, err := jwt.Parse(tokenJWT, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Méthode de signature inattendue : %v", token.Header["alg"])
+		}
+		return []byte(secretToken), nil
 	})
-	if err != nil {
-		fmt.Println("merde 3")
+	if err != nil || !token.Valid {
+		return nil
 	}
-
-	// Vérification de la validité du JWT
-	if !token.Valid {
-		fmt.Println("merde")
-		return
+	if token.Valid {
+		_, err := token.Claims.(jwt.MapClaims)
+		if err {
+			fmt.Println("bug : ", err)
+		}
 	}
-
-	// Accès aux claims (informations) du JWT
-	claims, ok := token.Claims.(jwt.MapClaims)
-	if !ok {
-		fmt.Println("merde 1")
-	}
-
-	// Accès aux données spécifiques du JWT
-	userID := claims["user_id"].(string)
-	expiration := claims["exp"].(float64)
-
-	// Utilisation des informations extraites du JWT
-	fmt.Println("User ID:", userID)
-	fmt.Println("Expiration:", expiration)
+	return token
 }
