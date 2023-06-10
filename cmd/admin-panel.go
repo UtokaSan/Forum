@@ -11,7 +11,6 @@ func sendInfoAdmin(w http.ResponseWriter, r *http.Request) {
 	userPanel := AdminPanel{
 		Account:         takeAllUsers(),
 		AccountReported: takeUserReported(),
-		Ban:             takeUsersBan(),
 		PostHidden:      takePostHidden(),
 		PostArchived:    postArchived(),
 	}
@@ -30,17 +29,30 @@ func adminPanel(w http.ResponseWriter, r *http.Request) {
 	}
 	var change AdminPanelChange
 	err = json.Unmarshal(body, &change)
-	fmt.Println(change.Key)
-	if change.Key == "deban-user" {
-		updateUserBan(User{
-			Username: change.DebanUser,
+	switch change.Key {
+	case "ban-user":
+		updateUnBanUserOrBan(User{
+			Username: change.BanUser,
+			Ban:      1,
+		})
+	case "unban-user":
+		updateUnBanUserOrBan(User{
+			Username: change.UnBanUser,
 			Ban:      0,
 		})
-	}
-	if change.Key == "user-admin-role" {
-		updateuserRole(User{
+	case "role-admin-user":
+		updateUserRole(User{
 			Username: change.RoleAdminUser,
 			Role:     "admin",
+		})
+	case "role-modo-user":
+		updateUserRole(User{
+			Username: change.RoleModoUser,
+			Role:     "modo",
+		})
+	case "delete-post":
+		deletePost(Post{
+			Title: change.DeletePost,
 		})
 	}
 }

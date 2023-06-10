@@ -30,4 +30,5 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/api/register", CreateUser)
 	server.HandleFunc("/api/adminpanel", adminPanel)
 	server.HandleFunc("/api/catch-info-admin", sendInfoAdmin)
+	server.HandleFunc("/api/post", createPostHandler)
 }
