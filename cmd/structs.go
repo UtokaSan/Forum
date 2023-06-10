@@ -1,7 +1,5 @@
 package cmd
 
-import "github.com/golang-jwt/jwt/v5"
-
 type User struct {
 	ID       int
 	Image    string
@@ -58,37 +56,8 @@ type responseRegister struct {
 	Message string `json:"message"`
 }
 
-type Claims struct {
-	Userid int `json:"user-id"`
-	Exp    int `json:"exp"`
-}
-
-func (c Claims) GetExpirationTime() (*jwt.NumericDate, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (c Claims) GetIssuedAt() (*jwt.NumericDate, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (c Claims) GetNotBefore() (*jwt.NumericDate, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (c Claims) GetIssuer() (string, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (c Claims) GetSubject() (string, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (c Claims) GetAudience() (jwt.ClaimStrings, error) {
-	//TODO implement me
-	panic("implement me")
+type DataTokenJWT struct {
+	UserId   float64 `json:"user-id"`
+	UserRole int     `json:"user-role"`
+	Exp      float64 `json:"exp"`
 }

@@ -9,9 +9,9 @@ const port = ":8080"
 
 func Runner() {
 	server := http.NewServeMux()
-	server.HandleFunc("/", indexHandlers)
+	server.HandleFunc("/", loginHandlers)
 	server.HandleFunc("/register", registerHandlers)
-	server.HandleFunc("/middleware", authUserSecurity)
+	server.HandleFunc("/middleware", authAdminSecurity(adminHandlers))
 	server.HandleFunc("/api/login", loginPost)
 	server.HandleFunc("/api/register", CreateUser)
 	fs := http.FileServer(http.Dir("templates/assets"))
