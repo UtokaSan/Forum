@@ -1,39 +1,34 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Administration</title>
-</head>
-<link rel="stylesheet" type="text/css" href="assets/style/admin.css">
-<img class="img2" src="assets/img/planet.png" alt="Image">
-<img class="img3" src="assets/img/tete.png" alt="Image">
-<body>
-  <form onsubmit="submitForm(event)">
-    <h1>Mettre Admin</h1>
-    <select id = "role-admin-user" class = "allRole">
-      <option value="">Select a user</option>
-    </select>
-    <h1>Mettre Modo</h1>
-    <select id = "role-modo-user" class = "allRole">
-      <option value="">Select a user</option>
-    </select>
-    <h1>Unban user</h1>
-    <select id = "unban-user">
-      <option value="">Select a user</option>
-    </select>
-    <h1>ban user</h1>
-    <select id = "ban-user">
-      <option value="">Select a user</option>
-    </select>
-    <h1>Supprimer un Post</h1>
-    <select id = "delete-post">
-      <option value = "">Select a Post</option>
-    </select>
+  <meta charset="UTF-8">
+  <title>Administration</title>
+  <link rel="stylesheet" type="text/css" href="assets/style/admin.css">
 
-    <button type="submit">Appliquer</button>
-  </form>
-  <div class="rectangle"></div>
-  <div class="rectangle1"></div>
+</head>
+<body>
+<form onsubmit="submitForm(event)">
+  <h1>Mettre Admin</h1>
+  <select id = "role-admin-user" class = "allRole">
+    <option value="">Select a user</option>
+  </select>
+  <h1>Mettre Modo</h1>
+  <select id = "role-modo-user" class = "allRole">
+    <option value="">Select a user</option>
+  </select>
+  <h1>Unban user</h1>
+  <select id = "unban-user">
+    <option value="">Select a user</option>
+  </select>
+  <h1>Ban user</h1>
+  <select id = "ban-user">
+    <option value="">Select a user</option>
+  </select>
+  <h1>Supprimer un Post</h1>
+  <select id = "delete-post">
+    <option value = "">Select a Post</option>
+  </select>
+  <button type="submit">Appliquer</button>
+</form>
 <script src = "assets/scripts/admin.js"></script>
 </body>
 </html>

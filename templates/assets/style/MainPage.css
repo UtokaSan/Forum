@@ -6,27 +6,30 @@ body {
     justify-content: center;
 }
 
-header{
-    /* Supprimez les styles du header */
+header {
 }
 
-.discussion{
+.discussion {
     margin-top: 10vh;
 }
 
 .pageContent {
     display: flex;
+    justify-content: flex-start;
 }
 
+
 .underPageContentFirst {
-    flex: 0.75;
+    flex: 1;
 }
-.underPageContentSecond  {
+
+.underPageContentSecond {
     flex: 1.50;
     min-height: 100vh;
 }
-.underPageContentThird{
-    flex: 0.75;
+
+.underPageContentThird {
+    flex: 1;
 }
 
 .discussion {
@@ -54,7 +57,7 @@ header{
     box-shadow: 4px 0 10px rgb(255, 0, 0);
 }
 
-.underPageContentSecond input{
+.underPageContentSecond input {
     width: 95%;
     height: 2vh;
     padding: 10px;
