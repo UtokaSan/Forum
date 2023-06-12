@@ -15,8 +15,15 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var data GestionPost
 	err = json.Unmarshal(body, &data)
-	fmt.Println(data.Post)
-	if data.Post == "create" {
-		createPost(Post{})
-	}
+	createPostWithTitle(Post{
+		Title: data.CreatePost,
+	})
+}
+
+func displayPostVisible(w http.ResponseWriter, r *http.Request) {
+	//jsonData, err := json.Marshal(post)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//w.Write(jsonData)
 }

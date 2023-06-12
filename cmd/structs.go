@@ -41,7 +41,7 @@ type AdminPanel struct {
 }
 
 type GestionPost struct {
-	Post string `json:"post"`
+	CreatePost string `json:"create-post"`
 }
 
 type AdminPanelChange struct {
