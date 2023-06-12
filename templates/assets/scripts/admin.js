@@ -1,14 +1,30 @@
 function submitForm (event) {
     event.preventDefault();
-    // Faire pour tous les users
-    const selectRole = document.querySelector("#role-user").value;
-    const selectBanUser = document.querySelector("#deban-user").value;
+    const selectUnBanUser = document.querySelector("#unban-user").value;
+    const selectBanUser = document.querySelector("#ban-user").value;
+    const selectRoleAdmin = document.querySelector("#role-admin-user").value;
+    const selectRoleModo = document.querySelector("#role-modo-user").value;
+    const selectDeletePost = document.querySelector("#delete-post").value;
     let formData = {}
-    if (selectRole !== "") {
-        formData["user-role"] = selectRole
+    if (selectUnBanUser !== "") {
+        formData["key"] = "unban-user"
+        formData["unban-user"] = selectUnBanUser
     }
     if (selectBanUser !== "") {
-        formData["deban-user"] = selectBanUser
+        formData["key"] = "ban-user"
+        formData["ban-user"] = selectBanUser
+    }
+    if (selectRoleModo !== "") {
+        formData["key"] = "role-modo-user"
+        formData["role-modo-user"] = selectRoleModo
+    }
+    if (selectRoleAdmin !== "") {
+        formData["key"] = "role-admin-user"
+        formData["role-admin-user"] = selectRoleAdmin
+    }
+    if (selectDeletePost !== "") {
+        formData["key"] = "delete-post"
+        formData["delete-post"] = selectDeletePost
     }
     fetch("/api/adminpanel", {
         method: "POST",
@@ -35,14 +51,33 @@ fetch("/api/catch-info-admin", {
     .then(response => response.json())
     .then(data => {
         console.log(data)
-        const selectDeban = document.querySelector("#deban-user")
+        const selectDeban = document.querySelector("#unban-user")
+        const selectBanUser = document.querySelector("#ban-user");
         const selectRoleAdmin = document.querySelector("#role-admin-user");
         const selectRoleModo = document.querySelector("#role-modo-user");
-        for (let i = 0; i < data.ban.length; i++) {
+        const selectDeletePost = document.querySelector("#delete-post");
+        for (let i = 0; i < data.account.length; i++) {
             const option = document.createElement("option")
-            option.text = data.ban[i].username;
-            selectDeban.appendChild(option)
+            if (data.account[i].ban === 1) {
+                option.text = data.account[i].username;
+                selectDeban.appendChild(option)
+            }
         }
+        for (let i = 0; i < data.account.length; i++) {
+            const option = document.createElement("option")
+            if (data.account[i].ban === 0) {
+                option.text = data.account[i].username;
+                selectBanUser.appendChild(option)
+            }
+        }
+        // Faire afficher les posts non hidden
+        // for (let i = 0; i < data.account.length; i++) {
+        //     const option = document.createElement("option")
+        //     if (data.account[i].ban === 0) {
+        //         option.text = data.account[i].username;
+        //         selectBanUser.appendChild(option)
+        //     }
+        // }
         for (let i = 0; i < data.account.length; i++) {
             const option = document.createElement("option");
             option.text = data.account[i].username;
