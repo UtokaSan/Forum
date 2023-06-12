@@ -14,6 +14,7 @@ type User struct {
 type Post struct {
 	ID          int
 	Photo       string
+	Title       string
 	Texte       string
 	Hidden      int
 	Like        int
@@ -39,11 +40,17 @@ type AdminPanel struct {
 	PostArchived    []map[string]interface{} `json:"postArchived"`
 }
 
+type GestionPost struct {
+	CreatePost string `json:"create-post"`
+}
+
 type AdminPanelChange struct {
 	Key           string `json:"key"`
-	DebanUser     string `json:"deban-user"`
+	UnBanUser     string `json:"unban-user"`
+	BanUser       string `json:"ban-user"`
 	RoleAdminUser string `json:"role-admin-user"`
 	RoleModoUser  string `json:"role-modo-user"`
+	DeletePost    string `json:"delete-post"`
 }
 
 type Register struct {
@@ -60,4 +67,9 @@ type DataTokenJWT struct {
 	UserId   float64 `json:"user-id"`
 	UserRole int     `json:"user-role"`
 	Exp      float64 `json:"exp"`
+}
+
+type UserGoogle struct {
+	Email   string `json:"email"`
+	Picture string `json:"picture"`
 }

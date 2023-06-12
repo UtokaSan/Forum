@@ -143,30 +143,32 @@ func createSuccessfulMessage(message string, code int, w http.ResponseWriter) []
 	return jsonData
 }
 
-func updateUserBan(user User) {
+func updateUnBanUserOrBan(user User) {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "UPDATE users SET  nom = ?, ban = ? WHERE nom = ?"
-	_, err = db.Exec(query, user.Username, user.Ban, user.Username)
+	query := "UPDATE users SET ban = ? WHERE nom = ?"
+	_, err = db.Exec(query, user.Ban, user.Username)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("User ban update successfully")
+	fmt.Println("User unban update successfully")
 }
 
-func updateuserRole(user User) {
+func updateUserRole(user User) {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 	defer db.Close()
-	query := "UPDATE users SET  nom = ?, role = ? WHERE nom = ?"
-	_, err = db.Exec(query, user.Username, user.Role, user.Username)
+	query := "UPDATE users SET role = ? WHERE nom = ?"
+	_, err = db.Exec(query, user.Role, user.Username)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
-	fmt.Println("User ban update successfully")
+	fmt.Println("User role updated successfully")
 }

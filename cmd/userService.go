@@ -117,29 +117,6 @@ func readUser(id int) {
 	}
 }
 
-func takeUsersBan() []map[string]interface{} {
-	db, err := sql.Open("sqlite3", "./forum.db")
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer db.Close()
-	query := "SELECT * FROM users WHERE ban = 1"
-	rows, err := db.Query(query)
-	var result []map[string]interface{}
-	for rows.Next() {
-		var user User
-		err := rows.Scan(&user.ID, &user.Image, &user.Username, &user.Email, &user.Password, &user.Role, &user.Ban, &user.Report)
-		if err != nil {
-			fmt.Println(err)
-		}
-		userData := make(map[string]interface{})
-		userData["email"] = user.Email
-		userData["username"] = user.Username
-		result = append(result, userData)
-	}
-	return result
-}
-
 func takeAllUsers() []map[string]interface{} {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
@@ -162,6 +139,7 @@ func takeAllUsers() []map[string]interface{} {
 		userData["email"] = user.Email
 		userData["username"] = user.Username
 		userData["role"] = user.Role
+		userData["ban"] = user.Ban
 		mapUser = append(mapUser, userData)
 	}
 	return mapUser

@@ -7,10 +7,29 @@ import (
 	"github.com/gorilla/sessions"
 	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"io/ioutil"
 	"net/http"
 	"time"
 )
+
+func loginGoogle(w http.ResponseWriter, r *http.Request) {
+	config := getConfig()
+	url := config.AuthCodeURL("state", oauth2.AccessTypeOffline)
+	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
+}
+
+func getConfig() *oauth2.Config {
+	config := &oauth2.Config{
+		ClientID:     "116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com",
+		ClientSecret: "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",
+		RedirectURL:  "http://localhost:8080/admin",
+		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
+		Endpoint:     google.Endpoint,
+	}
+	return config
+}
 
 func loginPost(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
