@@ -1,5 +1,9 @@
 body {
-    background: black;
+    width: 99%;
+    min-height: 100%;
+    background-color: #050523;
+    color: darkred;
+    justify-content: center;
 }
 
 .rectangle2 {
@@ -7,7 +11,7 @@ body {
     height: 910px;
     border: 2px solid #7E001A;
     box-sizing: border-box;
-}#7E001A
+}
 
 img {
     position: fixed;

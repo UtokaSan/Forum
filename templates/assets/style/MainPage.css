@@ -7,17 +7,7 @@ body {
 }
 
 header{
-    border-color: darkred;
-    border-width: 3px;
-    background-color: #0e0e4d;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    border-bottom: 1px solid #490a0a;
-    box-shadow: 0px 14px 18px rgba(239, 0, 0, 0.2);
+    /* Supprimez les styles du header */
 }
 
 .discussion{
@@ -64,8 +54,6 @@ header{
     box-shadow: 4px 0 10px rgb(255, 0, 0);
 }
 
-
-
 .underPageContentSecond input{
     width: 95%;
     height: 2vh;
@@ -91,7 +79,6 @@ header{
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 1vh;
-
 }
 
 .categories button.active {
@@ -100,4 +87,3 @@ header{
     border-color: #0e0e4d;
     border-width: 5px;
 }
-
