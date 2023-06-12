@@ -62,3 +62,8 @@ type Register struct {
 type responseRegister struct {
 	Message string `json:"message"`
 }
+
+type UserGoogle struct {
+	Email   string `json:"email"`
+	Picture string `json:"picture"`
+}
