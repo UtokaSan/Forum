@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-func handleLogin(w http.ResponseWriter, r *http.Request) {
+func loginGoogle(w http.ResponseWriter, r *http.Request) {
 	config := getConfig()
 	url := config.AuthCodeURL("state", oauth2.AccessTypeOffline)
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
@@ -24,29 +24,11 @@ func getConfig() *oauth2.Config {
 	config := &oauth2.Config{
 		ClientID:     "116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com",
 		ClientSecret: "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",
-		RedirectURL:  "http://localhost:8080/callback",
+		RedirectURL:  "http://localhost:8080/admin",
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
 		Endpoint:     google.Endpoint,
 	}
 	return config
-}
-
-func handleCallback(w http.ResponseWriter, r *http.Request) {
-	config := getConfig()
-	code := r.URL.Query().Get("code")
-	token, err := config.Exchange(oauth2.NoContext, code)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	client := config.Client(oauth2.NoContext, token)
-	response, err := client.Get("https://www.googleapis.com/oauth2/v2/userinfo")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	body, err := ioutil.ReadAll(response.Body)
-	fmt.Println(string(body))
 }
 
 func loginPost(w http.ResponseWriter, r *http.Request) {

@@ -12,8 +12,7 @@ func Runner() {
 	routes(server)
 	fs := http.FileServer(http.Dir("templates/assets"))
 	server.Handle("/assets/", http.StripPrefix("/assets", fs))
-	server.HandleFunc("/logintest", handleLogin)
-	server.HandleFunc("/callback", handleCallback)
+	server.HandleFunc("/login/google", loginGoogle)
 	fmt.Println("(http://localhost:8080", port)
 	err := http.ListenAndServe(port, server)
 	if err != nil {
