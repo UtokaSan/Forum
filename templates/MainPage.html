@@ -1,4 +1,5 @@
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/templates/assets/style/MainPage.css">
@@ -20,11 +21,22 @@
             <button class="categorie" >Sex Cam</button>
             <button class="categorie" >Red Room</button>
         </div>
-        <input placeholder="Que voulez vous partager ?">
+        <input placeholder="Que voulez-vous partager ?">
+        <div class="menu-deroulant">
+            <h2>Écrire un message</h2>
+            <select id="menu-deroulant-select">
+                <option value="Chat General">Chat General</option>
+                <option value="Drogue">Drogue</option>
+                <option value="Unban User">Unban User</option>
+                <option value="Sex Cam">Sex Cam</option>
+                <option value="Red Room">Red Room</option>
+            </select>
+            <textarea id="message" placeholder="Entrez votre message ici"></textarea>
+            <button type="submit">Envoyer</button>
+        </div>
     </div>
     <div class="underPageContentThird"></div>
 </div>
-<script src = "/templates/assets/scripts/MainPage.js"></script>
-
+<script src="/templates/assets/scripts/MainPage.js"></script>
 </body>
 </html>

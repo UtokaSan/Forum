@@ -1,34 +1,61 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Administration</title>
-  <link rel="stylesheet" type="text/css" href="assets/style/admin.css">
-
+  <link rel="stylesheet" type="text/css" href="/templates/assets/style/Admin2.css">
+  <script src="/templates/assets/scripts/Admin2.js"></script>
+  <title>Page admin</title>
 </head>
 <body>
+<header>
+
+</header>
+<div class="onglets">
+  <button class="onglet" onclick="afficherContenu(event, 'contenu1')">Mettre Admin</button>
+  <button class="onglet" onclick="afficherContenu(event, 'contenu2')">Mettre Modo</button>
+  <button class="onglet" onclick="afficherContenu(event, 'contenu3')">Unban User</button>
+  <button class="onglet" onclick="afficherContenu(event, 'contenu4')">Ban User</button>
+  <button class="onglet" onclick="afficherContenu(event, 'contenu5')">Supprimer un Post</button>
+</div>
+
 <form onsubmit="submitForm(event)">
-  <h1>Mettre Admin</h1>
-  <select id = "role-admin-user" class = "allRole">
-    <option value="">Select a user</option>
-  </select>
-  <h1>Mettre Modo</h1>
-  <select id = "role-modo-user" class = "allRole">
-    <option value="">Select a user</option>
-  </select>
-  <h1>Unban user</h1>
-  <select id = "unban-user">
-    <option value="">Select a user</option>
-  </select>
-  <h1>Ban user</h1>
-  <select id = "ban-user">
-    <option value="">Select a user</option>
-  </select>
-  <h1>Supprimer un Post</h1>
-  <select id = "delete-post">
-    <option value = "">Select a Post</option>
-  </select>
-  <button type="submit">Appliquer</button>
+  <div id="contenu1" class="contenu-onglet">
+    <h1>Mettre Admin</h1>
+    <select id="role-admin-user" class="allRole">
+      <option value="">Select a user</option>
+    </select>
+  </div>
+
+  <div id="contenu2" class="contenu-onglet">
+    <h1>Mettre Modo</h1>
+    <select id="role-modo-user" class="allRole">
+      <option value="">Select a user</option>
+    </select>
+  </div>
+
+  <div id="contenu3" class="contenu-onglet">
+    <h1>Unban User</h1>
+    <select id="unban-user">
+      <option value="">Select a user</option>
+    </select>
+  </div>
+
+  <div id="contenu4" class="contenu-onglet">
+    <h1>Ban User</h1>
+    <select id="ban-user">
+      <option value="">Select a user</option>
+    </select>
+  </div>
+
+  <div id="contenu5" class="contenu-onglet">
+    <h1>Supprimer un Post</h1>
+    <select id="delete-post">
+      <option value="">Select a Post</option>
+    </select>
+  </div>
+
+    <button type="submit">Appliquer</button>
+  </div>
 </form>
-<script src = "assets/scripts/admin.js"></script>
 </body>
 </html>

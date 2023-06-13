@@ -90,3 +90,46 @@ header {
     border-color: #0e0e4d;
     border-width: 5px;
 }
+
+/* Ajoutez le CSS pour le menu déroulant */
+.menu-deroulant {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    color: #000;
+    z-index: 9999;
+}
+
+.menu-deroulant h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.menu-deroulant select,
+.menu-deroulant textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.menu-deroulant button {
+    background-color: black;
+    color: red;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    border-radius: 3px;
+}
+
+.menu-deroulant button:hover {
+    background-color: #333;
+}
