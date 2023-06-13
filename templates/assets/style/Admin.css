@@ -1,0 +1,76 @@
+body {
+    width: 99%;
+    min-height: 100%;
+    background-color: #050523;
+    color: darkred;
+    justify-content: center;
+}
+
+
+#errorType{
+    position: relative;
+    margin-top: 35vh;
+    left: 45%;
+    width: 40vw;
+}
+
+
+header button {
+    background-color: black;
+    color: red;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    width: 3vw;
+    position: relative;
+    border-radius: 3vw;
+    left: 0.5%;
+}
+
+.onglets button {
+    border-radius: 5vw;
+}
+.contenu-onglet {
+    display: none;
+    margin-top: 5%;
+    position: relative;
+    left: 45%;
+}
+
+.onglet {
+    background-color: #ddd;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.onglet:hover {
+    background-color: #bbb;
+}
+.onglets {
+    position: relative;
+    margin-top: 10%;
+    display: flex;
+    gap: 2%;
+    left: 25%;
+}
+
+.onglet.active {
+    background-color: #000000;
+    color: red;
+    border-color: #0e0e4d;
+    border-width: 5px;
+
+}
+
+.content {
+    position: relative;
+    left: 45%;
+}
+
+

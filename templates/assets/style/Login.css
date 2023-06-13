@@ -1,5 +1,9 @@
 body {
-    background: black;
+    width: 99%;
+    min-height: 100%;
+    background-color: #050523;
+    color: darkred;
+    justify-content: center;
 }
 
 .rectangle2 {
@@ -271,5 +275,13 @@ a {
     left: 99px;
     width: 300px;
     height: 300px;
-    top: 75px;
+    top: 72px;
+}
+
+#google-image {
+    position: fixed;
+    left: 1320px;
+    width: 80px;
+    height: 80px;
+    top: 485px;
 }
