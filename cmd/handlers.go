@@ -42,6 +42,18 @@ func loginHandlers(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, r)
 	}
 }
+func mainHandlers(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/homepage" {
+		errorHandler(w, r, http.StatusNotFound)
+	} else {
+		t, err := template.ParseFiles("templates/MainPage.html")
+		if err != nil {
+			fmt.Println(err)
+		}
+		t.Execute(w, r)
+	}
+}
+
 func registerHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/register" {
 		errorHandler(w, r, http.StatusNotFound)
