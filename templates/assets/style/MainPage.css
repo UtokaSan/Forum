@@ -135,3 +135,11 @@ header {
 .menu-deroulant button:hover {
     background-color: #333;
 }
+
+.contenu-onglet {
+    display: none;
+}
+
+#contenu1{
+    display: block;
+}
