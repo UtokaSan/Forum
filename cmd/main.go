@@ -12,7 +12,6 @@ func Runner() {
 	routes(server)
 	fs := http.FileServer(http.Dir("templates/assets"))
 	server.Handle("/assets/", http.StripPrefix("/assets", fs))
-	server.HandleFunc("/login/google", loginGoogle)
 	fmt.Println("(http://localhost:8080", port)
 	err := http.ListenAndServe(port, server)
 	if err != nil {
@@ -23,7 +22,9 @@ func Runner() {
 
 func routes(server *http.ServeMux) {
 	server.HandleFunc("/", rootHandler)
+	server.HandleFunc("/homepage", mainHandlers)
 	server.HandleFunc("/login", loginHandlers)
+	server.HandleFunc("/login/google", loginGoogle)
 	server.HandleFunc("/register", registerHandlers)
 	server.HandleFunc("/admin", adminHandlers)
 	server.HandleFunc("/api/login", loginPost)
@@ -32,5 +33,5 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/api/adminpanel", adminPanel)
 	server.HandleFunc("/api/catch-info-admin", sendInfoAdmin)
 	server.HandleFunc("/api/create-post", createPostHandler)
-	server.HandleFunc("/api/display-post", createPostHandler)
+	server.HandleFunc("/api/display-post", displayPostVisible)
 }

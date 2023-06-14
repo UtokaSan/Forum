@@ -78,6 +78,29 @@ func takePostHidden() []map[string]interface{} {
 	}
 	return result
 }
+func takePostUnHidden() []map[string]interface{} {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	query := "SELECT * FROM posts WHERE hidden = 0"
+	rows, err := db.Query(query)
+	var result []map[string]interface{}
+	for rows.Next() {
+		var post Post
+		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived)
+		if err != nil {
+			fmt.Println(err)
+		}
+		postData := make(map[string]interface{})
+		postData["id"] = post.ID
+		postData["title"] = post.Title
+		postData["categorie"] = post.Categorie
+		result = append(result, postData)
+	}
+	return result
+}
 
 func postArchived() []map[string]interface{} {
 	db, err := sql.Open("sqlite3", "./forum.db")

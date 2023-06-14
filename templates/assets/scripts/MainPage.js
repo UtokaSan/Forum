@@ -23,3 +23,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
         });
     });
 });
+
+
+fetch("/api/display-post", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+})
+    .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+    .catch(error => {
+        console.error("Error update", error);
+    });
