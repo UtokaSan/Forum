@@ -283,5 +283,13 @@ a {
     left: 1400px;
     width: 40px;
     height: 40px;
-    top: 525px;
+    top: 505px;
+}
+
+#git-image{
+    position: fixed;
+    left: 1400px;
+    width: 40px;
+    height: 40px;
+    top: 590px;
 }
