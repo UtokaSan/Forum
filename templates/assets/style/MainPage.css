@@ -91,17 +91,19 @@ header {
     border-width: 5px;
 }
 
-/* Ajoutez le CSS pour le menu déroulant */
 .menu-deroulant {
     position: fixed;
-    top: 0;
-    right: 0;
+    top: 400px;
+    right: 80px;
     width: 300px;
-    background-color: #fff;
     padding: 20px;
     color: #000;
     z-index: 9999;
+    background-color: transparent;
+    border: 2px solid darkred;
+    border-radius: 10px;
 }
+
 
 .menu-deroulant h2 {
     font-size: 18px;
