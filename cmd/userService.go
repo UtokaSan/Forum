@@ -21,6 +21,22 @@ func createUser(user User) {
 	}
 	fmt.Println("User created successfully")
 }
+
+func createUserGoogle(user UserGoogle) string {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	createUser := `INSERT INTO users (image,nom, email, password, role, ban) VALUES (?,?, ?, null, 1, 0)`
+	_, errCreate := db.Exec(createUser, user.Picture, user.Nom, user.Email)
+	if errCreate != nil {
+		fmt.Println(err)
+		return "error with create Account"
+	}
+	return "User created successfully"
+}
+
 func readUsers() []User {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
@@ -55,23 +71,59 @@ func readOneUserByEmailOrPseudo(identifiant string) User {
 	}
 	defer db.Close()
 
-	query := "SELECT id, nom, email, password FROM users WHERE email = ? OR nom = ?"
+	query := "SELECT id,image, nom, email,password, role, ban, report FROM users WHERE email = ? OR nom = ?"
 
 	rows, err := db.Query(query, identifiant, identifiant)
 	if err != nil {
 		fmt.Println("err 1")
 		fmt.Println(err)
 	}
-	var user User
+	user := User{
+		ID: -1,
+	}
 
 	if rows.Next() {
-		err := rows.Scan(&user.ID, &user.Username, &user.Email, &user.Password)
+		err := rows.Scan(&user.ID, &user.Image, &user.Username, &user.Email, &user.Password, &user.Role, &user.Ban, &user.Report)
 		if err != nil {
 			fmt.Println("err 2")
 			fmt.Println(err)
 		}
 	}
 
+	fmt.Println("user")
+	fmt.Println(user)
+	return user
+}
+
+func readOneUserByIdentifiantWithGoogle(identifiant string) User {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println("err 0")
+		fmt.Println(err)
+	}
+	defer db.Close()
+
+	query := "SELECT id,image, nom, email, role, ban, report FROM users WHERE email = ? OR nom = ?"
+
+	rows, err := db.Query(query, identifiant, identifiant)
+	if err != nil {
+		fmt.Println("err 1")
+		fmt.Println(err)
+	}
+	user := User{
+		ID: -1,
+	}
+
+	if rows.Next() {
+		err := rows.Scan(&user.ID, &user.Image, &user.Username, &user.Email, &user.Role, &user.Ban, &user.Report)
+		if err != nil {
+			fmt.Println("err 2")
+			fmt.Println(err)
+		}
+	}
+
+	fmt.Println("user")
+	fmt.Println(user)
 	return user
 }
 
@@ -88,6 +140,7 @@ func updateUser(user User) {
 	}
 	fmt.Println("User update successfully")
 }
+
 func deleteUser(idOfUser int) {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {

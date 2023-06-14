@@ -55,16 +55,18 @@ func registerHandlers(w http.ResponseWriter, r *http.Request) {
 }
 
 func adminHandlers(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/admin" {
-		errorHandler(w, r, http.StatusNotFound)
-	} else {
-		t, err := template.ParseFiles("templates/Admin.html")
-		takeInfoGoogle(r)
-		if err != nil {
-			fmt.Println(err)
-		}
-		t.Execute(w, r)
-	}
+	callbackLoginGoogle(w, r)
+
+	//if r.URL.Path != "/admin" {
+	//	errorHandler(w, r, http.StatusNotFound)
+	//} else {
+	//	t, err := template.ParseFiles("templates/Admin.html")
+	//	takeInfoGoogle(r)
+	//	if err != nil {
+	//		fmt.Println(err)
+	//	}
+	//	t.Execute(w, r)
+	//}
 }
 
 func takeInfoGoogle(r *http.Request) {
@@ -82,13 +84,15 @@ func takeInfoGoogle(r *http.Request) {
 		return
 	}
 	body, err := ioutil.ReadAll(response.Body)
+
 	var usergoogle UserGoogle
 	err = json.Unmarshal(body, &usergoogle)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(usergoogle.Email)
+	fmt.Println(usergoogle)
+
 }
 
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {

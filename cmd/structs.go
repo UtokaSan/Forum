@@ -70,6 +70,8 @@ type DataTokenJWT struct {
 }
 
 type UserGoogle struct {
-	Email   string `json:"email"`
-	Picture string `json:"picture"`
+	Email         string `json:"email"`
+	Nom           string `json:"name"`
+	VerifiedEmail bool   `json:"verified_email"`
+	Picture       string `json:"picture"`
 }
