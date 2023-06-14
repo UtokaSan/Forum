@@ -14,14 +14,45 @@
     </div>
     <div class="discussion underPageContentSecond">
         <div class="categories">
-            <button class="categorie active" >Chat Général</button>
-            <button class="categorie" >Drogue</button>
-            <button class="categorie" >Sex Cam</button>
-            <button class="categorie" >Red Room</button>
+            <button class="onglet" onclick="afficherContenu(event, 'contenu1')">Chat Général</button>
+            <button class="onglet" onclick="afficherContenu(event, 'contenu2')">Drogue</button>
+            <button class="onglet" onclick="afficherContenu(event, 'contenu3')">Sex cam</button>
+            <button class="onglet" onclick="afficherContenu(event, 'contenu4')">Red Room</button>
         </div>
         <input placeholder="Que voulez-vous partager ?">
         <form id="messageForm" onsubmit="submitForm(event)">
-            <div class="menu-deroulant">
+            <form onsubmit="submitForm(event)">
+                <div id="contenu1" class="contenu-onglet">
+                    <h1>Chat Général</h1>
+                    <select id="Chat Général" class="allRole">
+                        <option value="">Select a user</option>
+                    </select>
+                </div>
+
+                <div id="contenu2" class="contenu-onglet">
+                    <h1>Drogue</h1>
+                    <select id="Drogue" class="allRole">
+                        <option value="">Select a user</option>
+                    </select>
+                </div>
+
+                <div id="contenu3" class="contenu-onglet">
+                    <h1>Sex cam</h1>
+                    <select id="Sex cam">
+                        <option value="">Select a user</option>
+                    </select>
+                </div>
+
+                <div id="contenu4" class="contenu-onglet">
+                    <h1>Red Room</h1>
+                    <select id="Red Room">
+                        <option value="">Select a user</option>
+                    </select>
+                </div>
+    </form>
+
+
+    <div class="menu-deroulant">
                 <h2>Créer un post </h2>
                 <select id="menu-deroulant-select" name="action">
                     <option value="Chat Général">Chat Général</option>
