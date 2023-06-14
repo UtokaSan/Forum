@@ -278,3 +278,10 @@ a {
     height: 300px;
     top: 75px;
 }
+.rectangle {
+    width: 400px;
+    height: 330px;
+    border: 2px solid #575757AD;
+    top: 450px;
+    left: 50px;
+}
