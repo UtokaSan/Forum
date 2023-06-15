@@ -17,6 +17,7 @@ function afficherContenu(evt, contenuId) {
     // Ajouter la classe "active" à l'onglet sélectionné
     evt.currentTarget.className += " active";
 }
+
 document.addEventListener("DOMContentLoaded", function(event) {
     // Activer la catégorie "Chat Général" et afficher son contenu
     var defaultCategoryButton = document.querySelector(".onglet[data-category='contenu1']");
