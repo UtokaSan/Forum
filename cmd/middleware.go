@@ -10,33 +10,21 @@ import (
 
 func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const secretToken = "token-user"
 		token := getSession(r)
-
-		println("token : " + token)
-
 		if token == "" {
 			tokenCookie := getCookie(r)
 			if tokenCookie == "" {
-				http.Redirect(w, r, "/login", 401)
+				next(w, r)
 				return
 			}
-
 			var store = sessions.NewCookieStore([]byte("secret-key"))
 			session, _ := store.Get(r, "session-login")
 			session.Values["jwtToken"] = tokenCookie
 			session.Save(r, w)
+			fmt.Println("session : ", session)
 		}
-		tokenJWT := checkJWT(secretToken, token)
-		dataUser := getData(tokenJWT)
-
-		if dataUser.UserRole >= 1 {
-			fmt.Println("user : ", dataUser.UserRole)
-			next(w, r)
-		} else {
-			http.Redirect(w, r, "/login", 401)
-			return
-		}
+		println("---------------------")
+		next(w, r)
 	}
 }
 
@@ -50,14 +38,14 @@ func authUserSecurity(next http.HandlerFunc) http.HandlerFunc {
 		if token == "" {
 			tokenCookie := getCookie(r)
 			if tokenCookie == "" {
-				http.Redirect(w, r, "/login", 401)
+				next(w, r)
 				return
 			}
-
 			var store = sessions.NewCookieStore([]byte("secret-key"))
 			session, _ := store.Get(r, "session-login")
 			session.Values["jwtToken"] = tokenCookie
 			session.Save(r, w)
+			fmt.Println("session : ", session)
 		}
 		tokenJWT := checkJWT(secretToken, token)
 		dataUser := getData(tokenJWT)
@@ -80,8 +68,16 @@ func authModoSecurity(next http.HandlerFunc) http.HandlerFunc {
 		fmt.Println("token : " + token)
 		//fmt.Println("token : ", len(token))
 		if token == "" {
-			http.Redirect(w, r, "/login", 401)
-			return
+			tokenCookie := getCookie(r)
+			if tokenCookie == "" {
+				next(w, r)
+				return
+			}
+			var store = sessions.NewCookieStore([]byte("secret-key"))
+			session, _ := store.Get(r, "session-login")
+			session.Values["jwtToken"] = tokenCookie
+			session.Save(r, w)
+			fmt.Println("session : ", session)
 		}
 		tokenJWT := checkJWT(secretToken, token)
 		dataUser := getData(tokenJWT)
@@ -104,8 +100,16 @@ func authAdminSecurity(next http.HandlerFunc) http.HandlerFunc {
 		fmt.Println("token : " + token)
 		//fmt.Println("token : ", len(token))
 		if token == "" {
-			http.Redirect(w, r, "/login", 401)
-			return
+			tokenCookie := getCookie(r)
+			if tokenCookie == "" {
+				next(w, r)
+				return
+			}
+			var store = sessions.NewCookieStore([]byte("secret-key"))
+			session, _ := store.Get(r, "session-login")
+			session.Values["jwtToken"] = tokenCookie
+			session.Save(r, w)
+			fmt.Println("session : ", session)
 		}
 		tokenJWT := checkJWT(secretToken, token)
 		dataUser := getData(tokenJWT)

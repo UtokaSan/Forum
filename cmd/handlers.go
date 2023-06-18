@@ -57,18 +57,17 @@ func registerHandlers(w http.ResponseWriter, r *http.Request) {
 }
 
 func adminHandlers(w http.ResponseWriter, r *http.Request) {
-	callbackLoginGoogle(w, r)
+	//callbackLoginGoogle(w, r)
 
-	//if r.URL.Path != "/admin" {
-	//	errorHandler(w, r, http.StatusNotFound)
-	//} else {
-	//	t, err := template.ParseFiles("templates/Admin.html")
-	//	takeInfoGoogle(r)
-	//	if err != nil {
-	//		fmt.Println(err)
-	//	}
-	//	t.Execute(w, r)
-	//}
+	if r.URL.Path != "/admin" {
+		errorHandler(w, r, http.StatusNotFound)
+	} else {
+		t, err := template.ParseFiles("templates/Admin.html")
+		if err != nil {
+			fmt.Println(err)
+		}
+		t.Execute(w, r)
+	}
 }
 
 func takeInfoGoogle(r *http.Request) {
