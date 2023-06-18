@@ -21,9 +21,10 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func displayPostVisible(w http.ResponseWriter, r *http.Request) {
-	//jsonData, err := json.Marshal(post)
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//w.Write(jsonData)
+	unhiddenPost := takePostUnHidden()
+	jsonData, err := json.Marshal(unhiddenPost)
+	if err != nil {
+		fmt.Println(err)
+	}
+	w.Write(jsonData)
 }

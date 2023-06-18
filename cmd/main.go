@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-const port = ":8080"
+const port = ":3001"
 
 func Runner() {
 	server := http.NewServeMux()
@@ -23,11 +23,12 @@ func Runner() {
 }
 
 func routes(server *http.ServeMux) {
-	server.HandleFunc("/", authUserSecurity(rootHandler))
+	server.HandleFunc("/", rootHandler)
+	server.HandleFunc("/homepage", mainHandlers)
 	server.HandleFunc("/login", loginHandlers)
+	server.HandleFunc("/login/google", loginGoogle)
 	server.HandleFunc("/register", registerHandlers)
-	server.HandleFunc("/admin", authGuestSecurity(adminHandlers))
-	server.HandleFunc("/adminEE", authGuestSecurity(loginHandlers))
+	server.HandleFunc("/admin", adminHandlers)
 	server.HandleFunc("/api/login", loginPost)
 	//server.HandleFunc("/api/test", CreateAccountGoogle)
 	server.HandleFunc("/api/loginGoogle", loginGoogle)
@@ -39,5 +40,5 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/api/adminpanel", adminPanel)
 	server.HandleFunc("/api/catch-info-admin", sendInfoAdmin)
 	server.HandleFunc("/api/create-post", createPostHandler)
-	server.HandleFunc("/api/display-post", createPostHandler)
+	server.HandleFunc("/api/display-post", displayPostVisible)
 }

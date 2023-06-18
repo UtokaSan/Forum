@@ -1,5 +1,9 @@
 body {
-    background: black;
+    width: 99%;
+    min-height: 100%;
+    background-color: #050523;
+    color: darkred;
+    justify-content: center;
 }
 
 .rectangle2 {

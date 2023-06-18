@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
     <link rel="stylesheet" type="text/css" href="assets/style/Login.css">
 </head>
 <body style="overflow: hidden">
@@ -16,9 +16,9 @@
 
 <img class="img2" src="assets/img/planet.png" alt="Image">
 <img class="img3" src="assets/img/tete.png" alt="Image">
-
 <img src="assets/img/carte.jpg" alt="Image">
-<img class="img1" src="assets/img/vidéo.gif" alt="GIF">
+<img id = "google-image" src = "assets/img/Google-Logo-PNG-Image.png" alt = "Image">
+
 
 
 <div class="square">
@@ -160,10 +160,10 @@
             </div>
             <input type="password" id="password" name="password" placeholder="mot de passe">
             <br>
-            <button id="connexion" type="submit">Connexion</button>
+            <button id="googleLogin" class="connexion" type="submit">Se connecter avec google</button>
             <br>
-            <p style="color: #7E001A;margin-left: 15%">Google</p>
-            <img id = "google-image" src = "assets/img/Google-Logo-PNG-Image.png" alt = "connect in google" />
+            <button id="connexion" class="connexion" type="submit">Connexion</button>
+            <br>
             <input type="checkbox" id="saveinfo" name="saveinfo" style="width: 20px; height: 20px; background-color: black; border: 2px solid red;">
             <label for="saveinfo" style="color: #7E001A;margin-left: 15%">Se souvenir de moi ?</label>
             <br>
@@ -173,7 +173,6 @@
             </div>
         </form>
     </div>
-</div>
 <script src = "assets/scripts/login.js"></script>
 </body>
 </html>

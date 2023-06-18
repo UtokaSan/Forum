@@ -34,3 +34,4 @@ form.addEventListener('submit', function(event) {
             console.error('Erreur lors de la requête:', error);
         });
 });
+

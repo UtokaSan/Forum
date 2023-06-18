@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="assets/style/MainPage.css">
+    <title>Home</title>
+</head>
+<body>
+<header>
+
+</header>
+<div class="pageContent" id="">
+    <div class="underPageContentFirst" >
+    </div>
+    <div class="discussion underPageContentSecond">
+        <div class="categories">
+            <button class="categorie active" >Chat Général</button>
+            <button class="categorie" >Drogue</button>
+            <button class="categorie" >Sex Cam</button>
+            <button class="categorie" >Red Room</button>
+        </div>
+        <input placeholder="Que voulez-vous partager ?">
+        <form id="messageForm" onsubmit="submitForm(event)">
+            <div class="menu-deroulant">
+                <h2>Créer un post </h2>
+                <select id="menu-deroulant-select" name="action">
+                    <option value="Chat Général">Chat Général</option>
+                    <option value="Drogue">Drogue</option>
+                    <option value="Sex Cam">Sex Cam</option>
+                    <option value="Red Room">Red Room</option>
+                </select>
+                <textarea id="message" name="message" placeholder="Entrez votre titre ici"></textarea>
+                <button type="submit">Envoyer</button>
+            </div>
+        </form>
+    </div>
+    <div class="underPageContentThird"></div>
+</div>
+<script src="assets/scripts/MainPage.js"></script>
+</body>
+</html>

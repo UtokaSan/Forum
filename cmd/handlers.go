@@ -44,6 +44,18 @@ func loginHandlers(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func mainHandlers(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/homepage" {
+		errorHandler(w, r, http.StatusNotFound)
+	} else {
+		t, err := template.ParseFiles("templates/MainPage.html")
+		if err != nil {
+			fmt.Println(err)
+		}
+		t.Execute(w, r)
+	}
+}
+
 func registerHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/register" {
 		errorHandler(w, r, http.StatusNotFound)
@@ -57,12 +69,11 @@ func registerHandlers(w http.ResponseWriter, r *http.Request) {
 }
 
 func adminHandlers(w http.ResponseWriter, r *http.Request) {
-	//callbackLoginGoogle(w, r)
-
 	if r.URL.Path != "/admin" {
 		errorHandler(w, r, http.StatusNotFound)
 	} else {
 		t, err := template.ParseFiles("templates/Admin.html")
+		takeInfoGoogle(r)
 		if err != nil {
 			fmt.Println(err)
 		}

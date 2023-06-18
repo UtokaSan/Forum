@@ -1,5 +1,9 @@
 body {
-    background: black;
+    width: 99%;
+    min-height: 100%;
+    background-color: #050523;
+    color: darkred;
+    justify-content: center;
 }
 
 .rectangle2 {
@@ -178,7 +182,7 @@ img {
     margin-right: auto;
     margin-left: auto;
 }
-#connexion {
+.connexion {
     background-color: black;
     color: red;
     border: none;
@@ -271,5 +275,13 @@ a {
     left: 99px;
     width: 300px;
     height: 300px;
-    top: 75px;
+    top: 72px;
+}
+
+#google-image {
+    position: fixed;
+    left: 1400px;
+    width: 40px;
+    height: 40px;
+    top: 525px;
 }
