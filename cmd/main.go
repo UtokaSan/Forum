@@ -23,7 +23,7 @@ func Runner() {
 }
 
 func routes(server *http.ServeMux) {
-	server.HandleFunc("/", rootHandler)
+	server.HandleFunc("/", authUserSecurity(rootHandler))
 	server.HandleFunc("/login", loginHandlers)
 	server.HandleFunc("/register", registerHandlers)
 	server.HandleFunc("/admin", adminHandlers)
@@ -32,6 +32,7 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/api/loginGoogle", loginGoogle)
 	server.HandleFunc("/api/loginGithub", loginGithub)
 	server.HandleFunc("/api/callbacklogingoogle", callbackLoginGoogle)
+	server.HandleFunc("/api/callbacklogingithub", callbackLoginGithub)
 	server.HandleFunc("/api/take-ban", adminPanel)
 	server.HandleFunc("/api/register", CreateUser)
 	server.HandleFunc("/api/adminpanel", adminPanel)

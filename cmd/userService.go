@@ -7,14 +7,37 @@ import (
 	"strconv"
 )
 
-func createUser(user User) {
+func createUser(user User) User {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer db.Close()
 	createUser := `INSERT INTO users (nom, email, password, role, ban) VALUES (?, ?, ?, 1, 0)`
-	_, errCreate := db.Exec(createUser, user.Username, user.Email, user.Password)
+	result, errCreate := db.Exec(createUser, user.Username, user.Email, user.Password)
+	if errCreate != nil {
+		fmt.Println(err)
+		return User{ID: -1}
+	}
+	IdUser, _ := result.LastInsertId()
+
+	fmt.Println("User created successfully")
+	return User{
+		ID:       int(IdUser),
+		Email:    user.Email,
+		Username: user.Username,
+		Password: user.Password,
+	}
+}
+
+func createUserGithub(user User) {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	createUser := `INSERT INTO users (image, nom, email, password, role, ban) VALUES (?, ?, ?, ?, 1, 0)`
+	_, errCreate := db.Exec(createUser, user.Image, user.Username, user.Email, user.Password)
 	if errCreate != nil {
 		fmt.Println(err)
 		return

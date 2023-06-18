@@ -8,14 +8,56 @@ import (
 	"strconv"
 )
 
+func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		const secretToken = "token-user"
+		token := getSession(r)
+
+		println("token : " + token)
+
+		if token == "" {
+			tokenCookie := getCookie(r)
+			if tokenCookie == "" {
+				http.Redirect(w, r, "/login", 401)
+				return
+			}
+
+			var store = sessions.NewCookieStore([]byte("secret-key"))
+			session, _ := store.Get(r, "session-login")
+			session.Values["jwtToken"] = tokenCookie
+			session.Save(r, w)
+		}
+		tokenJWT := checkJWT(secretToken, token)
+		dataUser := getData(tokenJWT)
+
+		if dataUser.UserRole >= 1 {
+			fmt.Println("user : ", dataUser.UserRole)
+			next(w, r)
+		} else {
+			http.Redirect(w, r, "/login", 401)
+			return
+		}
+	}
+}
+
 func authUserSecurity(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const secretToken = "token-user"
-
 		token := getSession(r)
+
+		println("token : " + token)
+
 		if token == "" {
-			http.Redirect(w, r, "/login", 401)
-			return
+			tokenCookie := getCookie(r)
+			if tokenCookie == "" {
+				http.Redirect(w, r, "/login", 401)
+				return
+			}
+
+			var store = sessions.NewCookieStore([]byte("secret-key"))
+			session, _ := store.Get(r, "session-login")
+			session.Values["jwtToken"] = tokenCookie
+			session.Save(r, w)
 		}
 		tokenJWT := checkJWT(secretToken, token)
 		dataUser := getData(tokenJWT)
@@ -90,6 +132,18 @@ func getSession(r *http.Request) string {
 		return ""
 	}
 	return session.Values["jwtToken"].(string)
+}
+
+func getCookie(r *http.Request) string {
+
+	cookieUser, err := r.Cookie("jwtToken")
+	fmt.Println("cookie : ", cookieUser, " | err : ", err)
+	if err != nil {
+		println("pas de cookie")
+		return ""
+	}
+	cookieStr := cookieUser.String()
+	return cookieStr[9 : len(cookieStr)-1]
 }
 
 func checkJWT(secretToken string, tokenJWT string) *jwt.Token {

@@ -11,6 +11,11 @@ type User struct {
 	Report   string
 }
 
+func (u User) Read(p []byte) (n int, err error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 type Post struct {
 	ID          int
 	Photo       string
@@ -61,6 +66,18 @@ type Register struct {
 
 type responseRegister struct {
 	Message string `json:"message"`
+}
+
+//{:client_id => CLIENT_ID,
+//: => CLIENT_SECRET,
+//:code => session_code},
+//:accept => :json)
+
+type responseLoginGithub struct {
+	ClientId     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
+	Code         string `json:"code"`
+	//Accept       string `json:"accept"`
 }
 
 type DataTokenJWT struct {
