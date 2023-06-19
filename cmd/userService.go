@@ -243,3 +243,17 @@ func takeUserReported() []map[string]interface{} {
 	}
 	return result
 }
+func verifyUser(email string) bool {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	query := "SELECT * FROM users where email = ?"
+	rows, err := db.Query(query, email)
+	if rows.Next() {
+		return true
+	} else {
+		return false
+	}
+}

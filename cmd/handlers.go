@@ -81,7 +81,7 @@ func adminHandlers(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func takeInfoGoogle(r *http.Request) {
+func takeInfoGoogle(w http.ResponseWriter, r *http.Request) {
 	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint)
 	code := r.URL.Query().Get("code")
 	token, err := config.Exchange(oauth2.NoContext, code)
@@ -102,6 +102,23 @@ func takeInfoGoogle(r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 		return
+	}
+	if !verifyUser(usergoogle.Email) {
+		http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
+		w.Write([]byte("Account not exist"))
+	}
+	user := readUsers()
+	for _, user := range user {
+		if user.Email == usergoogle.Email {
+			if user.Ban == 0 {
+				fmt.Println(createToken(user))
+				w.WriteHeader(http.StatusOK)
+				return
+			} else {
+				w.WriteHeader(http.StatusForbidden)
+				return
+			}
+		}
 	}
 	fmt.Println(usergoogle)
 
