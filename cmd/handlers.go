@@ -73,7 +73,7 @@ func adminHandlers(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound)
 	} else {
 		t, err := template.ParseFiles("templates/Admin.html")
-		takeInfoGoogle(r)
+		takeInfoGoogle(w, r)
 		if err != nil {
 			fmt.Println(err)
 		}

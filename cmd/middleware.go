@@ -23,7 +23,6 @@ func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
 			session.Save(r, w)
 			fmt.Println("session : ", session)
 		}
-		println("---------------------")
 		next(w, r)
 	}
 }

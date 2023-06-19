@@ -33,9 +33,12 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		createErrorMessage("Compte déjà existant", 403, w)
 		return
 	}
+	if errroCreateUserEmpty(userSend) {
+		createErrorMessage("Un champ de texte est vide", 403, w)
+		return
+	}
 
 	createUser(userSend)
-
 	createAToken(w, r, userSend)
 
 	_, err = w.Write(createSuccessfulMessage("compte bien créer", 201, w))
@@ -236,4 +239,11 @@ func convGithubToUser(userGithub *github.User, client *github.Client) User {
 		Email:    email,
 		Role:     "1",
 	}
+}
+
+func errroCreateUserEmpty(user User) bool {
+	if user.Password == "" || user.Email == "" || user.Username == "" {
+		return true
+	}
+	return false
 }

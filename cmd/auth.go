@@ -42,14 +42,18 @@ func callbackLoginGithub(w http.ResponseWriter, r *http.Request) {
 	CreateUserGithub(user)
 }
 
-
 func loginGithub(w http.ResponseWriter, r *http.Request) {
-	config := getConfig("5ec9ece005f647affa3d", "df2a2f79c65ae75448eb034ae6d918d987e8973d", []string{"user:email"})
+	endpoint := oauth2.Endpoint{
+		TokenURL: "https://github.com/login/oauth/access_token",
+		AuthURL:  "https://github.com/login/oauth/authorize",
+	}
+
+	config := getConfig("2289380b3bb541be1a3a", "81443484b632c86271768c67ee7a4da0c6e8ee0e", []string{"user:email"}, endpoint)
 	url := config.AuthCodeURL("state", oauth2.AccessTypeOnline)
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
 
-func getConfig(clientID string, clientSecret string, auth []string) *oauth2.Config {
+func getConfig(clientID string, clientSecret string, auth []string, endpoint oauth2.Endpoint) *oauth2.Config {
 	config := &oauth2.Config{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
@@ -68,11 +72,7 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 
 	var userLogin Login
 	err = json.Unmarshal(body, &userLogin)
-	token := jwt.New(jwt.SigningMethodHS256)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
+	//token := jwt.New(jwt.SigningMethodHS256)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -81,7 +81,7 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 	for _, user := range users {
 		if user.Email == userLogin.Email && bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userLogin.Password)) == nil {
 			if user.Ban == 0 {
-				createToken(user)
+				tokenStr := createToken(user)
 				cookieOrSession(w, r, userLogin.SaveInfo, tokenStr)
 				w.WriteHeader(http.StatusOK)
 				return

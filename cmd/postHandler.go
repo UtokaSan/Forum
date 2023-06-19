@@ -28,3 +28,22 @@ func displayPostVisible(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write(jsonData)
 }
+
+func createComment(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Create comment")
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	var data Comment
+	err = json.Unmarshal(body, &data)
+
+	fmt.Println(data)
+
+	if createCommentController(data) {
+		return // error
+	}
+	createCommentService(data)
+
+}

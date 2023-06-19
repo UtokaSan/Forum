@@ -31,6 +31,7 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/register", registerHandlers)
 	server.HandleFunc("/admin", adminHandlers)
 	server.HandleFunc("/api/login", loginPost)
+	server.HandleFunc("/api/uploadimage", uploadImage)
 	//server.HandleFunc("/api/test", CreateAccountGoogle)
 	server.HandleFunc("/api/loginGoogle", loginGoogle)
 	server.HandleFunc("/api/loginGithub", loginGithub)
@@ -42,4 +43,7 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/api/catch-info-admin", sendInfoAdmin)
 	server.HandleFunc("/api/create-post", createPostHandler)
 	server.HandleFunc("/api/display-post", displayPostVisible)
+	server.HandleFunc("/api/createcomment", createComment)
+	server.HandleFunc("/api/testImage", uploadImage)
+
 }

@@ -30,6 +30,13 @@ type Post struct {
 	Archived    string
 }
 
+type Comment struct {
+	ID        int    `json:"ID"`
+	IDPost    int    `json:"IDPost"`
+	IDCreator int    `json:"IDCreator"`
+	Text      string `json:"text"`
+}
+
 type Login struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
@@ -67,11 +74,6 @@ type Register struct {
 type responseRegister struct {
 	Message string `json:"message"`
 }
-
-//{:client_id => CLIENT_ID,
-//: => CLIENT_SECRET,
-//:code => session_code},
-//:accept => :json)
 
 type responseLoginGithub struct {
 	ClientId     string `json:"client_id"`

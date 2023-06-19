@@ -20,6 +20,7 @@ func createPost(post Post) {
 	}
 	fmt.Println("Post created successfully")
 }
+
 func readPost() {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
@@ -78,6 +79,7 @@ func takePostHidden() []map[string]interface{} {
 	}
 	return result
 }
+
 func takePostUnHidden() []map[string]interface{} {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
@@ -124,4 +126,22 @@ func postArchived() []map[string]interface{} {
 		result = append(result, postData)
 	}
 	return result
+}
+
+func createCommentService(comment Comment) {
+	db, err := sql.Open("sqlite3", "./forum.db")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer db.Close()
+
+	postCreate := `INSERT INTO comments (IDPost, IDCreator,Text) VALUES (?,?,?)`
+	_, errCreate := db.Exec(postCreate, comment.IDPost, comment.IDCreator, comment.Text)
+
+	if errCreate != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Post created successfully")
 }
