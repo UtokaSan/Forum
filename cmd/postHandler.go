@@ -47,3 +47,17 @@ func createComment(w http.ResponseWriter, r *http.Request) {
 	createCommentService(data)
 
 }
+
+func editPost(w http.ResponseWriter, r *http.Request) {
+
+	// Créer un if pour savoir si c'est un admin / créateur du post
+	// Si Post existe aussi !
+	//if {
+	//
+	//}
+
+	//Vérif les infos avant des les mettrent
+	editPostController(w, r)
+
+	// Edit le post
+}
