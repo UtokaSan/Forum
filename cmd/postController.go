@@ -2,8 +2,11 @@ package cmd
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
+	"mime/multipart"
 	"net/http"
 	"os"
 )
@@ -44,41 +47,75 @@ func createCommentController(comment Comment) bool {
 }
 
 func uploadImage(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+
+	if testMethod(w, r, http.MethodPost) {
+		http.Error(w, "Failed to load fonction (method wrong)", http.StatusBadRequest)
 		return
 	}
 
+	err, file, handlers := getDataToFormUploadImage(w, r)
+	if err {
+		http.Error(w, "Failed to load data (data type is may be wrong)", http.StatusBadRequest)
+		return
+	}
+
+	createImageToFolder(w, file, handlers)
+	return
+}
+
+func testMethod(w http.ResponseWriter, r *http.Request, method string) bool {
+	if r.Method != method {
+		return true
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+	}
+	return false
+}
+
+func getDataToFormUploadImage(w http.ResponseWriter, r *http.Request) (bool, multipart.File, *multipart.FileHeader) {
 	file, handlers, err := r.FormFile("file")
 	if err != nil {
 		http.Error(w, "Failed to retrieve file", http.StatusBadRequest)
-		return
+		return true, nil, nil
 	}
 
-	fmt.Println("handlers : Filename :", handlers.Filename)
-	fmt.Println("handlers : Header :")
-	fmt.Println("handlers : Size :", handlers.Size)
-
 	if handlers.Header.Get("Content-Type")[0:5] != "image" {
-		fmt.Println("C'est une image")
-	} else {
-		fmt.Println("C'est pas une image")
+		createErrorMessage("C'est pas une image", 400, w)
+		return true, nil, nil
 	}
 	defer file.Close()
 
+	return false, file, handlers
+}
+
+func createImageToFolder(w http.ResponseWriter, file multipart.File, handlers *multipart.FileHeader) {
 	dst, err := os.Create("templates/assets/img/imagePost/" + handlers.Filename)
 	if err != nil {
-		fmt.Println("error bug:", err)
-		http.Error(w, "Failed to create destination file", http.StatusInternalServerError)
+		http.Error(w, "Error to copy Image", http.StatusInternalServerError)
 		return
 	}
 	defer dst.Close()
 
 	_, err = io.Copy(dst, file)
 	if err != nil {
-		http.Error(w, "Failed to save file", http.StatusInternalServerError)
+		http.Error(w, "Error to create Image", http.StatusInternalServerError)
 		return
 	}
+	createSuccessfulMessage("File uploaded successfully", 201, w)
+}
 
-	fmt.Fprintln(w, "File uploaded successfully")
+func editPostController(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("TEST edit comment")
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	var data Comment
+	err = json.Unmarshal(body, &data)
+
+	fmt.Println(data)
+
+	//if {
+	//
+	//}
 }
