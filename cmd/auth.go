@@ -15,17 +15,23 @@ import (
 )
 
 func loginGoogle(w http.ResponseWriter, r *http.Request) {
-	config := getConfig()
+	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"})
 	url := config.AuthCodeURL("state", oauth2.AccessTypeOffline)
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
 
-func getConfig() *oauth2.Config {
+func loginGithub(w http.ResponseWriter, r *http.Request) {
+	config := getConfig("5ec9ece005f647affa3d", "df2a2f79c65ae75448eb034ae6d918d987e8973d", []string{"user:email"})
+	url := config.AuthCodeURL("state", oauth2.AccessTypeOnline)
+	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
+}
+
+func getConfig(clientID string, clientSecret string, auth []string) *oauth2.Config {
 	config := &oauth2.Config{
-		ClientID:     "116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com",
-		ClientSecret: "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",
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
 		RedirectURL:  "http://localhost:8080/admin",
-		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
+		Scopes:       auth,
 		Endpoint:     google.Endpoint,
 	}
 	return config
@@ -39,7 +45,6 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 
 	var userLogin Login
 	err = json.Unmarshal(body, &userLogin)
-	token := jwt.New(jwt.SigningMethodHS256)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -52,15 +57,7 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 	for _, user := range users {
 		if user.Email == userLogin.Email && bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userLogin.Password)) == nil {
 			if user.Ban == 0 {
-				claim := token.Claims.(jwt.MapClaims)
-				claim["user-id"] = user.ID
-				claim["user-role"] = user.Role
-				claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
-				tokenStr, err := token.SignedString([]byte("token-user"))
-				if err != nil {
-					fmt.Println(err)
-					return
-				}
+				tokenStr := createToken(user)
 				cookieOrSession(w, r, userLogin.SaveInfo, tokenStr)
 				w.WriteHeader(http.StatusOK)
 				return
@@ -71,6 +68,19 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	w.WriteHeader(http.StatusUnauthorized)
+}
+
+func createToken(user User) string {
+	token := jwt.New(jwt.SigningMethodHS256)
+	claim := token.Claims.(jwt.MapClaims)
+	claim["user-id"] = user.ID
+	claim["user-role"] = user.Role
+	claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
+	tokenStr, err := token.SignedString([]byte("token-user"))
+	if err != nil {
+		fmt.Println(err)
+	}
+	return tokenStr
 }
 
 func cookieOrSession(w http.ResponseWriter, r *http.Request, userlogin string, tokenStr string) {

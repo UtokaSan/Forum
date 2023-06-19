@@ -25,6 +25,7 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/homepage", mainHandlers)
 	server.HandleFunc("/login", loginHandlers)
 	server.HandleFunc("/login/google", loginGoogle)
+	server.HandleFunc("/login/github", loginGithub)
 	server.HandleFunc("/register", registerHandlers)
 	server.HandleFunc("/admin", adminHandlers)
 	server.HandleFunc("/api/login", loginPost)
