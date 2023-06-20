@@ -57,16 +57,6 @@ header {
     box-shadow: 4px 0 10px rgb(255, 0, 0);
 }
 
-.underPageContentSecond input {
-    width: 95%;
-    height: 2vh;
-    padding: 10px;
-    border: 1px solid #ea5353;
-    border-radius: 5vw;
-    background-color: rgba(87, 87, 87, 0.68);
-    color: darkred;
-}
-
 .categories {
     display: flex;
     top: 5vw;
@@ -143,4 +133,13 @@ header {
 
 #contenu1{
     display: block;
+}
+
+.importFile{
+    background-color: #ddd;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 1vh;
 }

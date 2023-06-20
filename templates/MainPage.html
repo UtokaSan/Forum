@@ -19,35 +19,22 @@
                 <button class="onglet" onclick="afficherContenu(event, 'contenu3')">Sex cam</button>
                 <button class="onglet" onclick="afficherContenu(event, 'contenu4')">Red Room</button>
         </div>
-        <input placeholder="Que voulez-vous partager ?">
         <form id="messageForm" onsubmit="submitForm(event)">
             <form onsubmit="submitForm(event)">
                 <div id="contenu1" class="contenu-onglet active">
                     <h1>Chat Général</h1>
-                    <select id="Chat Général" class="allRole">
-                        <option value="">Select a user</option>
-                    </select>
                 </div>
 
                 <div id="contenu2" class="contenu-onglet ">
                     <h1>Drogue</h1>
-                    <select id="Drogue" class="allRole">
-                        <option value="">Select a user</option>
-                    </select>
                 </div>
 
                 <div id="contenu3" class="contenu-onglet">
                     <h1>Sex cam</h1>
-                    <select id="Sex cam">
-                        <option value="">Select a user</option>
-                    </select>
                 </div>
 
                 <div id="contenu4" class="contenu-onglet">
                     <h1>Red Room</h1>
-                    <select id="Red Room">
-                        <option value="">Select a user</option>
-                    </select>
                 </div>
     </form>
 
@@ -63,7 +50,7 @@
                 <textarea id="message" name="message" placeholder="Entrez votre titre ici"></textarea>
                 <textarea id="messageContent" name="message" placeholder="Entrez votre texte ici"></textarea>
 
-        <input type="file" id="imageUpload" name="imageUpload" accept="image/jpeg, image/png, image/gif">
+        <input class="importFile" type="file" id="imageUpload" name="imageUpload" accept="image/jpeg, image/png, image/gif">
         <button type="submit">Envoyer</button>
 
             </div>
