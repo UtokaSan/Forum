@@ -142,7 +142,7 @@ img {
     margin-top: 10vh;
     margin-right: auto;
     margin-left: auto;
-    top: 50px;
+    top: 1px;
     position: absolute;
     left: 1250px;
 }
@@ -283,7 +283,7 @@ a {
     left: 1400px;
     width: 40px;
     height: 40px;
-    top: 505px;
+    top: 450px;
 }
 
 #git-image{
@@ -291,5 +291,5 @@ a {
     left: 1400px;
     width: 40px;
     height: 40px;
-    top: 590px;
+    top: 540px;
 }
