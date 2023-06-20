@@ -52,22 +52,24 @@ fetch("/api/display-post", {
 })
     .then(response => response.json())
     .then(data => {
-        // Parcourir les données reçues
         data.forEach(post => {
-            // Créer une nouvelle div
             var newDiv = document.createElement("div");
-            newDiv.id = "post-" + post.id; // Utiliser l'ID du post comme identifiant de la div
-            newDiv.className = "post-div topics"; // Ajouter la classe "topics" à la div
+            newDiv.id = "post-" + post.id;
+            newDiv.className = "post-div topics";
 
             // Créer un élément d'ancre
             var anchorElement = document.createElement("a");
-            anchorElement.href = '/'+post.id; // Définir l'URL de l'ancre (peut être modifié selon vos besoins)
-            anchorElement.textContent = post.title; // Utiliser le titre complet ici (non tronqué)
+            anchorElement.href = '/'+post.id;
+            anchorElement.textContent = post.title;
 
-            // Ajouter l'ancre à la div
+            if (anchorElement.textContent.length > 50)
+            {
+                anchorElement.textContent = anchorElement.textContent.substring(0,47)
+                anchorElement.textContent += "..."
+            }
+
             newDiv.appendChild(anchorElement);
 
-            // Ajouter la div à la catégorie correspondante
             var categoryDiv = document.getElementById("contenu" + (post.id + 1));
             if (categoryDiv) {
                 categoryDiv.appendChild(newDiv);
