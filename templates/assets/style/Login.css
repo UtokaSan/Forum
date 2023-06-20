@@ -142,10 +142,11 @@ img {
     margin-top: 10vh;
     margin-right: auto;
     margin-left: auto;
-    top: 50px;
+    top: 1px;
     position: absolute;
     left: 1250px;
 }
+
 .id{
     position: relative;
     left: 25%;
