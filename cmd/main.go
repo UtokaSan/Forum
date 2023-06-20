@@ -14,7 +14,7 @@ func Runner() {
 	server.Handle("/assets/", http.StripPrefix("/assets", fs))
 	fmt.Println("\n\033[34m[http://127.0.0.1:8080]\033[32m \033[4mServer run on port", port[1:], ".\033[0m")
 
-	err := http.ListenAndServe("127.0.0.1:8080", server)
+	err := http.ListenAndServe(port, server)
 
 	if err != nil {
 		fmt.Println("error :", err)
@@ -46,5 +46,5 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/api/createcomment", createComment)
 	server.HandleFunc("/api/testImage", uploadImage)
 	server.HandleFunc("/api/editPost", editPost)
-
+	server.HandleFunc("/api/reactions", postLikeOrDislike)
 }

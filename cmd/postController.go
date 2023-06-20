@@ -39,6 +39,65 @@ func createPostWithTitle(post Post) {
 	fmt.Println("Post created successfully")
 }
 
+func likePost(user_ID string, post_ID string) bool {
+	db, err := sql.Open("sqlite3", "forum.db")
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	defer db.Close()
+	var count int
+	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE user_id = ? AND post_id = ?", user_ID, post_ID).Scan(&count)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	if count > 0 {
+		return false
+	}
+	_, err = db.Exec("INSERT INTO likes (user_id, post_id) VALUES (?, ?)", user_ID, post_ID)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	var countLike int
+	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE post_id = ?", post_ID).Scan(&countLike)
+	_, err = db.Exec("UPDATE posts SET like = ? WHERE id = ?", countLike, post_ID)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return true
+}
+func dislikePost(user_ID string, post_ID string) bool {
+	db, err := sql.Open("sqlite3", "forum.db")
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	defer db.Close()
+	var count int
+	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE user_id = ? AND post_id = ?", user_ID, post_ID).Scan(&count)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	if count > 0 {
+		return false
+	}
+	_, err = db.Exec("INSERT INTO dislike (user_id, post_id) VALUES (?, ?)", user_ID, post_ID)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	var countDislike int
+	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE post_id = ?", post_ID).Scan(&countDislike)
+	_, err = db.Exec("UPDATE posts SET dislike = ? WHERE id = ?", countDislike, post_ID)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return true
+}
+
 func createCommentController(comment Comment) bool {
 	if comment.Text == "" || comment.IDPost == 0 || comment.IDCreator == 0 {
 		return true

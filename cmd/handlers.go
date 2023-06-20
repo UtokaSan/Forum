@@ -28,7 +28,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if token.Valid {
-		http.Redirect(w, r, "/admin", http.StatusSeeOther)
+		http.Redirect(w, r, "/homepage", http.StatusSeeOther)
 	}
 }
 
