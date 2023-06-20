@@ -11,6 +11,11 @@ type User struct {
 	Report   string
 }
 
+func (u User) Read(p []byte) (n int, err error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 type Post struct {
 	ID          int
 	Photo       string
@@ -23,6 +28,13 @@ type Post struct {
 	Categorie   string
 	Ban         int
 	Archived    string
+}
+
+type Comment struct {
+	ID        int    `json:"ID"`
+	IDPost    int    `json:"IDPost"`
+	IDCreator int    `json:"IDCreator"`
+	Text      string `json:"text"`
 }
 
 type Login struct {
@@ -63,7 +75,22 @@ type responseRegister struct {
 	Message string `json:"message"`
 }
 
+type responseLoginGithub struct {
+	ClientId     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
+	Code         string `json:"code"`
+	//Accept       string `json:"accept"`
+}
+
+type DataTokenJWT struct {
+	UserId   float64 `json:"user-id"`
+	UserRole int     `json:"user-role"`
+	Exp      float64 `json:"exp"`
+}
+
 type UserGoogle struct {
-	Email   string `json:"email"`
-	Picture string `json:"picture"`
+	Email         string `json:"email"`
+	Nom           string `json:"name"`
+	VerifiedEmail bool   `json:"verified_email"`
+	Picture       string `json:"picture"`
 }
