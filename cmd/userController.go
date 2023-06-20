@@ -38,7 +38,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	createUser(userSend)
+	userSend = createUser(userSend)
 	createAToken(w, r, userSend)
 
 	_, err = w.Write(createSuccessfulMessage("compte bien créer", 201, w))
