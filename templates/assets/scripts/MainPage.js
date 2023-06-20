@@ -59,13 +59,13 @@ fetch("/api/display-post", {
             newDiv.id = "post-" + post.id; // Utiliser l'ID du post comme identifiant de la div
             newDiv.className = "post-div topics"; // Ajouter la classe "topics" à la div
 
-            // Créer un élément de titre
-            var titleElement = document.createElement("h2");
-            var truncatedTitle = post.title.length > 40 ? post.title.substring(0, 36) + "..." : post.title;
-            titleElement.textContent = truncatedTitle;
+            // Créer un élément d'ancre
+            var anchorElement = document.createElement("a");
+            anchorElement.href = '/'+post.id; // Définir l'URL de l'ancre (peut être modifié selon vos besoins)
+            anchorElement.textContent = post.title; // Utiliser le titre complet ici (non tronqué)
 
-            // Ajouter le titre à la div
-            newDiv.appendChild(titleElement);
+            // Ajouter l'ancre à la div
+            newDiv.appendChild(anchorElement);
 
             // Ajouter la div à la catégorie correspondante
             var categoryDiv = document.getElementById("contenu" + (post.id + 1));

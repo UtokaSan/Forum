@@ -143,12 +143,26 @@ header {
     cursor: pointer;
     border-radius: 1vh;
 }
+a{
+    text-decoration: none;
+}
 
 .topics{
     display: flex;
-    align-content: center;
-    top: 50%;
     background-color: rgba(108, 108, 108, 0.3);
     height: 75px ;
     border-radius: 2vh;
+    color: #7E001A;
+    align-items: center;
+}
+
+.contenu-onglet a {
+    text-underline: none;
+    color: #7E001A;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.contenu-onglet a:hover {
+    color: red;
 }
