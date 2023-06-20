@@ -67,28 +67,27 @@ header {
     color: darkred;
 }
 
-.categories {
+.Title {
     display: flex;
-    top: 5vw;
-    margin-left: 20%;
+    position: relative;
+    font-size: 25px;
     margin-bottom: 5%;
-    gap: 5%;
+    box-shadow: 0px 5px 5px rgba(185, 0, 0, 0.3); /* Ajout de la bordure d'ombre */
 }
 
-.categories button {
-    background-color: #ddd;
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 1vh;
+.comments {
+    display: flex;
+    position: relative;
+    margin-top: 3vw;
+    margin-bottom: 5%;
+    box-shadow: 0px -5px 10px rgba(185, 0, 0, 0.3);
+    border: 10px #7E001A;
 }
 
-.categories button.active {
-    background-color: #000000;
-    color: red;
-    border-color: #0e0e4d;
-    border-width: 5px;
+.comment {
+    display: flex;
+    position: relative;
+    margin-top: 5%;
 }
 
 .menu-deroulant {

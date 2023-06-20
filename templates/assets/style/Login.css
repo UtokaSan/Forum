@@ -73,7 +73,7 @@ img {
 }
 .rectangle4 {
     position: absolute;
-    top: 800px;
+    top: 701px;
     width: 20px;
     height: 91px;
     background-color: #7E001A;
@@ -142,7 +142,7 @@ img {
     margin-top: 10vh;
     margin-right: auto;
     margin-left: auto;
-    top: 20px;
+    top: 50px;
     position: absolute;
     left: 1250px;
 }
@@ -281,10 +281,18 @@ a {
 
 #google-image {
     position: fixed;
-    left: 1390px;
+    left: 1400px;
     width: 40px;
     height: 40px;
-    top: 488px;
+    top: 505px;
+}
+
+#git-image{
+    position: fixed;
+    left: 1400px;
+    width: 40px;
+    height: 40px;
+    top: 590px;
 }
 
 .rectangle {

@@ -1,23 +1,43 @@
+function afficherContenu(evt, contenuId) {
+    // Cacher tous les contenus des onglets
+    var contenus = document.getElementsByClassName("contenu-onglet");
+    for (var i = 0; i < contenus.length; i++) {
+        contenus[i].style.display = "none";
+    }
+
+    // Supprimer la classe "active" de tous les onglets
+    var onglets = document.getElementsByClassName("onglet");
+    for (var i = 0; i < onglets.length; i++) {
+        onglets[i].className = onglets[i].className.replace(" active", "");
+    }
+
+    // Afficher le contenu de l'onglet sélectionné
+    document.getElementById(contenuId).style.display = "block";
+
+    // Ajouter la classe "active" à l'onglet sélectionné
+    evt.currentTarget.className += " active";
+}
+
 document.addEventListener("DOMContentLoaded", function(event) {
-    var categoryButtons = document.querySelectorAll(".categorie");
+    // Activer la catégorie "Chat Général" et afficher son contenu
+    var defaultCategoryButton = document.querySelector(".onglet[data-category='contenu1']");
+    defaultCategoryButton.classList.add("active");
+    var defaultCategoryContent = document.querySelector(".contenu-onglet[data-content='contenu1']");
+    defaultCategoryContent.style.display = "block";
+
+    var categoryButtons = document.querySelectorAll(".onglet");
 
     categoryButtons.forEach(function(button) {
         button.addEventListener("click", function() {
-            categoryButtons.forEach(function(btn) {
-                btn.classList.remove("active");
-            });
+            var category = button.getAttribute("data-category");
 
-            button.classList.add("active");
+            var discussionDivs = document.querySelectorAll(".contenu-onglet");
 
-            var category = button.textContent;
-
-            var discussionDivs = document.querySelectorAll(".discussion");
-
-           discussionDivs.forEach(function(div) {
-                if (div.classList.contains(category)) {
-                    div.classList.remove("hidden");
+            discussionDivs.forEach(function(div) {
+                if (div.getAttribute("data-content") === category) {
+                    div.style.display = "block";
                 } else {
-                    div.classList.add("hidden");
+                    div.style.display = "none";
                 }
             });
         });
