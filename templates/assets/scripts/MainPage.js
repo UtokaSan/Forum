@@ -58,3 +58,33 @@ fetch("/api/display-post", {
     .catch(error => {
         console.error("Error update", error);
     });
+
+fetch("/api/display-post", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+})
+    .then(response => response.json())
+    .then(data => {
+
+        data.forEach(post => {
+
+            var newDiv = document.createElement("div");
+            newDiv.id = "post-" + post.id; // Utiliser l'ID du post comme identifiant de la div
+            newDiv.className = "post-div";
+
+            var titleElement = document.createElement("h2");
+            titleElement.textContent = post.title;
+
+            newDiv.appendChild(titleElement);
+
+            var categoryDiv = document.getElementById("contenu" + (post.id + 1));
+            if (categoryDiv) {
+                categoryDiv.appendChild(newDiv);
+            }
+        });
+    })
+    .catch(error => {
+        console.error("Error update", error);
+    });
