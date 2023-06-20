@@ -44,21 +44,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 });
 
-
-fetch("/api/display-post", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-})
-    .then(response => response.json())
-        .then(data => {
-            console.log(data)
-        })
-    .catch(error => {
-        console.error("Error update", error);
-    });
-
 fetch("/api/display-post", {
     method: "POST",
     headers: {
@@ -67,18 +52,22 @@ fetch("/api/display-post", {
 })
     .then(response => response.json())
     .then(data => {
-
+        // Parcourir les données reçues
         data.forEach(post => {
-
+            // Créer une nouvelle div
             var newDiv = document.createElement("div");
             newDiv.id = "post-" + post.id; // Utiliser l'ID du post comme identifiant de la div
-            newDiv.className = "post-div";
+            newDiv.className = "post-div topics"; // Ajouter la classe "topics" à la div
 
+            // Créer un élément de titre
             var titleElement = document.createElement("h2");
-            titleElement.textContent = post.title;
+            var truncatedTitle = post.title.length > 40 ? post.title.substring(0, 36) + "..." : post.title;
+            titleElement.textContent = truncatedTitle;
 
+            // Ajouter le titre à la div
             newDiv.appendChild(titleElement);
 
+            // Ajouter la div à la catégorie correspondante
             var categoryDiv = document.getElementById("contenu" + (post.id + 1));
             if (categoryDiv) {
                 categoryDiv.appendChild(newDiv);
