@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -42,6 +43,7 @@ func loginHandlers(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, r)
 	}
 }
+
 func mainHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/homepage" {
 		errorHandler(w, r, http.StatusNotFound)
@@ -80,7 +82,7 @@ func adminHandlers(w http.ResponseWriter, r *http.Request) {
 }
 
 func takeInfoGoogle(w http.ResponseWriter, r *http.Request) {
-	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"})
+	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint)
 	code := r.URL.Query().Get("code")
 	token, err := config.Exchange(oauth2.NoContext, code)
 	if err != nil {
@@ -94,6 +96,7 @@ func takeInfoGoogle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	body, err := ioutil.ReadAll(response.Body)
+
 	var usergoogle UserGoogle
 	err = json.Unmarshal(body, &usergoogle)
 	if err != nil {
@@ -117,6 +120,8 @@ func takeInfoGoogle(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+	fmt.Println(usergoogle)
+
 }
 
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {

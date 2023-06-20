@@ -20,6 +20,7 @@ func createPost(post Post) {
 	}
 	fmt.Println("Post created successfully")
 }
+
 func readPost() {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
@@ -27,6 +28,27 @@ func readPost() {
 	}
 	defer db.Close()
 	query := "SELECT id, photo, title, texte, hidden, like, dislike, report, categorie, ban, archived FROM posts"
+	rows, err := db.Query(query)
+	if err != nil {
+		fmt.Println(err)
+	}
+	for rows.Next() {
+		var post Post
+		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println("Id : " + strconv.Itoa(post.ID) + " photo : " + post.Photo + " titre : " + post.Title + " texte : " + post.Texte)
+	}
+}
+
+func readOnePostById() {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	query := "SELECT id, photo, title, texte, hidden, like, dislike, signalement, categorie, ban, archived FROM users WHERE id = ?"
 	rows, err := db.Query(query)
 	if err != nil {
 		fmt.Println(err)
@@ -78,6 +100,7 @@ func takePostHidden() []map[string]interface{} {
 	}
 	return result
 }
+
 func takePostUnHidden() []map[string]interface{} {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
@@ -124,4 +147,22 @@ func postArchived() []map[string]interface{} {
 		result = append(result, postData)
 	}
 	return result
+}
+
+func createCommentService(comment Comment) {
+	db, err := sql.Open("sqlite3", "./forum.db")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer db.Close()
+
+	postCreate := `INSERT INTO comments (IDPost, IDCreator,Text) VALUES (?,?,?)`
+	_, errCreate := db.Exec(postCreate, comment.IDPost, comment.IDCreator, comment.Text)
+
+	if errCreate != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Post created successfully")
 }

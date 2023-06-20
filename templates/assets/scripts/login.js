@@ -26,6 +26,7 @@ form.addEventListener('submit', function(event) {
                     alert("Votre compte n'existe pas")
                 }
             } else {
+                console.log(document.cookie)
                 console.log("user logged")
             }
         })
