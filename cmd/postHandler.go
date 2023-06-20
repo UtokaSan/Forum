@@ -14,6 +14,11 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var data GestionPost
+	const secretToken = "token-user"
+	token := getSession(r)
+	tokenJWT := checkJWT(secretToken, token)
+	dataUser := getData(tokenJWT)
+	fmt.Println(dataUser)
 	err = json.Unmarshal(body, &data)
 	createPostWithTitle(Post{
 		Title: data.CreatePost,
