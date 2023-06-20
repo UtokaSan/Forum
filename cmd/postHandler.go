@@ -31,6 +31,11 @@ func displayPostVisible(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	const secretToken = "token-user"
+	token := getSession(r)
+	tokenJWT := checkJWT(secretToken, token)
+	dataUser := getData(tokenJWT)
+	fmt.Println(dataUser)
 	w.Write(jsonData)
 }
 
@@ -51,6 +56,30 @@ func createComment(w http.ResponseWriter, r *http.Request) {
 	}
 	createCommentService(data)
 
+}
+
+func postLikeOrDislike(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	var data Reaction
+	err = json.Unmarshal(body, &data)
+	if data.Like == "on" {
+		if likePost(data.UserId, data.PostId) == true {
+			w.Write([]byte("liked"))
+		} else {
+			w.Write([]byte("already liked"))
+		}
+	}
+	if data.Dislike == "on" {
+		if dislikePost(data.UserId, data.PostId) == true {
+			w.Write([]byte("liked"))
+		} else {
+			w.Write([]byte("already liked"))
+		}
+	}
 }
 
 func editPost(w http.ResponseWriter, r *http.Request) {

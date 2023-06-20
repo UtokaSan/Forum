@@ -94,3 +94,9 @@ type UserGoogle struct {
 	VerifiedEmail bool   `json:"verified_email"`
 	Picture       string `json:"picture"`
 }
+type Reaction struct {
+	Like    string `json:"like"`
+	Dislike string `json:"dislike"`
+	PostId  string `json:"post_id"`
+	UserId  string `json:"user_id"`
+}
