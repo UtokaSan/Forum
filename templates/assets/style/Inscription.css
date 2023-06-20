@@ -8,7 +8,7 @@ body {
 
 .rectangle2 {
     width: 1909px;
-    height: 945px;
+    height: 1000px;
     border: 2px solid #7E001A;
     box-sizing: border-box;
 }
@@ -130,23 +130,25 @@ img {
     text-align: center;
 }
 #login {
+    width: 500px;
     font-size: 1vh;
     font-weight: bold;
-    border-width: 3px;
+    border: solid 3px;
     color: darkred;
     top: 50px;
     position: absolute;
     left: 1200px;
     justify-items: center;
+    align-content: center;
 }
 
 .informations {
-    margin: 0 auto;
     max-width: 80%;
+    display: flex;
 }
 .id{
     position: relative;
-    left: 25%;
+    left: 10%;
     font-size: large;
     text-align: center;
 }
@@ -211,7 +213,7 @@ a {
 }
 .creation{
     position: relative;
-    left: 15%;
+    left: 30%;
     margin-bottom: 5vh;
 }
 .square2 {
