@@ -134,3 +134,18 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 		// REFUSE
 	}
 }
+
+func getComments(w http.ResponseWriter, r *http.Request) {
+	data := getDataComments(r)
+	comments := takeComments(data.ID)
+
+	fmt.Println("id : ", data.ID)
+
+	jsonData, err := json.Marshal(comments)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	w.WriteHeader(200)
+	w.Write(jsonData)
+}

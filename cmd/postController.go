@@ -62,12 +62,14 @@ func likePost(user_ID string, post_ID string) bool {
 	}
 	var countLike int
 	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE post_id = ?", post_ID).Scan(&countLike)
+
 	_, err = db.Exec("UPDATE posts SET like = ? WHERE id = ?", countLike, post_ID)
 	if err != nil {
 		fmt.Println(err)
 	}
 	return true
 }
+
 func dislikePost(user_ID string, post_ID string) bool {
 	db, err := sql.Open("sqlite3", "forum.db")
 	if err != nil {
@@ -230,4 +232,20 @@ func takeInfoPostId(id int) []map[string]interface{} {
 		result = append(result, userData)
 	}
 	return result
+}
+
+func getDataComments(r *http.Request) Input {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println("error : ", err)
+		return Input{ID: -1}
+	}
+	var data Input
+
+	err = json.Unmarshal(body, &data)
+
+	fmt.Println("LA DATA DE TES MROTS C'EST : ", data)
+
+	return data
+
 }

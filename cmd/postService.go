@@ -184,3 +184,24 @@ func createCommentService(comment Comment) {
 	}
 	fmt.Println("Post created successfully")
 }
+
+func takeComments(id int) CommentJson {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	query := "SELECT * FROM comments WHERE idPost= ?"
+	rows, err := db.Query(query, id)
+	commentData := []Comment{}
+	for rows.Next() {
+		var comment Comment
+		err := rows.Scan(&comment.ID, &comment.IDPost, &comment.Text, &comment.IDCreator)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		commentData = append(commentData, comment)
+	}
+	return CommentJson{Comment: commentData}
+}
