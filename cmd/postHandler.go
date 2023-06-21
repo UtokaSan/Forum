@@ -14,11 +14,6 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var data GestionPost
-	const secretToken = "token-user"
-	token := getSession(r)
-	tokenJWT := checkJWT(secretToken, token)
-	dataUser := getData(tokenJWT)
-	fmt.Println(dataUser)
 	err = json.Unmarshal(body, &data)
 	createPostWithTitle(Post{
 		Title: data.CreatePost,
@@ -27,14 +22,16 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 
 func displayPostVisible(w http.ResponseWriter, r *http.Request) {
 	unhiddenPost := takePostUnHidden()
-	jsonData, err := json.Marshal(unhiddenPost)
-	if err != nil {
-		fmt.Println(err)
-	}
 	const secretToken = "token-user"
 	token := getSession(r)
 	tokenJWT := checkJWT(secretToken, token)
 	dataUser := getData(tokenJWT)
+
+	fmt.Println(dataUser)
+	jsonData, err := json.Marshal(unhiddenPost)
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println(dataUser)
 	w.Write(jsonData)
 }

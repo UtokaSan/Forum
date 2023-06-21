@@ -14,7 +14,7 @@ import (
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	takeCookie, err := r.Cookie("jwtToken")
 	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Redirect(w, r, "/homepage", http.StatusSeeOther)
 		return
 	}
 	token, err := jwt.Parse(takeCookie.Value, func(token *jwt.Token) (interface{}, error) {
