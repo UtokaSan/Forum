@@ -13,6 +13,17 @@ import (
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	takeCookie, err := r.Cookie("jwtToken")
+
+	const secretToken = "token-user"
+	tokene := getSession(r)
+	tokenJWT := checkJWT(secretToken, tokene)
+	dataUser := getData(tokenJWT)
+
+	println("------OUI------")
+	println(dataUser.UserId)
+	println(dataUser.UserRole)
+	println("-------NON-----")
+
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return

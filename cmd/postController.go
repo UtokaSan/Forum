@@ -111,6 +111,7 @@ func editPostController(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var data Comment
+
 	err = json.Unmarshal(body, &data)
 
 	fmt.Println(data)
@@ -118,4 +119,46 @@ func editPostController(w http.ResponseWriter, r *http.Request) {
 	//if {
 	//
 	//}
+}
+
+func editedPost(r *http.Request, post Post) Post {
+	fmt.Println("TEST edit comment")
+	data := getDataEditPost(r)
+	if data.ID == -1 {
+		return Post{ID: -1}
+	}
+
+	rst := changedDataPost(post, data)
+
+	fmt.Println(rst)
+	return rst
+}
+
+func getDataEditPost(r *http.Request) Post {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println(err)
+		return Post{ID: -1}
+	}
+	var data Post
+
+	err = json.Unmarshal(body, &data)
+
+	return data
+}
+
+func changedDataPost(post Post, postInput Post) Post {
+	var PostResult Post
+
+	if postInput.Title == "" {
+		PostResult.Title = post.Title
+	}
+	if postInput.Texte == "" {
+		PostResult.Texte = post.Texte
+	}
+	if postInput.Photo == "" {
+		PostResult.Photo = post.Photo
+	}
+
+	return Post{}
 }

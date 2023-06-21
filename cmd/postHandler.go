@@ -50,19 +50,24 @@ func createComment(w http.ResponseWriter, r *http.Request) {
 
 func editPost(w http.ResponseWriter, r *http.Request) {
 
-	//Créer un if pour savoir si c'est un admin / créateur du post
-	//Si Post existe aussi !
-	const secretToken = "token-user"
-	token := getSession(r)
-	tokenJWT := checkJWT(secretToken, token)
-	dataUser := getData(tokenJWT)
+	//const secretToken = "token-user"
+	//token := getSession(r)
+	//tokenJWT := checkJWT(secretToken, token)
+	//dataUser := getData(tokenJWT)
+
+	var dataUser DataTokenJWT
+	dataUser.UserRole = 3
+	dataUser.UserId = 2
+
+	Post := readOnePostById(2)
 
 	if dataUser.UserRole >= 3 {
-		// ADMIN
 		fmt.Println("Admin")
+		postEdit := editedPost(r, Post)
+		fmt.Println("postEdit")
+		fmt.Println(postEdit)
 
-	} else if dataUser.UserId == 3 {
-		// User that created post
+	} else if dataUser.UserId == Post.IDCreator {
 		fmt.Println("User")
 
 	} else {
@@ -71,9 +76,4 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 
 		// REFUSE
 	}
-
-	//Vérif les infos avant des les mettrent
-	editPostController(w, r)
-
-	// Edit le post
 }

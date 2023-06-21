@@ -42,14 +42,14 @@ func readPost() {
 	}
 }
 
-func readOnePostById() {
+func readOnePostById(IDPost int) Post {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "SELECT id, photo, title, texte, hidden, like, dislike, signalement, categorie, ban, archived FROM users WHERE id = ?"
-	rows, err := db.Query(query)
+	query := "SELECT id, photo, title, texte, hidden, like, dislike, signalement, categorie, ban, archived FROM posts WHERE id = ?"
+	rows, err := db.Query(query, IDPost)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -60,7 +60,9 @@ func readOnePostById() {
 			fmt.Println(err)
 		}
 		fmt.Println("Id : " + strconv.Itoa(post.ID) + " photo : " + post.Photo + " titre : " + post.Title + " texte : " + post.Texte)
+		return post
 	}
+	return Post{ID: -1}
 }
 
 func updatePost(post Post) {
@@ -69,8 +71,8 @@ func updatePost(post Post) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "UPDATE posts SET photo = ?, title = ?, texte = ?, hidden = ?, like = ?, dislike = ?, report = ?, categorie = ?, ban = ?, archived = ? WHERE ID = ?"
-	_, err = db.Exec(query, post.Photo, post.Title, post.Texte, post.Hidden, post.Like, post.Dislike, post.Signalement, post.Categorie, post.Ban, post.Archived)
+	query := "UPDATE posts SET photo = ?, title = ?, texte = ? WHERE ID = ?"
+	_, err = db.Exec(query, post.Photo, post.Title, post.Texte, post.ID)
 	if err != nil {
 		fmt.Println(err)
 	}

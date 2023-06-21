@@ -83,6 +83,7 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 			if user.Ban == 0 {
 				tokenStr := createToken(user)
 				cookieOrSession(w, r, userLogin.SaveInfo, tokenStr)
+				fmt.Println(tokenStr)
 				w.WriteHeader(http.StatusOK)
 				return
 			} else {

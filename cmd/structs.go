@@ -18,6 +18,7 @@ func (u User) Read(p []byte) (n int, err error) {
 
 type Post struct {
 	ID          int
+	IDCreator   int
 	Photo       string
 	Title       string
 	Texte       string
@@ -83,9 +84,9 @@ type responseLoginGithub struct {
 }
 
 type DataTokenJWT struct {
-	UserId   float64 `json:"user-id"`
-	UserRole int     `json:"user-role"`
-	Exp      float64 `json:"exp"`
+	UserId   int `json:"user-id"`
+	UserRole int `json:"user-role"`
+	Exp      int `json:"exp"`
 }
 
 type UserGoogle struct {

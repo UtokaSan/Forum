@@ -152,8 +152,10 @@ func getCookie(r *http.Request) string {
 func checkJWT(secretToken string, tokenJWT string) *jwt.Token {
 	token, err := jwt.Parse(tokenJWT, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			fmt.Println("Non")
 			return nil, fmt.Errorf("Méthode de signature inattendue : %v", token.Header["alg"])
 		}
+		fmt.Println("Yes")
 		return []byte(secretToken), nil
 	})
 	if err != nil || !token.Valid {
@@ -171,7 +173,13 @@ func checkJWT(secretToken string, tokenJWT string) *jwt.Token {
 
 func getData(token *jwt.Token) DataTokenJWT {
 	data := DataTokenJWT{}
+	fmt.Println()
+	fmt.Println("--**-- token --**--")
+	fmt.Println("token : ", token)
+	fmt.Println("--**-- token --**--")
+	fmt.Println()
 	if token == nil {
+		fmt.Println("mince ! avec le dataTokenJWT qui est dans checkJWT l:152")
 		return DataTokenJWT{
 			UserRole: 0,
 		}
@@ -188,7 +196,8 @@ func getData(token *jwt.Token) DataTokenJWT {
 	fmt.Println("----------------------------------")
 
 	// Accéder aux données du JWT
-	data.UserId = allDataToken["user-id"].(float64)
+
+	data.UserId = int(allDataToken["user-id"].(float64))
 	data.UserRole, _ = strconv.Atoi(allDataToken["user-role"].(string))
 	//data.Exp = allDataToken["user-fdsfdsqf"].(float64)
 
