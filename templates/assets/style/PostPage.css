@@ -32,6 +32,62 @@ header {
     flex: 1;
 }
 
+.like {
+    background-color: black;
+    color: red;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    width: 5vw;
+    border-radius: 3vw;
+}
+.like:hover {
+    background-color: red;
+    color: black;
+}
+.item-like {
+    position: absolute;
+    top: 34%;
+    left: 31.5%;
+    display: flex;
+    flex-direction: row;
+}
+.text-like {
+    margin-right: 10px;
+}
+.dislike {
+    background-color: black;
+    color: red;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    width: 5vw;
+    border-radius: 3vw;
+}
+.dislike:hover {
+    background-color: red;
+    color: black;
+}
+.item-dislike {
+    position: absolute;
+    top: 34%;
+    right: 31.5%;
+    display: flex;
+    flex-direction: row;
+}
+.text-dislike {
+    margin-left: 10px;
+}
 .discussion {
     margin-top: 10vh;
     position: relative;
