@@ -142,3 +142,31 @@ header {
 #contenu1{
     display: block;
 }
+
+
+buttonlike {
+    float: right;
+    cursor: pointer;
+    outline: 0;
+    color: #AAA;
+    margin-right: 60px;
+    top:1800px;
+    transform: translate(20px);
+
+
+}
+
+.btn:focus {
+    outline: none;
+
+}
+
+.green {
+    color: green;
+
+}
+
+.red {
+    color: red;
+
+}
