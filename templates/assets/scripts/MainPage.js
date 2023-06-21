@@ -46,7 +46,6 @@ fetch("/api/display-post", {
             newDiv.className = "post-div topics " + post.categorie.split(" ").join("_") ;
             // Créer un élément d'ancre
             var anchorElement = document.createElement("a");
-            anchorElement.href = '/' + post.id;
             anchorElement.textContent = post.title;
             if (anchorElement.textContent.length > 50) {
                 anchorElement.textContent = anchorElement.textContent.substring(0, 47)
@@ -66,8 +65,12 @@ fetch("/api/display-post", {
             } else {
                 document.getElementById("contenu1").appendChild(newDiv);
             }
-
-
+            newDiv.addEventListener('click', function() {
+                let urlParameter = new URLSearchParams();
+                urlParameter.append('id', post.id);
+                let urlNewPage = `http://localhost:8080/post?${urlParameter.toString()}`;
+                window.location.href = urlNewPage;
+            });
         });
     })
     .catch(error => {

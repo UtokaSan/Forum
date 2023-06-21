@@ -30,19 +30,22 @@ func createUser(user User) User {
 	}
 }
 
-func createUserGithub(user User) {
+func createUserGithub(user User) User {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer db.Close()
 	createUser := `INSERT INTO users (image, nom, email, password, role, ban) VALUES (?, ?, ?, ?, 1, 0)`
-	_, errCreate := db.Exec(createUser, user.Image, user.Username, user.Email, user.Password)
+	querry, errCreate := db.Exec(createUser, user.Image, user.Username, user.Email, user.Password)
+	userID, _ := querry.LastInsertId()
+	user.ID = int(userID)
 	if errCreate != nil {
 		fmt.Println(err)
-		return
+		return User{ID: -1}
 	}
 	fmt.Println("User created successfully")
+	return user
 }
 
 func createUserGoogle(user UserGoogle) string {

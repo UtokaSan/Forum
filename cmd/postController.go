@@ -62,12 +62,14 @@ func likePost(user_ID string, post_ID string) bool {
 	}
 	var countLike int
 	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE post_id = ?", post_ID).Scan(&countLike)
+
 	_, err = db.Exec("UPDATE posts SET like = ? WHERE id = ?", countLike, post_ID)
 	if err != nil {
 		fmt.Println(err)
 	}
 	return true
 }
+
 func dislikePost(user_ID string, post_ID string) bool {
 	db, err := sql.Open("sqlite3", "forum.db")
 	if err != nil {
@@ -105,21 +107,34 @@ func createCommentController(comment Comment) bool {
 	return false
 }
 
-func uploadImage(w http.ResponseWriter, r *http.Request) {
+func uploadImage(w http.ResponseWriter, r *http.Request) { // c'est un return string
 
 	if testMethod(w, r, http.MethodPost) {
 		http.Error(w, "Failed to load fonction (method wrong)", http.StatusBadRequest)
 		return
+		//return "Failed to load fonction (method wrong)"
 	}
 
 	err, file, handlers := getDataToFormUploadImage(w, r)
 	if err {
 		http.Error(w, "Failed to load data (data type is may be wrong)", http.StatusBadRequest)
 		return
+		//return "Failed to load data (data type is may be wrong)"
 	}
 
-	createImageToFolder(w, file, handlers)
+	message, err := createImageToFolder(w, file, handlers)
+	if err {
+		fmt.Println("Err : ", message)
+		return
+		//return "Err : ", message
+
+	}
+
+	fmt.Println("success")
+	fmt.Println(message)
 	return
+	//return message
+
 }
 
 func testMethod(w http.ResponseWriter, r *http.Request, method string) bool {
@@ -146,78 +161,89 @@ func getDataToFormUploadImage(w http.ResponseWriter, r *http.Request) (bool, mul
 	return false, file, handlers
 }
 
-func createImageToFolder(w http.ResponseWriter, file multipart.File, handlers *multipart.FileHeader) {
+func createImageToFolder(w http.ResponseWriter, file multipart.File, handlers *multipart.FileHeader) (string, bool) {
 	dst, err := os.Create("templates/assets/img/imagePost/" + handlers.Filename)
 	if err != nil {
 		http.Error(w, "Error to copy Image", http.StatusInternalServerError)
-		return
+		return "Error to copy Image", true
 	}
 	defer dst.Close()
 
 	_, err = io.Copy(dst, file)
 	if err != nil {
 		http.Error(w, "Error to create Image", http.StatusInternalServerError)
-		return
+		return "Error to create Image", true
 	}
 	createSuccessfulMessage("File uploaded successfully", 201, w)
-}
-
-func editPostController(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("TEST edit comment")
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	var data Comment
-
-	err = json.Unmarshal(body, &data)
-
-	fmt.Println(data)
-
-	//if {
-	//
-	//}
-}
-
-func editedPost(r *http.Request, post Post) Post {
-	fmt.Println("TEST edit comment")
-	data := getDataEditPost(r)
-	if data.ID == -1 {
-		return Post{ID: -1}
-	}
-
-	rst := changedDataPost(post, data)
-
-	fmt.Println(rst)
-	return rst
+	return "assets/img/imagePost/" + handlers.Filename, false
 }
 
 func getDataEditPost(r *http.Request) Post {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("error : ", err)
 		return Post{ID: -1}
 	}
 	var data Post
 
 	err = json.Unmarshal(body, &data)
 
+	fmt.Println("LA DATA DE TES MROTS C'EST : ", data)
+
 	return data
 }
 
 func changedDataPost(post Post, postInput Post) Post {
-	var PostResult Post
+	postInput.ID = post.ID
 
 	if postInput.Title == "" {
-		PostResult.Title = post.Title
+		postInput.Title = post.Title
 	}
 	if postInput.Texte == "" {
-		PostResult.Texte = post.Texte
+		postInput.Texte = post.Texte
 	}
 	if postInput.Photo == "" {
-		PostResult.Photo = post.Photo
+		postInput.Photo = post.Photo
 	}
 
-	return Post{}
+	return postInput
+}
+
+func takeInfoPostId(id int) []map[string]interface{} {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	query := "SELECT * FROM posts WHERE id = ?"
+	rows, err := db.Query(query, id)
+	var result []map[string]interface{}
+	for rows.Next() {
+		var post Post
+		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived, &post.IDCreator, &post.NameCreator)
+		if err != nil {
+			fmt.Println(err)
+		}
+		userData := make(map[string]interface{})
+		userData["title"] = post.Title
+		userData["text"] = post.Texte
+		userData["like"] = post.Like
+		userData["dislike"] = post.Dislike
+		result = append(result, userData)
+	}
+	return result
+}
+
+func getDataComments(r *http.Request) Input {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println("error : ", err)
+		return Input{ID: -1}
+	}
+	var data Input
+
+	err = json.Unmarshal(body, &data)
+
+	return data
+
 }

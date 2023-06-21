@@ -139,7 +139,7 @@ img {
     justify-items: center;
     color: darkred;
     width: 30vw;
-    margin-top: 10vh;
+    margin-top: 3vh;
     margin-right: auto;
     margin-left: auto;
     top: 1px;
@@ -292,4 +292,20 @@ a {
     width: 40px;
     height: 40px;
     top: 540px;
+}
+
+.rectangle {
+    width: 400px;
+    height: 330px;
+    border: 2px solid #575757AD;
+    top: 450px;
+    left: 50px;
+}
+
+.img5 {
+    position: fixed;
+    left: 54px;
+    width: 395px;
+    height: 325px;
+    top: 455px;
 }

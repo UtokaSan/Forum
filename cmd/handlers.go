@@ -3,7 +3,6 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"html/template"
@@ -11,45 +10,57 @@ import (
 	"net/http"
 )
 
-func rootHandler(w http.ResponseWriter, r *http.Request) {
-	takeCookie, err := r.Cookie("jwtToken")
-
-	const secretToken = "token-user"
-	fmt.Println()
-	fmt.Println()
-	tokene := getSession(r)
-	tokenJWT := checkJWT(secretToken, tokene)
-	dataUser := getData(tokenJWT)
-
-	println("------OUI------")
-	println(dataUser.UserId)
-	println(dataUser.UserRole)
-	println("-------NON-----")
-
-	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
-		return
-	}
-	token, err := jwt.Parse(takeCookie.Value, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Méthode de signature inattendue : %v", token.Header["alg"])
-		}
-		return []byte("token-user"), nil
-	})
-	if err != nil || !token.Valid {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
-		return
-	}
-	if token.Valid {
-		http.Redirect(w, r, "/homepage", http.StatusSeeOther)
-	}
-}
+//func rootHandler(w http.ResponseWriter, r *http.Request) {
+//	takeCookie, err := r.Cookie("jwtToken")
+//
+//	const secretToken = "token-user"
+//	fmt.Println()
+//	fmt.Println()
+//	tokene := getSession(r)
+//	tokenJWT := checkJWT(secretToken, tokene)
+//	dataUser := getData(tokenJWT)
+//
+//	println("------OUI------")
+//	println(dataUser.UserId)
+//	println(dataUser.UserRole)
+//	println("-------NON-----")
+//
+//	if err != nil {
+//		http.Redirect(w, r, "/login", http.StatusSeeOther)
+//		return
+//	}
+//	token, err := jwt.Parse(takeCookie.Value, func(token *jwt.Token) (interface{}, error) {
+//		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+//			return nil, fmt.Errorf("Méthode de signature inattendue : %v", token.Header["alg"])
+//		}
+//		return []byte("token-user"), nil
+//	})
+//	if err != nil || !token.Valid {
+//		http.Redirect(w, r, "/login", http.StatusSeeOther)
+//		return
+//	}
+//	if token.Valid {
+//		http.Redirect(w, r, "/homepage", http.StatusSeeOther)
+//	}
+//}
 
 func loginHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/login" {
 		errorHandler(w, r, http.StatusNotFound)
 	} else {
 		t, err := template.ParseFiles("templates/Login.html")
+		if err != nil {
+			fmt.Println(err)
+		}
+		t.Execute(w, r)
+	}
+}
+
+func postHandlers(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/post" {
+		errorHandler(w, r, http.StatusNotFound)
+	} else {
+		t, err := template.ParseFiles("templates/postPage.html")
 		if err != nil {
 			fmt.Println(err)
 		}
