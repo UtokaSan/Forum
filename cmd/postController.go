@@ -162,35 +162,6 @@ func createImageToFolder(w http.ResponseWriter, file multipart.File, handlers *m
 	createSuccessfulMessage("File uploaded successfully", 201, w)
 }
 
-func editPostController(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("TEST edit comment")
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	var data Comment
-
-	err = json.Unmarshal(body, &data)
-
-	//if {
-	//
-	//}
-}
-
-func editedPost(r *http.Request, post Post) Post {
-	fmt.Println("TEST edit comment")
-	data := getDataEditPost(r)
-
-	if data.ID == -1 {
-		fmt.Println("HEEEEEIIINNN")
-		return Post{ID: -1}
-	}
-
-	rst := changedDataPost(post, data)
-	return rst
-}
-
 func getDataEditPost(r *http.Request) Post {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {

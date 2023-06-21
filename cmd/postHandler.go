@@ -103,35 +103,26 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 	tokenJWT := checkJWT(secretToken, token)
 	dataUser := getData(tokenJWT)
 
-	post := readOnePostById(3)
-
-	fmt.Println()
-	fmt.Println("------")
-	fmt.Println("post")
-	fmt.Println(post)
-	fmt.Println("------")
-	fmt.Println()
+	data := getDataEditPost(r)
+	post := readOnePostById(data.ID)
 
 	if dataUser.UserRole >= 3 {
 		fmt.Println("Admin")
-		postEdit := editedPost(r, post)
+		postEdit := changedDataPost(post, data)
 		if postEdit.ID == -1 {
 			println("C'est de la merde")
 			return
 		}
-		fmt.Println("postEdit")
 		updatePost(postEdit)
-
-		fmt.Println(postEdit)
-
 	} else if dataUser.UserId == post.IDCreator {
-		postEdit := editedPost(r, post)
+		fmt.Println("user")
+		postEdit := changedDataPost(post, data)
 		if postEdit.ID == -1 {
 			println("C'est de la merde")
 			return
 		}
-		fmt.Println("postEdit")
 		updatePost(postEdit)
+
 	} else {
 
 		fmt.Println("Mec user Other")
