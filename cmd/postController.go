@@ -105,21 +105,34 @@ func createCommentController(comment Comment) bool {
 	return false
 }
 
-func uploadImage(w http.ResponseWriter, r *http.Request) {
+func uploadImage(w http.ResponseWriter, r *http.Request) { // c'est un return string
 
 	if testMethod(w, r, http.MethodPost) {
 		http.Error(w, "Failed to load fonction (method wrong)", http.StatusBadRequest)
 		return
+		//return "Failed to load fonction (method wrong)"
 	}
 
 	err, file, handlers := getDataToFormUploadImage(w, r)
 	if err {
 		http.Error(w, "Failed to load data (data type is may be wrong)", http.StatusBadRequest)
 		return
+		//return "Failed to load data (data type is may be wrong)"
 	}
 
-	createImageToFolder(w, file, handlers)
+	message, err := createImageToFolder(w, file, handlers)
+	if err {
+		fmt.Println("Err : ", message)
+		return
+		//return "Err : ", message
+
+	}
+
+	fmt.Println("success")
+	fmt.Println(message)
 	return
+	//return message
+
 }
 
 func testMethod(w http.ResponseWriter, r *http.Request, method string) bool {
@@ -146,20 +159,21 @@ func getDataToFormUploadImage(w http.ResponseWriter, r *http.Request) (bool, mul
 	return false, file, handlers
 }
 
-func createImageToFolder(w http.ResponseWriter, file multipart.File, handlers *multipart.FileHeader) {
+func createImageToFolder(w http.ResponseWriter, file multipart.File, handlers *multipart.FileHeader) (string, bool) {
 	dst, err := os.Create("templates/assets/img/imagePost/" + handlers.Filename)
 	if err != nil {
 		http.Error(w, "Error to copy Image", http.StatusInternalServerError)
-		return
+		return "Error to copy Image", true
 	}
 	defer dst.Close()
 
 	_, err = io.Copy(dst, file)
 	if err != nil {
 		http.Error(w, "Error to create Image", http.StatusInternalServerError)
-		return
+		return "Error to create Image", true
 	}
 	createSuccessfulMessage("File uploaded successfully", 201, w)
+	return "assets/img/imagePost/" + handlers.Filename, false
 }
 
 func getDataEditPost(r *http.Request) Post {
