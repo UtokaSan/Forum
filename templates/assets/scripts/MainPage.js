@@ -3,32 +3,25 @@ function afficherContenu(evt, contenuId) {
     for (var i = 0; i < contenus.length; i++) {
         contenus[i].style.display = "none";
     }
-
     var onglets = document.getElementsByClassName("onglet");
     for (var i = 0; i < onglets.length; i++) {
         onglets[i].className = onglets[i].className.replace(" active", "");
     }
-
     document.getElementById(contenuId).style.display = "block";
-
     evt.currentTarget.className += " active";
 }
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
     var defaultCategoryButton = document.querySelector(".onglet[data-category='contenu1']");
     defaultCategoryButton.classList.add("active");
     var defaultCategoryContent = document.querySelector(".contenu-onglet[data-content='contenu1']");
     defaultCategoryContent.style.display = "block";
-
     var categoryButtons = document.querySelectorAll(".onglet");
-
-    categoryButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
+    categoryButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
             var category = button.getAttribute("data-category");
-
             var discussionDivs = document.querySelectorAll(".contenu-onglet");
-
-            discussionDivs.forEach(function(div) {
+            discussionDivs.forEach(function (div) {
                 if (div.getAttribute("data-content") === category) {
                     div.style.display = "block";
                 } else {
@@ -38,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         });
     });
 });
-
 fetch("/api/display-post", {
     method: "POST",
     headers: {
@@ -51,25 +43,33 @@ fetch("/api/display-post", {
         data.forEach(post => {
             var newDiv = document.createElement("div");
             newDiv.id = "post-" + post.id;
-            newDiv.className = "post-div topics";
-
+            newDiv.className = "post-div topics " + post.categorie.split(" ").join("_") ;
+            console.log("------------")
+            console.log(newDiv)
+            console.log("------------")
             // Créer un élément d'ancre
             var anchorElement = document.createElement("a");
-            anchorElement.href = '/'+post.id;
+            anchorElement.href = '/' + post.id;
             anchorElement.textContent = post.title;
-
-            if (anchorElement.textContent.length > 50)
-            {
-                anchorElement.textContent = anchorElement.textContent.substring(0,47)
+            if (anchorElement.textContent.length > 50) {
+                anchorElement.textContent = anchorElement.textContent.substring(0, 47)
                 anchorElement.textContent += "..."
             }
-
             newDiv.appendChild(anchorElement);
-
-            var categoryDiv = document.getElementById("contenu" + (post.id + 1));
-            if (categoryDiv) {
-                categoryDiv.appendChild(newDiv);
+            let categoryDiv
+            console.log(newDiv.classList.contains('Drogue'))
+            if (newDiv.classList.contains('ChatGénéral')) {
+                document.getElementById("contenu1").appendChild(newDiv);
+            } else if (newDiv.classList.contains('Drogue')) {
+                document.getElementById("contenu2").appendChild(newDiv);
+            } else if (newDiv.classList.contains('Sex_cam')) {
+                document.getElementById("contenu3").appendChild(newDiv);
+            } else if (newDiv.classList.contains('Red_Room')) {
+                document.getElementById("contenu4").appendChild(newDiv);
+            } else {
+                document.getElementById("contenu1").appendChild(newDiv);
             }
+
 
         });
     })

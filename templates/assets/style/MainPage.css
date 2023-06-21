@@ -178,3 +178,8 @@ a{
     cursor: pointer;
     border-radius: 1vh;
 }
+
+.topics{
+    display: flex;
+    margin-top: 4vh;
+}
