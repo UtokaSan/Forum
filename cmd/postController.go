@@ -220,3 +220,28 @@ func changedDataPost(post Post, postInput Post) Post {
 
 	return postInput
 }
+
+func takeInfoPostId(id int) []map[string]interface{} {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	query := "SELECT * FROM posts WHERE id = ?"
+	rows, err := db.Query(query, id)
+	var result []map[string]interface{}
+	for rows.Next() {
+		var post Post
+		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived, &post.IDCreator, &post.NameCreator)
+		if err != nil {
+			fmt.Println(err)
+		}
+		userData := make(map[string]interface{})
+		userData["title"] = post.Title
+		userData["text"] = post.Texte
+		userData["like"] = post.Like
+		userData["dislike"] = post.Dislike
+		result = append(result, userData)
+	}
+	return result
+}
