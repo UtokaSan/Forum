@@ -125,40 +125,41 @@ func editedPost(r *http.Request, post Post) Post {
 	fmt.Println("TEST edit comment")
 	data := getDataEditPost(r)
 	if data.ID == -1 {
+		fmt.Println("HEEEEEIIINNN")
 		return Post{ID: -1}
 	}
 
 	rst := changedDataPost(post, data)
-
-	fmt.Println(rst)
 	return rst
 }
 
 func getDataEditPost(r *http.Request) Post {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("error : ", err)
 		return Post{ID: -1}
 	}
 	var data Post
 
 	err = json.Unmarshal(body, &data)
 
+	fmt.Println("LA DATA DE TES MROTS C'EST : ", data)
+
 	return data
 }
 
 func changedDataPost(post Post, postInput Post) Post {
-	var PostResult Post
+	postInput.ID = post.ID
 
 	if postInput.Title == "" {
-		PostResult.Title = post.Title
+		postInput.Title = post.Title
 	}
 	if postInput.Texte == "" {
-		PostResult.Texte = post.Texte
+		postInput.Texte = post.Texte
 	}
 	if postInput.Photo == "" {
-		PostResult.Photo = post.Photo
+		postInput.Photo = post.Photo
 	}
 
-	return Post{}
+	return postInput
 }

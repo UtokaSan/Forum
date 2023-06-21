@@ -11,13 +11,8 @@ import (
 func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := getSession(r)
-		fmt.Println()
-		fmt.Println("TOKEN : ", token)
-		fmt.Println()
 		if token == "" {
 			tokenCookie := getCookie(r)
-			fmt.Println("MEdedededeD : ", tokenCookie)
-
 			if tokenCookie == "" {
 				next(w, r)
 				return
@@ -27,11 +22,11 @@ func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
 			session, _ := store.Get(r, "session-login")
 			session.Values["jwtToken"] = tokenCookie
 			session.Save(r, w)
-			fmt.Println("session : ", session)
 			next(w, r)
 			return
 		}
 		next(w, r)
+		return
 	}
 }
 
@@ -152,13 +147,7 @@ func getSession(r *http.Request) string {
 }
 
 func getCookie(r *http.Request) string {
-	fmt.Println("COOKIE")
-	fmt.Println()
-	fmt.Println("cokkie : ", r.Cookie)
-	fmt.Println()
-
 	cookieUser, err := r.Cookie("jwtToken")
-	fmt.Println("cookie : ", cookieUser, " | err : ", err)
 	if err != nil {
 		println("pas de cookie")
 		return ""
@@ -191,11 +180,6 @@ func checkJWT(secretToken string, tokenJWT string) *jwt.Token {
 
 func getData(token *jwt.Token) DataTokenJWT {
 	data := DataTokenJWT{}
-	fmt.Println()
-	fmt.Println("--**-- token --**--")
-	fmt.Println("token : ", token)
-	fmt.Println("--**-- token --**--")
-	fmt.Println()
 	if token == nil {
 		fmt.Println("mince ! avec le dataTokenJWT qui est dans checkJWT l:152")
 		return DataTokenJWT{
@@ -206,18 +190,15 @@ func getData(token *jwt.Token) DataTokenJWT {
 
 	fmt.Println("----------------------------------")
 	fmt.Println(allDataToken["user-id"])
-	fmt.Println(allDataToken["user-id"].(float64))
 	fmt.Println(allDataToken["user-role"])
-	fmt.Println(strconv.Atoi(allDataToken["user-role"].(string)))
 	fmt.Println(allDataToken["exp"])
-	fmt.Println(allDataToken["exp"].(float64))
 	fmt.Println("----------------------------------")
 
 	// Accéder aux données du JWT
 
 	data.UserId = int(allDataToken["user-id"].(float64))
 	data.UserRole, _ = strconv.Atoi(allDataToken["user-role"].(string))
-	//data.Exp = allDataToken["user-fdsfdsqf"].(float64)
+	data.Exp = int(allDataToken["exp"].(float64))
 
 	fmt.Println("user-role:", data)
 	return data
