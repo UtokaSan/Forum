@@ -159,6 +159,7 @@ func checkJWT(secretToken string, tokenJWT string) *jwt.Token {
 		return []byte(secretToken), nil
 	})
 	if err != nil || !token.Valid {
+		fmt.Println("bug : ", err)
 		return nil
 	}
 
