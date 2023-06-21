@@ -18,6 +18,8 @@ func (u User) Read(p []byte) (n int, err error) {
 
 type Post struct {
 	ID          int
+	IDCreator   int
+	NameCreator string
 	Photo       string
 	Title       string
 	Texte       string

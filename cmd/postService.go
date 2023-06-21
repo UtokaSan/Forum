@@ -13,8 +13,8 @@ func createPost(post Post) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	postCreate := `INSERT INTO posts (photo, title, texte, hidden, like, dislike, report, categorie, ban, archived) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?)`
-	_, errCreate := db.Exec(postCreate, post.Photo, post.Texte, post.Hidden, post.Like, post.Dislike, post.Signalement, post.Categorie, post.Ban, post.Archived)
+	postCreate := `INSERT INTO posts (photo, title, texte, hidden, like, dislike, report, categorie, ban, archived, nameCreator, idCreator) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)`
+	_, errCreate := db.Exec(postCreate, post.Photo, post.Texte, post.Hidden, post.Like, post.Dislike, post.Signalement, post.Categorie, post.Ban, post.Archived, post.NameCreator, post.IDCreator)
 	if errCreate != nil {
 		fmt.Println(err)
 	}
@@ -27,14 +27,14 @@ func readPost() {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "SELECT id, photo, title, texte, hidden, like, dislike, report, categorie, ban, archived FROM posts"
+	query := "SELECT id, photo, title, texte, hidden, like, dislike, report, categorie, ban, archived, nameCreator, idCreator FROM posts"
 	rows, err := db.Query(query)
 	if err != nil {
 		fmt.Println(err)
 	}
 	for rows.Next() {
 		var post Post
-		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived)
+		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived, &post.NameCreator, &post.IDCreator)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -88,7 +88,7 @@ func takePostHidden() []map[string]interface{} {
 	var result []map[string]interface{}
 	for rows.Next() {
 		var post Post
-		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived)
+		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived, &post.IDCreator, &post.NameCreator)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -112,7 +112,7 @@ func takePostUnHidden() []map[string]interface{} {
 	var result []map[string]interface{}
 	for rows.Next() {
 		var post Post
-		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived)
+		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived, &post.IDCreator, &post.NameCreator)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -136,7 +136,7 @@ func postArchived() []map[string]interface{} {
 	var result []map[string]interface{}
 	for rows.Next() {
 		var post Post
-		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived)
+		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived, &post.IDCreator, post.NameCreator)
 		if err != nil {
 			fmt.Println(err)
 		}
