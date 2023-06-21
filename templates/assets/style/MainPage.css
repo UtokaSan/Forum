@@ -17,7 +17,9 @@ header {
     display: flex;
     justify-content: flex-start;
 }
-
+a {
+    cursor: pointer;
+}
 
 .underPageContentFirst {
     flex: 1;
