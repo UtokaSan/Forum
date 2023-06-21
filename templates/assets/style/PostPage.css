@@ -142,3 +142,41 @@ header {
 #contenu1{
     display: block;
 }
+
+.edit {
+    margin-top: 20%;
+    margin-left: 10%;
+}
+
+.edit #title {
+    background-color: rgba(0, 126, 255, 0.27);
+    width: 20vw;
+    height: 5vh;
+    color: white;
+    margin-bottom:2vh;
+}
+
+.edit #message {
+    background-color: rgba(0, 126, 255, 0.27);
+    width: 20vw;
+    height: 20vh;
+    color: white;
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.editForm button{
+width: 40%;
+    margin-top: 5vh;
+    margin-left: 4vw;
+    height: 3vh;
+    background-color: #ddd;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 1vh;
+}
