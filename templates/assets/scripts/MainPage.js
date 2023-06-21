@@ -44,9 +44,6 @@ fetch("/api/display-post", {
             var newDiv = document.createElement("div");
             newDiv.id = "post-" + post.id;
             newDiv.className = "post-div topics " + post.categorie.split(" ").join("_") ;
-            console.log("------------")
-            console.log(newDiv)
-            console.log("------------")
             // Créer un élément d'ancre
             var anchorElement = document.createElement("a");
             anchorElement.href = '/' + post.id;
