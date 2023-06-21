@@ -98,17 +98,19 @@ func postLikeOrDislike(w http.ResponseWriter, r *http.Request) {
 }
 
 func editPost(w http.ResponseWriter, r *http.Request) {
+	const secretToken = "token-user"
+	token := getSession(r)
+	tokenJWT := checkJWT(secretToken, token)
+	dataUser := getData(tokenJWT)
 
-	//const secretToken = "token-user"
-	//token := getSession(r)
-	//tokenJWT := checkJWT(secretToken, token)
-	//dataUser := getData(tokenJWT)
+	post := readOnePostById(3)
 
-	var dataUser DataTokenJWT
-	dataUser.UserRole = 3
-	dataUser.UserId = 2
-
-	post := readOnePostById(2)
+	fmt.Println()
+	fmt.Println("------")
+	fmt.Println("post")
+	fmt.Println(post)
+	fmt.Println("------")
+	fmt.Println()
 
 	if dataUser.UserRole >= 3 {
 		fmt.Println("Admin")
@@ -122,9 +124,14 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Println(postEdit)
 
-	} else if dataUser.UserId == 2 {
-		fmt.Println("User")
-
+	} else if dataUser.UserId == post.IDCreator {
+		postEdit := editedPost(r, post)
+		if postEdit.ID == -1 {
+			println("C'est de la merde")
+			return
+		}
+		fmt.Println("postEdit")
+		updatePost(postEdit)
 	} else {
 
 		fmt.Println("Mec user Other")

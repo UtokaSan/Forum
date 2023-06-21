@@ -181,6 +181,7 @@ func editPostController(w http.ResponseWriter, r *http.Request) {
 func editedPost(r *http.Request, post Post) Post {
 	fmt.Println("TEST edit comment")
 	data := getDataEditPost(r)
+
 	if data.ID == -1 {
 		fmt.Println("HEEEEEIIINNN")
 		return Post{ID: -1}
