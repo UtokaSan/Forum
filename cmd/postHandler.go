@@ -55,6 +55,28 @@ func createComment(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func sendDataPostWithId(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	var data Input
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	gestionPost := TakePostId{
+		Info: takeInfoPostId(data.ID),
+	}
+	jsonData, err := json.Marshal(gestionPost)
+	if err != nil {
+		fmt.Println(err)
+	}
+	w.Write(jsonData)
+}
+
 func postLikeOrDislike(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -95,7 +117,13 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 	if dataUser.UserRole >= 3 {
 		fmt.Println("Admin")
 		postEdit := editedPost(r, post)
+		if postEdit.ID == -1 {
+			println("C'est de la merde")
+			return
+		}
 		fmt.Println("postEdit")
+		updatePost(postEdit)
+
 		fmt.Println(postEdit)
 
 	} else if dataUser.UserId == 2 {

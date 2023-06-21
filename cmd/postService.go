@@ -60,14 +60,20 @@ func readOnePostById(id int) Post {
 	post := Post{
 		ID: -1,
 	}
+	var photo sql.NullString
 
 	if rows.Next() {
-		err := rows.Scan(&post.Photo, &post.Title, &post.Texte)
+		err := rows.Scan(&photo, &post.Title, &post.Texte)
 		if err != nil {
 			fmt.Println("err 2")
 			fmt.Println(err)
 		}
+		if photo.Valid {
+			post.Photo = photo.String
+		}
+		post.ID = id
 	}
+	defer rows.Close()
 
 	fmt.Println("post")
 	fmt.Println(post)
@@ -85,7 +91,8 @@ func updatePost(post Post) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("User update successfully")
+	fmt.Println("Post update successfully")
+	return
 }
 
 func takePostHidden() []map[string]interface{} {

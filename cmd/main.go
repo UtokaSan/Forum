@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-const port = ":8080"
+const port = ":3001"
 
 func Runner() {
 	server := http.NewServeMux()
@@ -14,7 +14,7 @@ func Runner() {
 	server.Handle("/assets/", http.StripPrefix("/assets", fs))
 	fmt.Println("\n\033[34m[http://127.0.0.1"+port+"]\033[32m \033[4mServer run on port", port, ".\033[0m")
 
-	err := http.ListenAndServe("127.0.0.1"+port, server)
+	err := http.ListenAndServe(port, server)
 
 	if err != nil {
 		fmt.Println("error :", err)
@@ -23,7 +23,7 @@ func Runner() {
 }
 
 func routes(server *http.ServeMux) {
-	server.HandleFunc("/", authGuestSecurity(rootHandler))
+	//server.HandleFunc("/", authGuestSecurity(rootHandler))
 	server.HandleFunc("/homepage", mainHandlers)
 	server.HandleFunc("/login", loginHandlers)
 	server.HandleFunc("/login/google", loginGoogle)
@@ -47,5 +47,5 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/api/createcomment", createComment)
 	server.HandleFunc("/api/testImage", uploadImage)
 	server.HandleFunc("/api/editPost", editPost)
-
+	server.HandleFunc("/api/takepostid", sendDataPostWithId)
 }
