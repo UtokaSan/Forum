@@ -52,8 +52,8 @@ header {
 }
 .item-like {
     position: absolute;
-    top: 34%;
-    left: 31.5%;
+    top: 40%;
+    left: 10.5%;
     display: flex;
     flex-direction: row;
 }
@@ -81,12 +81,12 @@ header {
 .item-dislike {
     position: absolute;
     top: 34%;
-    right: 31.5%;
+    left: 10.5%;
     display: flex;
     flex-direction: row;
 }
 .text-dislike {
-    margin-left: 10px;
+    margin-right: 10px;
 }
 .discussion {
     margin-top: 10vh;

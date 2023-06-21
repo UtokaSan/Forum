@@ -39,7 +39,7 @@ func createPostWithTitle(post Post) {
 	fmt.Println("Post created successfully")
 }
 
-func likePost(user_ID string, post_ID string) bool {
+func likePost(user_ID int, post_ID string) bool {
 	db, err := sql.Open("sqlite3", "forum.db")
 	if err != nil {
 		fmt.Println(err)
@@ -68,7 +68,7 @@ func likePost(user_ID string, post_ID string) bool {
 	}
 	return true
 }
-func dislikePost(user_ID string, post_ID string) bool {
+func dislikePost(user_ID int, post_ID string) bool {
 	db, err := sql.Open("sqlite3", "forum.db")
 	if err != nil {
 		fmt.Println(err)

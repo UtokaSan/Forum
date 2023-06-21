@@ -90,15 +90,19 @@ func postLikeOrDislike(w http.ResponseWriter, r *http.Request) {
 	}
 	var data Reaction
 	err = json.Unmarshal(body, &data)
+	const secretToken = "token-user"
+	token := getSession(r)
+	tokenJWT := checkJWT(secretToken, token)
+	dataUser := getData(tokenJWT)
 	if data.Like == "on" {
-		if likePost(data.UserId, data.PostId) == true {
+		if likePost(dataUser.UserId, data.PostId) == true {
 			w.Write([]byte("liked"))
 		} else {
 			w.Write([]byte("already liked"))
 		}
 	}
 	if data.Dislike == "on" {
-		if dislikePost(data.UserId, data.PostId) == true {
+		if dislikePost(dataUser.UserId, data.PostId) == true {
 			w.Write([]byte("liked"))
 		} else {
 			w.Write([]byte("already disliked"))
