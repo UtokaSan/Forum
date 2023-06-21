@@ -65,22 +65,29 @@ func CreateAccountGoogle(r *http.Request) (User, bool) {
 
 }
 
-func CreateUserGithub(user User) (User, bool) {
-
-	fmt.Println("user : ", user.Email)
-	fmt.Println("ptr user : ", user.Email)
-	fmt.Println("url : ", user.Image)
+func CreateUserGithub(w http.ResponseWriter, r *http.Request, user User) (User, bool) {
 
 	userDB := readOneUserByIdentifiantWithGoogle(user.Email)
 
 	if userDB.ID == -1 {
 		if checkInputNotValid(user.Email, user.Username) {
 			fmt.Println("user email : ", user.Email, ", username : ", user.Username)
+			fmt.Println("PUTTTEE")
+			return User{ID: -1}, true
 		}
 		createUserGithub(user)
+		fmt.Println("MERDE TA MERE")
 		return User{}, true
 	}
 
+	tokenStr := createToken(user)
+	var store = sessions.NewCookieStore([]byte("secret-key"))
+	session, err := store.Get(r, "session-login")
+	if err != nil {
+		fmt.Println(err)
+	}
+	session.Values["jwtToken"] = tokenStr
+	err = session.Save(r, w)
 	return User{}, true
 }
 
