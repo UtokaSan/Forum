@@ -73,9 +73,16 @@ func CreateUserGithub(w http.ResponseWriter, r *http.Request, user User) (User, 
 		if checkInputNotValid(user.Email, user.Username) {
 
 		}
-		createUserGithub(user)
-		fmt.Println("MERDE TA MERE")
-		return User{}, true
+		user = createUserGithub(user)
+		tokenStr := createToken(user)
+		var store = sessions.NewCookieStore([]byte("secret-key"))
+		session, err := store.Get(r, "session-login")
+		if err != nil {
+			fmt.Println(err)
+		}
+		session.Values["jwtToken"] = tokenStr
+		err = session.Save(r, w)
+		return user, false
 	}
 
 	tokenStr := createToken(userDB)
