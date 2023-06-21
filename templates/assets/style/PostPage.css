@@ -180,35 +180,3 @@ width: 40%;
     cursor: pointer;
     border-radius: 1vh;
 }
-
-
-
-button {
-    color: black;
-    left: 80px;
-    margin-bottom: 10px;
-}
-buttonlike#red{
-    position: absolute;
-    right: 900px;
-    top: 305px;
-}
-buttonlike#green{
-    position: absolute;
-    left: 900px;
-    top: 305px;
-}
-.btn:focus {
-    outline: none;
-
-}
-
-.green {
-    color: green;
-
-}
-
-.red {
-    color: red;
-
-}
