@@ -26,7 +26,7 @@ form.addEventListener('submit', function(event) {
                     alert("Votre compte n'existe pas")
                 }
             } else {
-                console.log(document.cookie)
+                window.location.href = "http://localhost:8080/homepage";
                 console.log("user logged")
             }
         })

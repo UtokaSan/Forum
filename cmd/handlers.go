@@ -41,7 +41,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if token.Valid {
-		http.Redirect(w, r, "/admin", http.StatusSeeOther)
+		http.Redirect(w, r, "/homepage", http.StatusSeeOther)
 	}
 }
 
@@ -50,6 +50,17 @@ func loginHandlers(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound)
 	} else {
 		t, err := template.ParseFiles("templates/Login.html")
+		if err != nil {
+			fmt.Println(err)
+		}
+		t.Execute(w, r)
+	}
+}
+func postHandlers(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/post" {
+		errorHandler(w, r, http.StatusNotFound)
+	} else {
+		t, err := template.ParseFiles("templates/postPage.html")
 		if err != nil {
 			fmt.Println(err)
 		}

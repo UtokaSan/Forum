@@ -11,8 +11,13 @@ import (
 func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := getSession(r)
+		fmt.Println()
+		fmt.Println("TOKEN : ", token)
+		fmt.Println()
 		if token == "" {
 			tokenCookie := getCookie(r)
+			fmt.Println("MEdedededeD : ", tokenCookie)
+
 			if tokenCookie == "" {
 				next(w, r)
 				return
@@ -22,6 +27,7 @@ func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
 			session, _ := store.Get(r, "session-login")
 			session.Values["jwtToken"] = tokenCookie
 			session.Save(r, w)
+			fmt.Println("session : ", session)
 			next(w, r)
 			return
 		}

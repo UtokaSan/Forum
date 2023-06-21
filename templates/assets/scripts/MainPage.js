@@ -1,30 +1,36 @@
-document.addEventListener("DOMContentLoaded", function(event) {
-    var categoryButtons = document.querySelectorAll(".categorie");
+function afficherContenu(evt, contenuId) {
+    var contenus = document.getElementsByClassName("contenu-onglet");
+    for (var i = 0; i < contenus.length; i++) {
+        contenus[i].style.display = "none";
+    }
+    var onglets = document.getElementsByClassName("onglet");
+    for (var i = 0; i < onglets.length; i++) {
+        onglets[i].className = onglets[i].className.replace(" active", "");
+    }
+    document.getElementById(contenuId).style.display = "block";
+    evt.currentTarget.className += " active";
+}
 
-    categoryButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            categoryButtons.forEach(function(btn) {
-                btn.classList.remove("active");
-            });
-
-            button.classList.add("active");
-
-            var category = button.textContent;
-
-            var discussionDivs = document.querySelectorAll(".discussion");
-
-           discussionDivs.forEach(function(div) {
-                if (div.classList.contains(category)) {
-                    div.classList.remove("hidden");
+document.addEventListener("DOMContentLoaded", function (event) {
+    var defaultCategoryButton = document.querySelector(".onglet[data-category='contenu1']");
+    defaultCategoryButton.classList.add("active");
+    var defaultCategoryContent = document.querySelector(".contenu-onglet[data-content='contenu1']");
+    defaultCategoryContent.style.display = "block";
+    var categoryButtons = document.querySelectorAll(".onglet");
+    categoryButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            var category = button.getAttribute("data-category");
+            var discussionDivs = document.querySelectorAll(".contenu-onglet");
+            discussionDivs.forEach(function (div) {
+                if (div.getAttribute("data-content") === category) {
+                    div.style.display = "block";
                 } else {
-                    div.classList.add("hidden");
+                    div.style.display = "none";
                 }
             });
         });
     });
 });
-
-
 fetch("/api/display-post", {
     method: "POST",
     headers: {
@@ -32,9 +38,41 @@ fetch("/api/display-post", {
     },
 })
     .then(response => response.json())
-        .then(data => {
-            console.log(data)
-        })
+    .then(data => {
+        console.log(data)
+        data.forEach(post => {
+            var newDiv = document.createElement("div");
+            newDiv.id = "post-" + post.id;
+            newDiv.className = "post-div topics " + post.categorie.split(" ").join("_") ;
+            console.log("------------")
+            console.log(newDiv)
+            console.log("------------")
+            // Créer un élément d'ancre
+            var anchorElement = document.createElement("a");
+            anchorElement.href = '/' + post.id;
+            anchorElement.textContent = post.title;
+            if (anchorElement.textContent.length > 50) {
+                anchorElement.textContent = anchorElement.textContent.substring(0, 47)
+                anchorElement.textContent += "..."
+            }
+            newDiv.appendChild(anchorElement);
+            let categoryDiv
+            console.log(newDiv.classList.contains('Drogue'))
+            if (newDiv.classList.contains('ChatGénéral')) {
+                document.getElementById("contenu1").appendChild(newDiv);
+            } else if (newDiv.classList.contains('Drogue')) {
+                document.getElementById("contenu2").appendChild(newDiv);
+            } else if (newDiv.classList.contains('Sex_cam')) {
+                document.getElementById("contenu3").appendChild(newDiv);
+            } else if (newDiv.classList.contains('Red_Room')) {
+                document.getElementById("contenu4").appendChild(newDiv);
+            } else {
+                document.getElementById("contenu1").appendChild(newDiv);
+            }
+
+
+        });
+    })
     .catch(error => {
         console.error("Error update", error);
     });

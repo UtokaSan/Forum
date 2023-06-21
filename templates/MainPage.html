@@ -7,20 +7,32 @@
 </head>
 <body>
 <header>
-
 </header>
 <div class="pageContent" id="">
     <div class="underPageContentFirst" >
     </div>
     <div class="discussion underPageContentSecond">
         <div class="categories">
-            <button class="categorie active" >Chat Général</button>
-            <button class="categorie" >Drogue</button>
-            <button class="categorie" >Sex Cam</button>
-            <button class="categorie" >Red Room</button>
+            <button class="onglet active" onclick="afficherContenu(event, 'contenu1')">Chat Général</button>
+            <button class="onglet" onclick="afficherContenu(event, 'contenu2')">Drogue</button>
+            <button class="onglet" onclick="afficherContenu(event, 'contenu3')">Sex cam</button>
+            <button class="onglet" onclick="afficherContenu(event, 'contenu4')">Red Room</button>
         </div>
-        <input placeholder="Que voulez-vous partager ?">
         <form id="messageForm" onsubmit="submitForm(event)">
+            <form onsubmit="submitForm(event)">
+                <div id="contenu1" class="contenu-onglet active">
+                    <h1>Chat Général</h1>
+                </div>
+                <div id="contenu2" class="contenu-onglet ">
+                    <h1>Drogue</h1>
+                </div>
+                <div id="contenu3" class="contenu-onglet">
+                    <h1>Sex cam</h1>
+                </div>
+                <div id="contenu4" class="contenu-onglet">
+                    <h1>Red Room</h1>
+                </div>
+            </form>
             <div class="menu-deroulant">
                 <h2>Créer un post </h2>
                 <select id="menu-deroulant-select" name="action">
@@ -30,12 +42,21 @@
                     <option value="Red Room">Red Room</option>
                 </select>
                 <textarea id="message" name="message" placeholder="Entrez votre titre ici"></textarea>
+                <textarea id="messageContent" name="message" placeholder="Entrez votre texte ici"></textarea>
+                <input class="importFile" type="file" id="imageUpload" name="imageUpload" accept="image/jpeg, image/png, image/gif">
                 <button type="submit">Envoyer</button>
             </div>
         </form>
     </div>
     <div class="underPageContentThird"></div>
+    <button id="login" class="login" >Login</button>
+    <script>
+        document.getElementById("login").addEventListener("click", function() {
+            window.location.href = "/login";
+        });
+    </script>
 </div>
+
 <script src="assets/scripts/MainPage.js"></script>
 </body>
 </html>

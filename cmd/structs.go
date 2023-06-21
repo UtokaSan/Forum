@@ -17,11 +17,12 @@ func (u User) Read(p []byte) (n int, err error) {
 }
 
 type Post struct {
-	ID          int `json:"ID"`
+	ID          int
 	IDCreator   int
-	Photo       string `json:"photo"`
-	Title       string `json:"title"`
-	Texte       string `json:"texte"`
+	NameCreator string
+	Photo       string
+	Title       string
+	Texte       string
 	Hidden      int
 	Like        int
 	Dislike     int
@@ -94,4 +95,10 @@ type UserGoogle struct {
 	Nom           string `json:"name"`
 	VerifiedEmail bool   `json:"verified_email"`
 	Picture       string `json:"picture"`
+}
+type Reaction struct {
+	Like    string `json:"like"`
+	Dislike string `json:"dislike"`
+	PostId  string `json:"post_id"`
+	UserId  string `json:"user_id"`
 }
