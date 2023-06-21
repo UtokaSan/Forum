@@ -53,12 +53,15 @@ type AdminPanel struct {
 	PostHidden      []map[string]interface{} `json:"postHidden"`
 	PostArchived    []map[string]interface{} `json:"postArchived"`
 }
-
+type Input struct {
+	ID int `json:"id"`
+}
 type TakePostId struct {
-	Title string `json:"title"`
+	Info []map[string]interface{} `json:"info"`
 }
 
 type GestionPost struct {
+	ID         int    `json:"id"`
 	CreatePost string `json:"create-post"`
 }
 

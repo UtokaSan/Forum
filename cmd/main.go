@@ -44,5 +44,5 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/api/createcomment", createComment)
 	server.HandleFunc("/api/testImage", uploadImage)
 	server.HandleFunc("/api/editPost", editPost)
-
+	server.HandleFunc("/api/takepostid", sendDataPostWithId)
 }

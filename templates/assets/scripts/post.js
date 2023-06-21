@@ -1,4 +1,21 @@
 var url = new URL(window.location.href);
-var param1Value = url.searchParams.get('param1');
+var param1Value = url.searchParams.get('id');
 
-fetch("/api/")
+var parameterUrl = {
+    id: parseInt(param1Value)
+};
+
+fetch("/api/takepostid", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(parameterUrl),
+})
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error("Error sending data id", error);
+    });

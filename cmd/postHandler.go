@@ -55,21 +55,25 @@ func createComment(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func takePostWithId(w http.ResponseWriter, r *http.Request) {
+func sendDataPostWithId(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	data := TakePostId{
-		Title: "ss",
+	var data Input
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
-
-	jsonData, err := json.Marshal(data)
+	gestionPost := TakePostId{
+		Info: takeInfoPostId(data.ID),
+	}
+	jsonData, err := json.Marshal(gestionPost)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(body)
 	w.Write(jsonData)
 }
 
