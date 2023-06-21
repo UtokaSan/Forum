@@ -114,7 +114,7 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Admin")
 		postEdit := changedDataPost(post, data)
 		if postEdit.ID == -1 {
-			println("C'est de la merde")
+			println("it's no change post with data post")
 			return
 		}
 		updatePost(postEdit)
@@ -122,16 +122,13 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("user")
 		postEdit := changedDataPost(post, data)
 		if postEdit.ID == -1 {
-			println("C'est de la merde")
+			println("it's no change post with data post")
 			return
 		}
 		updatePost(postEdit)
 
 	} else {
-
-		fmt.Println("Mec user Other")
-
-		// REFUSE
+		return
 	}
 }
 
