@@ -62,9 +62,17 @@ func likePost(user_ID int, post_ID string) bool {
 	}
 	var countLike int
 	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE post_id = ?", post_ID).Scan(&countLike)
-	_, err = db.Exec("UPDATE posts SET like = ? WHERE id = ?", countLike, post_ID)
+	_, err = db.Exec("UPDATE posts SET likes = ? WHERE id = ?", countLike, post_ID)
+
+	var countNbrDislike int
+	err = db.QueryRow("SELECT COUNT(*) FROM dislikes WHERE user_id = ? AND post_id = ?", user_ID, post_ID).Scan(&countNbrDislike)
+	if countNbrDislike > 0 {
+		_, err = db.Exec("UPDATE posts SET dislikes = dislikes - 1 WHERE id = ?", post_ID)
+		_, err = db.Exec("DELETE FROM dislikes WHERE user_id = ? AND post_id = ?", user_ID, post_ID)
+	}
 	if err != nil {
 		fmt.Println(err)
+		return false
 	}
 	return true
 }
@@ -76,7 +84,7 @@ func dislikePost(user_ID int, post_ID string) bool {
 	}
 	defer db.Close()
 	var count int
-	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE user_id = ? AND post_id = ?", user_ID, post_ID).Scan(&count)
+	err = db.QueryRow("SELECT COUNT(*) FROM dislikes WHERE user_id = ? AND post_id = ?", user_ID, post_ID).Scan(&count)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -84,16 +92,35 @@ func dislikePost(user_ID int, post_ID string) bool {
 	if count > 0 {
 		return false
 	}
-	_, err = db.Exec("INSERT INTO dislike (user_id, post_id) VALUES (?, ?)", user_ID, post_ID)
+	_, err = db.Exec("INSERT INTO dislikes (user_id, post_id) VALUES (?, ?)", user_ID, post_ID)
 	if err != nil {
 		fmt.Println(err)
 		return false
 	}
 	var countDislike int
-	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE post_id = ?", post_ID).Scan(&countDislike)
-	_, err = db.Exec("UPDATE posts SET dislike = ? WHERE id = ?", countDislike, post_ID)
+	err = db.QueryRow("SELECT COUNT(*) FROM dislikes WHERE post_id = ?", post_ID).Scan(&countDislike)
 	if err != nil {
 		fmt.Println(err)
+		return false
+	}
+	_, err = db.Exec("UPDATE posts SET dislikes = ? WHERE id = ?", countDislike, post_ID)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	var countNbrLike int
+	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE user_id = ? AND post_id = ?", user_ID, post_ID).Scan(&countNbrLike)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	if countNbrLike > 0 {
+		_, err = db.Exec("UPDATE posts SET likes = likes - 1 WHERE id = ?", post_ID)
+		_, err = db.Exec("DELETE FROM likes WHERE user_id = ? AND post_id = ?", user_ID, post_ID)
+		if err != nil {
+			fmt.Println(err)
+			return false
+		}
 	}
 	return true
 }

@@ -14,7 +14,7 @@ fetch("/api/takepostid", {
 })
     .then(response => response.json())
     .then(data => {
-        console.log(data.info[0].title);
+        console.log(data);
         var title = document.querySelector('.Title');
         title.innerText = data.info[0].title;
 
@@ -48,18 +48,25 @@ function envoyerDislike() {
 function sendData (formDataSend) {
     const data = {
         reactions: formDataSend,
-        post_id: parseInt(param1Value),
+        post_id: param1Value,
     };
     fetch("/api/likeordislike", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: data,
+        body: JSON.stringify(data),
     })
-        .then(response => response.text())
-        .then(data => {
-            console.log(data);
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 400) {
+                    alert("already liked");
+                } else {
+                    console.log("problem");
+                }
+            } else {
+                alert("liked");
+            }
         })
         .catch(error => {
             console.error('Error:', error);

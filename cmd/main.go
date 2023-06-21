@@ -48,5 +48,5 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/api/testImage", uploadImage)
 	server.HandleFunc("/api/editPost", editPost)
 	server.HandleFunc("/api/takepostid", sendDataPostWithId)
-	server.HandleFunc("/api/likeordislike", authUserSecurity(postLikeOrDislike))
+	server.HandleFunc("/api/likeordislike", postLikeOrDislike)
 }

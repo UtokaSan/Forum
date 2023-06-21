@@ -104,8 +104,6 @@ type UserGoogle struct {
 	Picture       string `json:"picture"`
 }
 type Reaction struct {
-	Like    string `json:"like"`
-	Dislike string `json:"dislike"`
-	PostId  string `json:"post_id"`
-	UserId  string `json:"user_id"`
+	Reactions string `json:"reactions"`
+	PostId    string `json:"post_id"`
 }
