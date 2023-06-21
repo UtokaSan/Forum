@@ -75,7 +75,7 @@ func CreateUserGithub(user User) (User, bool) {
 
 	if userDB.ID == -1 {
 		if checkInputNotValid(user.Email, user.Username) {
-			return User{}, true
+			fmt.Println("user email : ", user.Email, ", username : ", user.Username)
 		}
 		createUserGithub(user)
 		return User{}, true

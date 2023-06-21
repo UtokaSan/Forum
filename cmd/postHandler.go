@@ -112,7 +112,13 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 	if dataUser.UserRole >= 3 {
 		fmt.Println("Admin")
 		postEdit := editedPost(r, post)
+		if postEdit.ID == -1 {
+			println("C'est de la merde")
+			return
+		}
 		fmt.Println("postEdit")
+		updatePost(postEdit)
+
 		fmt.Println(postEdit)
 
 	} else if dataUser.UserId == 2 {
