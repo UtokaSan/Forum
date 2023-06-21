@@ -17,19 +17,22 @@ func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
 				next(w, r)
 				return
 			}
+
 			var store = sessions.NewCookieStore([]byte("secret-key"))
 			session, _ := store.Get(r, "session-login")
 			session.Values["jwtToken"] = tokenCookie
 			session.Save(r, w)
-			fmt.Println("session : ", session)
+			next(w, r)
+			return
 		}
 		next(w, r)
+		return
 	}
 }
 
 func authUserSecurity(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const secretToken = "token-user"
+		//var secretToken = "token-user"
 		token := getSession(r)
 
 		println("token : " + token)
@@ -40,13 +43,14 @@ func authUserSecurity(next http.HandlerFunc) http.HandlerFunc {
 				next(w, r)
 				return
 			}
+
 			var store = sessions.NewCookieStore([]byte("secret-key"))
 			session, _ := store.Get(r, "session-login")
 			session.Values["jwtToken"] = tokenCookie
 			session.Save(r, w)
 			fmt.Println("session : ", session)
 		}
-		tokenJWT := checkJWT(secretToken, token)
+		tokenJWT := checkJWT("", token)
 		dataUser := getData(tokenJWT)
 
 		if dataUser.UserRole >= 1 {
@@ -68,15 +72,18 @@ func authModoSecurity(next http.HandlerFunc) http.HandlerFunc {
 		//fmt.Println("token : ", len(token))
 		if token == "" {
 			tokenCookie := getCookie(r)
+			fmt.Println("Coooookie : ", tokenCookie)
 			if tokenCookie == "" {
 				next(w, r)
 				return
 			}
 			var store = sessions.NewCookieStore([]byte("secret-key"))
-			session, _ := store.Get(r, "session-login")
+			session, err := store.Get(r, "session-login")
+			if err != nil {
+				fmt.Println(err)
+			}
 			session.Values["jwtToken"] = tokenCookie
-			session.Save(r, w)
-			fmt.Println("session : ", session)
+			err = session.Save(r, w)
 		}
 		tokenJWT := checkJWT(secretToken, token)
 		dataUser := getData(tokenJWT)
@@ -131,6 +138,8 @@ func authAdminSecurity(next http.HandlerFunc) http.HandlerFunc {
 func getSession(r *http.Request) string {
 	var store = sessions.NewCookieStore([]byte("secret-key"))
 	session, _ := store.Get(r, "session-login")
+	fmt.Println("MERDEDEEEEEEEEFCDSxw : ", session)
+
 	if session.Values["jwtToken"] == nil {
 		return ""
 	}
@@ -138,26 +147,25 @@ func getSession(r *http.Request) string {
 }
 
 func getCookie(r *http.Request) string {
-
 	cookieUser, err := r.Cookie("jwtToken")
-	fmt.Println("cookie : ", cookieUser, " | err : ", err)
 	if err != nil {
 		println("pas de cookie")
 		return ""
 	}
 	cookieStr := cookieUser.String()
-	return cookieStr[9 : len(cookieStr)-1]
+	return cookieStr[9:len(cookieStr)]
 }
 
 func checkJWT(secretToken string, tokenJWT string) *jwt.Token {
 	token, err := jwt.Parse(tokenJWT, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			fmt.Println("Non")
 			return nil, fmt.Errorf("Méthode de signature inattendue : %v", token.Header["alg"])
 		}
+		fmt.Println("Yes")
 		return []byte(secretToken), nil
 	})
 	if err != nil || !token.Valid {
-		fmt.Println("bug : ", err)
 		return nil
 	}
 
@@ -173,6 +181,7 @@ func checkJWT(secretToken string, tokenJWT string) *jwt.Token {
 func getData(token *jwt.Token) DataTokenJWT {
 	data := DataTokenJWT{}
 	if token == nil {
+		fmt.Println("mince ! avec le dataTokenJWT qui est dans checkJWT l:152")
 		return DataTokenJWT{
 			UserRole: 0,
 		}
@@ -181,17 +190,15 @@ func getData(token *jwt.Token) DataTokenJWT {
 
 	fmt.Println("----------------------------------")
 	fmt.Println(allDataToken["user-id"])
-	fmt.Println(allDataToken["user-id"].(float64))
 	fmt.Println(allDataToken["user-role"])
-	fmt.Println(strconv.Atoi(allDataToken["user-role"].(string)))
 	fmt.Println(allDataToken["exp"])
-	fmt.Println(allDataToken["exp"].(float64))
 	fmt.Println("----------------------------------")
 
 	// Accéder aux données du JWT
-	data.UserId = allDataToken["user-id"].(float64)
+
+	data.UserId = int(allDataToken["user-id"].(float64))
 	data.UserRole, _ = strconv.Atoi(allDataToken["user-role"].(string))
-	//data.Exp = allDataToken["user-fdsfdsqf"].(float64)
+	data.Exp = int(allDataToken["user-fdsfdsqf"].(float64))
 
 	fmt.Println("user-role:", data)
 	return data

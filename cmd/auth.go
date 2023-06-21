@@ -83,6 +83,7 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 			if user.Ban == 0 {
 				tokenStr := createToken(user)
 				cookieOrSession(w, r, userLogin.SaveInfo, tokenStr)
+				fmt.Println(tokenStr)
 				w.WriteHeader(http.StatusOK)
 				return
 			} else {
@@ -109,12 +110,18 @@ func createToken(user User) string {
 
 func cookieOrSession(w http.ResponseWriter, r *http.Request, userlogin string, tokenStr string) {
 	if userlogin == "on" {
+		fmt.Println()
+		fmt.Println("COOOKIE : ", tokenStr)
 		cookie := http.Cookie{
 			Name:    "jwtToken",
 			Value:   tokenStr,
 			Expires: time.Now().Add(time.Hour * 24),
 			Path:    "/",
 		}
+		fmt.Println("cookie")
+		fmt.Println(cookie)
+		fmt.Println()
+
 		http.SetCookie(w, &cookie)
 	} else {
 		var store = sessions.NewCookieStore([]byte("secret-key"))

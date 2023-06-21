@@ -1,3 +1,5 @@
+
+
 function submitForm (event) {
     event.preventDefault();
     const selectUnBanUser = document.querySelector("#unban-user").value;
@@ -17,7 +19,7 @@ function submitForm (event) {
     if (selectRoleModo !== "") {
         formData["key"] = "role-modo-user"
         formData["role-modo-user"] = selectRoleModo
-    }
+    }-
     if (selectRoleAdmin !== "") {
         formData["key"] = "role-admin-user"
         formData["role-admin-user"] = selectRoleAdmin

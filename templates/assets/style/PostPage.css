@@ -57,28 +57,37 @@ header {
     box-shadow: 4px 0 10px rgb(255, 0, 0);
 }
 
-.categories {
+.underPageContentSecond input {
+    width: 95%;
+    height: 2vh;
+    padding: 10px;
+    border: 1px solid #ea5353;
+    border-radius: 5vw;
+    background-color: rgba(87, 87, 87, 0.68);
+    color: darkred;
+}
+
+.Title {
     display: flex;
-    top: 5vw;
-    margin-left: 20%;
+    position: relative;
+    font-size: 25px;
     margin-bottom: 5%;
-    gap: 5%;
+    box-shadow: 0px 5px 5px rgba(185, 0, 0, 0.3); /* Ajout de la bordure d'ombre */
 }
 
-.categories button {
-    background-color: #ddd;
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 1vh;
+.comments {
+    display: flex;
+    position: relative;
+    margin-top: 3vw;
+    margin-bottom: 5%;
+    box-shadow: 0px -5px 10px rgba(185, 0, 0, 0.3);
+    border: 10px #7E001A;
 }
 
-.categories button.active {
-    background-color: #000000;
-    color: red;
-    border-color: #0e0e4d;
-    border-width: 5px;
+.comment {
+    display: flex;
+    position: relative;
+    margin-top: 5%;
 }
 
 .menu-deroulant {
@@ -98,7 +107,6 @@ header {
 .menu-deroulant h2 {
     font-size: 18px;
     margin-bottom: 10px;
-    color: #7E001A;
 }
 
 .menu-deroulant select,
@@ -133,53 +141,4 @@ header {
 
 #contenu1{
     display: block;
-}
-
-.importFile{
-    background-color: #ddd;
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 1vh;
-}
-a{
-    text-decoration: none;
-}
-
-.topics{
-    display: flex;
-    background-color: rgba(108, 108, 108, 0.3);
-    height: 75px ;
-    border-radius: 2vh;
-    color: #7E001A;
-    align-items: center;
-}
-
-.contenu-onglet a {
-    text-underline: none;
-    color: #7E001A;
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.contenu-onglet a:hover {
-    color: red;
-}
-
-#login {
-    margin-top: 5vh;
-    margin-right: 2vw;
-    height: 40px;
-    width: 60px;
-    background-color: #ddd;
-    border: none;
-    color: black;
-    cursor: pointer;
-    border-radius: 1vh;
-}
-
-.topics{
-    display: flex;
-    margin-top: 4vh;
 }
