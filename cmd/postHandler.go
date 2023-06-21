@@ -137,9 +137,12 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 
 func getComments(w http.ResponseWriter, r *http.Request) {
 	data := getDataComments(r)
+	if data.ID == -1 {
+		w.WriteHeader(200)
+		w.Write([]byte("Error to get data"))
+		return
+	}
 	comments := takeComments(data.ID)
-
-	fmt.Println("id : ", data.ID)
 
 	jsonData, err := json.Marshal(comments)
 	if err != nil {

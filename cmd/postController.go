@@ -244,8 +244,6 @@ func getDataComments(r *http.Request) Input {
 
 	err = json.Unmarshal(body, &data)
 
-	fmt.Println("LA DATA DE TES MROTS C'EST : ", data)
-
 	return data
 
 }
