@@ -39,7 +39,7 @@ func createPostWithTitle(post Post) {
 	fmt.Println("Post created successfully")
 }
 
-func likePost(user_ID string, post_ID string) bool {
+func likePost(user_ID int, post_ID string) bool {
 	db, err := sql.Open("sqlite3", "forum.db")
 	if err != nil {
 		fmt.Println(err)
@@ -62,15 +62,13 @@ func likePost(user_ID string, post_ID string) bool {
 	}
 	var countLike int
 	err = db.QueryRow("SELECT COUNT(*) FROM likes WHERE post_id = ?", post_ID).Scan(&countLike)
-
 	_, err = db.Exec("UPDATE posts SET like = ? WHERE id = ?", countLike, post_ID)
 	if err != nil {
 		fmt.Println(err)
 	}
 	return true
 }
-
-func dislikePost(user_ID string, post_ID string) bool {
+func dislikePost(user_ID int, post_ID string) bool {
 	db, err := sql.Open("sqlite3", "forum.db")
 	if err != nil {
 		fmt.Println(err)
