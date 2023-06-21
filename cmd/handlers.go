@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -12,8 +13,19 @@ import (
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	takeCookie, err := r.Cookie("jwtToken")
+
+	const secretToken = "token-user"
+	tokene := getSession(r)
+	tokenJWT := checkJWT(secretToken, tokene)
+	dataUser := getData(tokenJWT)
+
+	println("------OUI------")
+	println(dataUser.UserId)
+	println(dataUser.UserRole)
+	println("-------NON-----")
+
 	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Redirect(w, r, "/homepage", http.StatusSeeOther)
 		return
 	}
 	token, err := jwt.Parse(takeCookie.Value, func(token *jwt.Token) (interface{}, error) {
@@ -27,7 +39,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if token.Valid {
-		http.Redirect(w, r, "/admin", http.StatusSeeOther)
+		http.Redirect(w, r, "/homepage", http.StatusSeeOther)
 	}
 }
 
@@ -42,6 +54,7 @@ func loginHandlers(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, r)
 	}
 }
+
 func mainHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/homepage" {
 		errorHandler(w, r, http.StatusNotFound)
@@ -71,7 +84,7 @@ func adminHandlers(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound)
 	} else {
 		t, err := template.ParseFiles("templates/Admin.html")
-		takeInfoGoogle(r)
+		takeInfoGoogle(w, r)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -79,8 +92,8 @@ func adminHandlers(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func takeInfoGoogle(r *http.Request) {
-	config := getConfig()
+func takeInfoGoogle(w http.ResponseWriter, r *http.Request) {
+	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint)
 	code := r.URL.Query().Get("code")
 	token, err := config.Exchange(oauth2.NoContext, code)
 	if err != nil {
@@ -94,13 +107,32 @@ func takeInfoGoogle(r *http.Request) {
 		return
 	}
 	body, err := ioutil.ReadAll(response.Body)
+
 	var usergoogle UserGoogle
 	err = json.Unmarshal(body, &usergoogle)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(usergoogle.Email)
+	if !verifyUser(usergoogle.Email) {
+		http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
+		w.Write([]byte("Account not exist"))
+	}
+	user := readUsers()
+	for _, user := range user {
+		if user.Email == usergoogle.Email {
+			if user.Ban == 0 {
+				fmt.Println(createToken(user))
+				w.WriteHeader(http.StatusOK)
+				return
+			} else {
+				w.WriteHeader(http.StatusForbidden)
+				return
+			}
+		}
+	}
+	fmt.Println(usergoogle)
+
 }
 
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {

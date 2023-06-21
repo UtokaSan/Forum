@@ -20,6 +20,7 @@ func createPost(post Post) {
 	}
 	fmt.Println("Post created successfully")
 }
+
 func readPost() {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
@@ -41,14 +42,46 @@ func readPost() {
 	}
 }
 
+func readOnePostById(id int) Post {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println("err 0")
+		fmt.Println(err)
+	}
+	defer db.Close()
+
+	query := "SELECT photo, title, texte FROM posts WHERE id = ?"
+
+	rows, err := db.Query(query, id)
+	if err != nil {
+		fmt.Println("err 1")
+		fmt.Println(err)
+	}
+	post := Post{
+		ID: -1,
+	}
+
+	if rows.Next() {
+		err := rows.Scan(&post.Photo, &post.Title, &post.Texte)
+		if err != nil {
+			fmt.Println("err 2")
+			fmt.Println(err)
+		}
+	}
+
+	fmt.Println("post")
+	fmt.Println(post)
+	return post
+}
+
 func updatePost(post Post) {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "UPDATE posts SET photo = ?, title = ?, texte = ?, hidden = ?, like = ?, dislike = ?, report = ?, categorie = ?, ban = ?, archived = ? WHERE ID = ?"
-	_, err = db.Exec(query, post.Photo, post.Title, post.Texte, post.Hidden, post.Like, post.Dislike, post.Signalement, post.Categorie, post.Ban, post.Archived)
+	query := "UPDATE posts SET photo = ?, title = ?, texte = ? WHERE ID = ?"
+	_, err = db.Exec(query, post.Photo, post.Title, post.Texte, post.ID)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -78,6 +111,7 @@ func takePostHidden() []map[string]interface{} {
 	}
 	return result
 }
+
 func takePostUnHidden() []map[string]interface{} {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
@@ -124,4 +158,22 @@ func postArchived() []map[string]interface{} {
 		result = append(result, postData)
 	}
 	return result
+}
+
+func createCommentService(comment Comment) {
+	db, err := sql.Open("sqlite3", "./forum.db")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer db.Close()
+
+	postCreate := `INSERT INTO comments (IDPost, IDCreator,Text) VALUES (?,?,?)`
+	_, errCreate := db.Exec(postCreate, comment.IDPost, comment.IDCreator, comment.Text)
+
+	if errCreate != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Post created successfully")
 }

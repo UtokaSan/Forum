@@ -11,11 +11,17 @@ type User struct {
 	Report   string
 }
 
+func (u User) Read(p []byte) (n int, err error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 type Post struct {
-	ID          int
-	Photo       string
-	Title       string
-	Texte       string
+	ID          int `json:"ID"`
+	IDCreator   int
+	Photo       string `json:"photo"`
+	Title       string `json:"title"`
+	Texte       string `json:"texte"`
 	Hidden      int
 	Like        int
 	Dislike     int
@@ -23,6 +29,13 @@ type Post struct {
 	Categorie   string
 	Ban         int
 	Archived    string
+}
+
+type Comment struct {
+	ID        int    `json:"ID"`
+	IDPost    int    `json:"IDPost"`
+	IDCreator int    `json:"IDCreator"`
+	Text      string `json:"text"`
 }
 
 type Login struct {
@@ -63,7 +76,28 @@ type responseRegister struct {
 	Message string `json:"message"`
 }
 
+type responseLoginGithub struct {
+	ClientId     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
+	Code         string `json:"code"`
+	//Accept       string `json:"accept"`
+}
+
+type DataTokenJWT struct {
+	UserId   int `json:"user-id"`
+	UserRole int `json:"user-role"`
+	Exp      int `json:"exp"`
+}
+
 type UserGoogle struct {
-	Email   string `json:"email"`
-	Picture string `json:"picture"`
+	Email         string `json:"email"`
+	Nom           string `json:"name"`
+	VerifiedEmail bool   `json:"verified_email"`
+	Picture       string `json:"picture"`
+}
+type Reaction struct {
+	Like    string `json:"like"`
+	Dislike string `json:"dislike"`
+	PostId  string `json:"post_id"`
+	UserId  string `json:"user_id"`
 }

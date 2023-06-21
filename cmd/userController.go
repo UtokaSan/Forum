@@ -1,10 +1,12 @@
 package cmd
 
 import (
+	"context"
 	"database/sql"
 	"encoding/json"
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/go-github/v53/github"
 	"github.com/gorilla/sessions"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
@@ -31,14 +33,55 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		createErrorMessage("Compte déjà existant", 403, w)
 		return
 	}
+	if errroCreateUserEmpty(userSend) {
+		createErrorMessage("Un champ de texte est vide", 403, w)
+		return
+	}
 
-	createUser(userSend)
+	userSend = createUser(userSend)
 	createAToken(w, r, userSend)
 
 	_, err = w.Write(createSuccessfulMessage("compte bien créer", 201, w))
 	if err != nil {
 		return
 	}
+}
+
+func CreateAccountGoogle(r *http.Request) (User, bool) {
+	account := getInfoGoogle(r)
+	account.Nom = strings.Split(account.Email, "@")[0]
+	if account.VerifiedEmail == true {
+		user := readOneUserByIdentifiantWithGoogle(account.Email)
+		if user.ID == -1 {
+			if checkInputNotValid(account.Email, account.Nom) {
+				return User{}, true
+			}
+			createUserGoogle(account)
+			return User{}, true
+		}
+		return user, false
+	}
+	return User{}, true
+
+}
+
+func CreateUserGithub(user User) (User, bool) {
+
+	fmt.Println("user : ", user.Email)
+	fmt.Println("ptr user : ", user.Email)
+	fmt.Println("url : ", user.Image)
+
+	userDB := readOneUserByIdentifiantWithGoogle(user.Email)
+
+	if userDB.ID == -1 {
+		if checkInputNotValid(user.Email, user.Username) {
+			return User{}, true
+		}
+		createUserGithub(user)
+		return User{}, true
+	}
+
+	return User{}, true
 }
 
 func cryptPassword(password string) string {
@@ -77,9 +120,14 @@ func changeRegisterToUser(user Register) (User, string) {
 func createAToken(w http.ResponseWriter, r *http.Request, user User) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claim := token.Claims.(jwt.MapClaims)
+	fmt.Println(user.ID)
+
 	claim["user-id"] = user.ID
+	claim["user-role"] = user.Role
 	claim["exp"] = time.Now().Add(time.Hour * 24).Unix()
+
 	tokenStr, err := token.SignedString([]byte("token-user"))
+	fmt.Println(tokenStr)
 	if err != nil {
 		createErrorMessage("Bug avec le token d'authentification", 500, w)
 		return
@@ -168,4 +216,34 @@ func updateUserRole(user User) {
 		return
 	}
 	fmt.Println("User role updated successfully")
+}
+
+func convGithubToUser(userGithub *github.User, client *github.Client) User {
+	ctx := context.Background()
+	emails, _, _ := client.Users.ListEmails(ctx, nil)
+
+	email := ""
+
+	fmt.Println("url : ", userGithub.GetAvatarURL())
+
+	if len(emails) > 1 {
+		email = *emails[1].Email
+	} else {
+		fmt.Println("Aucune adresse email trouvée.")
+		return User{ID: -1}
+	}
+
+	return User{
+		Image:    userGithub.GetAvatarURL(),
+		Username: userGithub.GetName(),
+		Email:    email,
+		Role:     "1",
+	}
+}
+
+func errroCreateUserEmpty(user User) bool {
+	if user.Password == "" || user.Email == "" || user.Username == "" {
+		return true
+	}
+	return false
 }
