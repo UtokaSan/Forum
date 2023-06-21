@@ -34,17 +34,20 @@
                 </div>
             </form>
             <div class="menu-deroulant">
-                <h2>Créer un post </h2>
-                <select id="menu-deroulant-select" name="action">
-                    <option value="Chat Général">Chat Général</option>
-                    <option value="Drogue">Drogue</option>
-                    <option value="Sex Cam">Sex Cam</option>
-                    <option value="Red Room">Red Room</option>
-                </select>
-                <textarea id="message" name="message" placeholder="Entrez votre titre ici"></textarea>
-                <textarea id="messageContent" name="message" placeholder="Entrez votre texte ici"></textarea>
-                <input class="importFile" type="file" id="imageUpload" name="imageUpload" accept="image/jpeg, image/png, image/gif">
-                <button type="submit">Envoyer</button>
+                <h2>Créer un post</h2>
+                <form>
+                    <select id="menu-deroulant-select" name="action" required>
+                        <option value="" disabled selected>Sélectionnez une catégorie</option>
+                        <option value="Chat Général">Chat Général</option>
+                        <option value="Drogue">Drogue</option>
+                        <option value="Sex Cam">Sex Cam</option>
+                        <option value="Red Room">Red Room</option>
+                    </select>
+                    <textarea id="message" name="message" placeholder="Entrez votre titre ici" required></textarea>
+                    <textarea id="messageContent" name="messageContent" placeholder="Entrez votre texte ici" required></textarea>
+                    <input class="importFile" type="file" id="imageUpload" name="imageUpload" accept="image/jpeg, image/png, image/gif">
+                    <button type="submit">Envoyer</button>
+                </form>
             </div>
         </form>
     </div>
