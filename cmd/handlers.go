@@ -43,6 +43,17 @@ func loginHandlers(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, r)
 	}
 }
+func postHandlers(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/post" {
+		errorHandler(w, r, http.StatusNotFound)
+	} else {
+		t, err := template.ParseFiles("templates/Post.html")
+		if err != nil {
+			fmt.Println(err)
+		}
+		t.Execute(w, r)
+	}
+}
 
 func mainHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/homepage" {

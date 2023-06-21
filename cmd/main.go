@@ -30,6 +30,7 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/login/github", loginGithub)
 	server.HandleFunc("/register", registerHandlers)
 	server.HandleFunc("/admin", adminHandlers)
+	server.HandleFunc("/post", postHandlers)
 	server.HandleFunc("/api/login", loginPost)
 	server.HandleFunc("/api/uploadimage", uploadImage)
 	//server.HandleFunc("/api/test", CreateAccountGoogle)
