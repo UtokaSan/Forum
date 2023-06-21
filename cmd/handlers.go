@@ -15,6 +15,8 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	takeCookie, err := r.Cookie("jwtToken")
 
 	const secretToken = "token-user"
+	fmt.Println()
+	fmt.Println()
 	tokene := getSession(r)
 	tokenJWT := checkJWT(secretToken, tokene)
 	dataUser := getData(tokenJWT)

@@ -11,17 +11,25 @@ import (
 func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := getSession(r)
+		fmt.Println()
+		fmt.Println("TOKEN : ", token)
+		fmt.Println()
 		if token == "" {
 			tokenCookie := getCookie(r)
+			fmt.Println("MEdedededeD : ", tokenCookie)
+
 			if tokenCookie == "" {
 				next(w, r)
 				return
 			}
+
 			var store = sessions.NewCookieStore([]byte("secret-key"))
 			session, _ := store.Get(r, "session-login")
 			session.Values["jwtToken"] = tokenCookie
 			session.Save(r, w)
 			fmt.Println("session : ", session)
+			next(w, r)
+			return
 		}
 		next(w, r)
 	}
@@ -29,7 +37,7 @@ func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
 
 func authUserSecurity(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const secretToken = "token-user"
+		//var secretToken = "token-user"
 		token := getSession(r)
 
 		println("token : " + token)
@@ -40,13 +48,14 @@ func authUserSecurity(next http.HandlerFunc) http.HandlerFunc {
 				next(w, r)
 				return
 			}
+
 			var store = sessions.NewCookieStore([]byte("secret-key"))
 			session, _ := store.Get(r, "session-login")
 			session.Values["jwtToken"] = tokenCookie
 			session.Save(r, w)
 			fmt.Println("session : ", session)
 		}
-		tokenJWT := checkJWT(secretToken, token)
+		tokenJWT := checkJWT("", token)
 		dataUser := getData(tokenJWT)
 
 		if dataUser.UserRole >= 1 {
@@ -68,15 +77,18 @@ func authModoSecurity(next http.HandlerFunc) http.HandlerFunc {
 		//fmt.Println("token : ", len(token))
 		if token == "" {
 			tokenCookie := getCookie(r)
+			fmt.Println("Coooookie : ", tokenCookie)
 			if tokenCookie == "" {
 				next(w, r)
 				return
 			}
 			var store = sessions.NewCookieStore([]byte("secret-key"))
-			session, _ := store.Get(r, "session-login")
+			session, err := store.Get(r, "session-login")
+			if err != nil {
+				fmt.Println(err)
+			}
 			session.Values["jwtToken"] = tokenCookie
-			session.Save(r, w)
-			fmt.Println("session : ", session)
+			err = session.Save(r, w)
 		}
 		tokenJWT := checkJWT(secretToken, token)
 		dataUser := getData(tokenJWT)
@@ -131,6 +143,8 @@ func authAdminSecurity(next http.HandlerFunc) http.HandlerFunc {
 func getSession(r *http.Request) string {
 	var store = sessions.NewCookieStore([]byte("secret-key"))
 	session, _ := store.Get(r, "session-login")
+	fmt.Println("MERDEDEEEEEEEEFCDSxw : ", session)
+
 	if session.Values["jwtToken"] == nil {
 		return ""
 	}
@@ -138,6 +152,10 @@ func getSession(r *http.Request) string {
 }
 
 func getCookie(r *http.Request) string {
+	fmt.Println("COOKIE")
+	fmt.Println()
+	fmt.Println("cokkie : ", r.Cookie)
+	fmt.Println()
 
 	cookieUser, err := r.Cookie("jwtToken")
 	fmt.Println("cookie : ", cookieUser, " | err : ", err)
@@ -146,7 +164,7 @@ func getCookie(r *http.Request) string {
 		return ""
 	}
 	cookieStr := cookieUser.String()
-	return cookieStr[9 : len(cookieStr)-1]
+	return cookieStr[9:len(cookieStr)]
 }
 
 func checkJWT(secretToken string, tokenJWT string) *jwt.Token {
