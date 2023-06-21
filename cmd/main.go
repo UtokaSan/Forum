@@ -23,6 +23,7 @@ func Runner() {
 }
 
 func routes(server *http.ServeMux) {
+	server.HandleFunc("/", authGuestSecurity(rootHandler))
 	server.HandleFunc("/homepage", mainHandlers)
 	server.HandleFunc("/login", loginHandlers)
 	server.HandleFunc("/login/google", loginGoogle)

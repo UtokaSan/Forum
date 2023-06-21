@@ -71,16 +71,14 @@ func CreateUserGithub(w http.ResponseWriter, r *http.Request, user User) (User, 
 
 	if userDB.ID == -1 {
 		if checkInputNotValid(user.Email, user.Username) {
-			fmt.Println("user email : ", user.Email, ", username : ", user.Username)
-			fmt.Println("PUTTTEE")
-			return User{ID: -1}, true
+
 		}
 		createUserGithub(user)
 		fmt.Println("MERDE TA MERE")
 		return User{}, true
 	}
 
-	tokenStr := createToken(user)
+	tokenStr := createToken(userDB)
 	var store = sessions.NewCookieStore([]byte("secret-key"))
 	session, err := store.Get(r, "session-login")
 	if err != nil {
@@ -88,7 +86,8 @@ func CreateUserGithub(w http.ResponseWriter, r *http.Request, user User) (User, 
 	}
 	session.Values["jwtToken"] = tokenStr
 	err = session.Save(r, w)
-	return User{}, true
+
+	return userDB, true
 }
 
 func cryptPassword(password string) string {
