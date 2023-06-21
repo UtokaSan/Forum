@@ -59,15 +59,15 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 	dataUser.UserRole = 3
 	dataUser.UserId = 2
 
-	Post := readOnePostById(2)
+	post := readOnePostById(2)
 
 	if dataUser.UserRole >= 3 {
 		fmt.Println("Admin")
-		postEdit := editedPost(r, Post)
+		postEdit := editedPost(r, post)
 		fmt.Println("postEdit")
 		fmt.Println(postEdit)
 
-	} else if dataUser.UserId == Post.IDCreator {
+	} else if dataUser.UserId == 2 {
 		fmt.Println("User")
 
 	} else {

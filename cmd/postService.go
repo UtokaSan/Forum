@@ -42,27 +42,36 @@ func readPost() {
 	}
 }
 
-func readOnePostById(IDPost int) Post {
+func readOnePostById(id int) Post {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
+		fmt.Println("err 0")
 		fmt.Println(err)
 	}
 	defer db.Close()
-	query := "SELECT id, photo, title, texte, hidden, like, dislike, signalement, categorie, ban, archived FROM posts WHERE id = ?"
-	rows, err := db.Query(query, IDPost)
+
+	query := "SELECT photo, title, texte FROM posts WHERE id = ?"
+
+	rows, err := db.Query(query, id)
 	if err != nil {
+		fmt.Println("err 1")
 		fmt.Println(err)
 	}
-	for rows.Next() {
-		var post Post
-		err := rows.Scan(&post.ID, &post.Photo, &post.Title, &post.Texte, &post.Hidden, &post.Like, &post.Dislike, &post.Signalement, &post.Categorie, &post.Ban, &post.Archived)
+	post := Post{
+		ID: -1,
+	}
+
+	if rows.Next() {
+		err := rows.Scan(&post.Photo, &post.Title, &post.Texte)
 		if err != nil {
+			fmt.Println("err 2")
 			fmt.Println(err)
 		}
-		fmt.Println("Id : " + strconv.Itoa(post.ID) + " photo : " + post.Photo + " titre : " + post.Title + " texte : " + post.Texte)
-		return post
 	}
-	return Post{ID: -1}
+
+	fmt.Println("post")
+	fmt.Println(post)
+	return post
 }
 
 func updatePost(post Post) {
