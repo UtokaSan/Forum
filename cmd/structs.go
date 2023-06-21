@@ -54,6 +54,10 @@ type AdminPanel struct {
 	PostArchived    []map[string]interface{} `json:"postArchived"`
 }
 
+type TakePostId struct {
+	Title string `json:"title"`
+}
+
 type GestionPost struct {
 	CreatePost string `json:"create-post"`
 }

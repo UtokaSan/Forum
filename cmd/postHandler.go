@@ -55,6 +55,24 @@ func createComment(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func takePostWithId(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	data := TakePostId{
+		Title: "ss",
+	}
+
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(body)
+	w.Write(jsonData)
+}
+
 func postLikeOrDislike(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
