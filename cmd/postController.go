@@ -114,8 +114,6 @@ func editPostController(w http.ResponseWriter, r *http.Request) {
 
 	err = json.Unmarshal(body, &data)
 
-	fmt.Println(data)
-
 	//if {
 	//
 	//}
