@@ -1,4 +1,15 @@
-
+function afficherContenu(evt, contenuId) {
+    var contenus = document.getElementsByClassName("contenu-onglet");
+    for (var i = 0; i < contenus.length; i++) {
+        contenus[i].style.display = "none";
+    }
+    var onglets = document.getElementsByClassName("onglet");
+    for (var i = 0; i < onglets.length; i++) {
+        onglets[i].className = onglets[i].className.replace(" active", "");
+    }
+    document.getElementById(contenuId).style.display = "block";
+    evt.currentTarget.className += " active";
+}
 
 function submitForm (event) {
     event.preventDefault();
@@ -19,7 +30,7 @@ function submitForm (event) {
     if (selectRoleModo !== "") {
         formData["key"] = "role-modo-user"
         formData["role-modo-user"] = selectRoleModo
-    }-
+    }
     if (selectRoleAdmin !== "") {
         formData["key"] = "role-admin-user"
         formData["role-admin-user"] = selectRoleAdmin

@@ -1,28 +1,31 @@
 
-fetch("/api/getComments", {
+
+var url = new URL(window.location.href);
+var param1Value = url.searchParams.get('id');
+
+var parameterUrl = {
+    id: parseInt(param1Value)
+};
+
+fetch("/api/takepostid", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
     },
-    body:JSON.stringify({
-        id:parseInt(url.searchParams.get('id'))
-    })
+    body: JSON.stringify(parameterUrl),
 })
     .then(response => response.json())
     .then(data => {
-        console.log(data)
-        data.comment.forEach(post => {
-            var newDiv = document.createElement("div");
-            newDiv.id = "comment";
-            var anchorElement = document.createElement("p");
-            anchorElement.textContent = post.IDCreator + " : " + post.text;
-            newDiv.appendChild(anchorElement);
-            console.log(newDiv);
-            console.log(document.getElementById('comments'))
-            document.getElementById("comments").appendChild(newDiv);
+        console.log(data.info[0].title);
+        var title = document.querySelector('.Title');
+        var texttitle = data.info[0].title;
+        title.innerText = texttitle;
 
-        });
+        var description= document.querySelector('.contentPost');
+        var textdescription = data.info[0].text;
+        description.innerText = textdescription;
+
     })
     .catch(error => {
-        console.error("Error update", error);
+        console.error("Error sending data id", error);
     });
