@@ -55,6 +55,7 @@ func loginHandlers(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, r)
 	}
 }
+
 func postHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/post" {
 		errorHandler(w, r, http.StatusNotFound)

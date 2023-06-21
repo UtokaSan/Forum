@@ -39,7 +39,7 @@ func callbackLoginGithub(w http.ResponseWriter, r *http.Request) {
 	if user.ID == -1 {
 		fmt.Println("error with Get User")
 	}
-	CreateUserGithub(user)
+	CreateUserGithub(w, r, user)
 }
 
 func loginGithub(w http.ResponseWriter, r *http.Request) {
