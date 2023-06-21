@@ -61,8 +61,15 @@ func takePostWithId(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		return
 	}
-	var data TakePostId
+	data := TakePostId{
+		Title: "ss",
+	}
 
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+	}
+	w.Write(jsonData)
 }
 
 func postLikeOrDislike(w http.ResponseWriter, r *http.Request) {
