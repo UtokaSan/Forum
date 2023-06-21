@@ -144,18 +144,22 @@ header {
 }
 
 
-buttonlike {
-    float: right;
-    cursor: pointer;
-    outline: 0;
-    color: #AAA;
-    margin-right: 60px;
-    top:1800px;
-    transform: translate(20px);
 
-
+button {
+    color: black;
+    left: 80px;
+    margin-bottom: 10px;
 }
-
+buttonlike#red{
+    position: absolute;
+    right: 900px;
+    top: 305px;
+}
+buttonlike#green{
+    position: absolute;
+    left: 900px;
+    top: 305px;
+}
 .btn:focus {
     outline: none;
 
