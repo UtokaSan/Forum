@@ -58,7 +58,7 @@ fetch("/api/display-post", {
                 document.getElementById("contenu1").appendChild(newDiv);
             } else if (newDiv.classList.contains('Drogue')) {
                 document.getElementById("contenu2").appendChild(newDiv);
-            } else if (newDiv.classList.contains('Sex_cam')) {
+            } else if (newDiv.classList.contains('Sex_Cam')) {
                 document.getElementById("contenu3").appendChild(newDiv);
             } else if (newDiv.classList.contains('Red_Room')) {
                 document.getElementById("contenu4").appendChild(newDiv);
@@ -98,7 +98,8 @@ document.getElementById("createPost").addEventListener("submit", function(event)
     })
         .then(function(response) {
             if (response.ok) {
-                console.log(response);
+                alert("Post created")
+                location.reload();
             } else {
                 console.error(response.status);
             }

@@ -55,6 +55,7 @@ type AdminPanel struct {
 	AccountReported []map[string]interface{} `json:"accountReported"`
 	Ban             []map[string]interface{} `json:"ban"`
 	PostHidden      []map[string]interface{} `json:"postHidden"`
+	PostUnHidden    []map[string]interface{} `json:"postUnHidden"`
 	PostArchived    []map[string]interface{} `json:"postArchived"`
 }
 type Input struct {

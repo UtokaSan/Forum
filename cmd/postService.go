@@ -13,8 +13,8 @@ func createPost(post Post) {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	postCreate := `INSERT INTO posts (photo, title, texte, hidden, like, dislike, report, categorie, ban, archived, nameCreator, idCreator) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)`
-	_, errCreate := db.Exec(postCreate, post.Photo, post.Texte, post.Hidden, post.Like, post.Dislike, post.Signalement, post.Categorie, post.Ban, post.Archived, post.NameCreator, post.IDCreator)
+	postCreate := `INSERT INTO posts (photo, title, texte, hidden, likes, dislikes, report, categorie, ban, archived, nameCreator, idCreator) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)`
+	_, errCreate := db.Exec(postCreate, post.Photo, post.Title, post.Texte, post.Hidden, post.Like, post.Dislike, post.Signalement, post.Categorie, post.Ban, post.Archived, post.NameCreator, post.IDCreator)
 	if errCreate != nil {
 		fmt.Println(err)
 	}

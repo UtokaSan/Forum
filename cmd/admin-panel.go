@@ -12,6 +12,7 @@ func sendInfoAdmin(w http.ResponseWriter, r *http.Request) {
 		Account:         takeAllUsers(),
 		AccountReported: takeUserReported(),
 		PostHidden:      takePostHidden(),
+		PostUnHidden:    takePostUnHidden(),
 		PostArchived:    postArchived(),
 	}
 	jsonData, err := json.Marshal(userPanel)

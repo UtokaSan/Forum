@@ -5,19 +5,27 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 func createPostHandler(w http.ResponseWriter, r *http.Request) {
+	uploadFunction := uploadImage(w, r)
+	var image string
+	if strings.Contains(uploadFunction, "assets") {
+		image = uploadFunction
+	}
 	const secretToken = "token-user"
 	token := getSession(r)
 	tokenJWT := checkJWT(secretToken, token)
 	dataUser := getData(tokenJWT)
-	createPostWithTitle(Post{
+	createPost(Post{
 		Categorie: r.FormValue("action"),
 		Title:     r.FormValue("message"),
 		Texte:     r.FormValue("messageContent"),
+		Photo:     image,
 		IDCreator: dataUser.UserId,
 	})
+	w.WriteHeader(http.StatusOK)
 }
 
 func displayPostVisible(w http.ResponseWriter, r *http.Request) {

@@ -83,14 +83,11 @@ fetch("/api/catch-info-admin", {
                 selectBanUser.appendChild(option)
             }
         }
-        // Faire afficher les posts non hidden
-        // for (let i = 0; i < data.account.length; i++) {
-        //     const option = document.createElement("option")
-        //     if (data.account[i].ban === 0) {
-        //         option.text = data.account[i].username;
-        //         selectBanUser.appendChild(option)
-        //     }
-        // }
+        for (let i = 0; i < data.postUnHidden.length; i++) {
+            const option = document.createElement("option");
+            option.text = data.postUnHidden[i].title;
+            selectDeletePost.appendChild(option);
+        }
         for (let i = 0; i < data.account.length; i++) {
             const option = document.createElement("option");
             option.text = data.account[i].username;

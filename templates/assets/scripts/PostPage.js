@@ -1,10 +1,8 @@
 var url = new URL(window.location.href);
 var param1Value = url.searchParams.get('id');
-
 var parameterUrl = {
     id: parseInt(param1Value)
 };
-
 fetch("/api/takepostid", {
     method: "POST",
     headers: {
@@ -17,34 +15,32 @@ fetch("/api/takepostid", {
         console.log(data);
         var title = document.querySelector('.Title');
         title.innerText = data.info[0].title;
-
+        const para = document.createElement('p');
         var description= document.querySelector('.contentPost');
-        description.innerText = data.info[0].text;
-
+        para.innerText = data.info[0].text;
+        description.appendChild(para)
         var like= document.querySelector('.text-like');
         like.innerText = data.info[0].like;
-
         var dislike= document.querySelector('.text-dislike');
         dislike.innerText = data.info[0].dislike;
+        const image = document.createElement('img');
+        image.src = data.info[0].image;
+        var imageSelect= document.querySelector('.contentPost');
+        imageSelect.appendChild(image)
     })
     .catch(error => {
         console.error("Error sending data id", error);
     });
-
 const likeButton = document.querySelector('.like');
 const dislikeButton = document.querySelector('.dislike');
-
 likeButton.addEventListener('click', envoyerLike);
 dislikeButton.addEventListener('click', envoyerDislike);
-
 function envoyerLike() {
     sendData('like');
 }
-
 function envoyerDislike() {
     sendData('dislike');
 }
-
 function sendData (formDataSend) {
     const data = {
         reactions: formDataSend,
