@@ -76,3 +76,34 @@ fetch("/api/display-post", {
     .catch(error => {
         console.error("Error update", error);
     });
+
+
+document.getElementById("createPost").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    var action = document.getElementById("menu-deroulant-select").value;
+    var message = document.getElementById("message").value;
+    var messageContent = document.getElementById("messageContent").value;
+    var imageUpload = document.getElementById("imageUpload").files[0];
+
+    var formData = new FormData();
+    formData.append("action", action);
+    formData.append("message", message);
+    formData.append("messageContent", messageContent);
+    formData.append("imageUpload", imageUpload);
+
+    fetch("/api/create-post", {
+        method: "POST",
+        body: formData
+    })
+        .then(function(response) {
+            if (response.ok) {
+                console.log(response);
+            } else {
+                console.error(response.status);
+            }
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+});

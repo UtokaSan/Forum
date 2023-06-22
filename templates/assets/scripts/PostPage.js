@@ -65,7 +65,8 @@ function sendData (formDataSend) {
                     console.log("problem");
                 }
             } else {
-                alert("liked");
+                location.reload();
+                alert("reaction added");
             }
         })
         .catch(error => {

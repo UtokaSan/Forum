@@ -8,19 +8,14 @@ import (
 )
 
 func createPostHandler(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.Body)
 	const secretToken = "token-user"
 	token := getSession(r)
 	tokenJWT := checkJWT(secretToken, token)
 	dataUser := getData(tokenJWT)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	var data GestionPost
-	err = json.Unmarshal(body, &data)
 	createPostWithTitle(Post{
-		Title:     data.CreatePost,
+		Categorie: r.FormValue("action"),
+		Title:     r.FormValue("message"),
+		Texte:     r.FormValue("messageContent"),
 		IDCreator: dataUser.UserId,
 	})
 }

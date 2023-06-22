@@ -144,8 +144,6 @@ func authAdminSecurity(next http.HandlerFunc) http.HandlerFunc {
 func getSession(r *http.Request) string {
 	var store = sessions.NewCookieStore([]byte("secret-key"))
 	session, _ := store.Get(r, "session-login")
-	fmt.Println("MERDEDEEEEEEEEFCDSxw : ", session)
-
 	if session.Values["jwtToken"] == nil {
 		return ""
 	}
@@ -194,18 +192,10 @@ func getData(token *jwt.Token) DataTokenJWT {
 	}
 	allDataToken := token.Claims.(jwt.MapClaims)
 
-	fmt.Println("----------------------------------")
-	fmt.Println(allDataToken["user-id"])
-	fmt.Println(allDataToken["user-role"])
-	fmt.Println(allDataToken["exp"])
-	fmt.Println("----------------------------------")
-
 	// Accéder aux données du JWT
 
 	data.UserId = int(allDataToken["user-id"].(float64))
 	data.UserRole, _ = strconv.Atoi(allDataToken["user-role"].(string))
 	data.Exp = int(allDataToken["exp"].(float64))
-
-	fmt.Println("user-role:", data)
 	return data
 }

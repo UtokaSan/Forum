@@ -60,11 +60,6 @@ type TakePostId struct {
 	Info []map[string]interface{} `json:"info"`
 }
 
-type GestionPost struct {
-	ID         int    `json:"id"`
-	CreatePost string `json:"create-post"`
-}
-
 type AdminPanelChange struct {
 	Key           string `json:"key"`
 	UnBanUser     string `json:"unban-user"`
