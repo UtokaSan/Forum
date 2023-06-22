@@ -39,7 +39,7 @@ func callbackLoginGithub(w http.ResponseWriter, r *http.Request) {
 	if user.ID == -1 {
 		fmt.Println("error with Get User")
 	}
-	CreateUserGithub(user)
+	CreateUserGithub(w, r, user)
 }
 
 func loginGithub(w http.ResponseWriter, r *http.Request) {
@@ -72,7 +72,6 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 
 	var userLogin Login
 	err = json.Unmarshal(body, &userLogin)
-	//token := jwt.New(jwt.SigningMethodHS256)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -83,7 +82,6 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 			if user.Ban == 0 {
 				tokenStr := createToken(user)
 				cookieOrSession(w, r, userLogin.SaveInfo, tokenStr)
-				fmt.Println(tokenStr)
 				w.WriteHeader(http.StatusOK)
 				return
 			} else {
@@ -110,17 +108,12 @@ func createToken(user User) string {
 
 func cookieOrSession(w http.ResponseWriter, r *http.Request, userlogin string, tokenStr string) {
 	if userlogin == "on" {
-		fmt.Println()
-		fmt.Println("COOOKIE : ", tokenStr)
 		cookie := http.Cookie{
 			Name:    "jwtToken",
 			Value:   tokenStr,
 			Expires: time.Now().Add(time.Hour * 24),
 			Path:    "/",
 		}
-		fmt.Println("cookie")
-		fmt.Println(cookie)
-		fmt.Println()
 
 		http.SetCookie(w, &cookie)
 	} else {
@@ -143,7 +136,6 @@ func getInfoGoogle(r *http.Request) UserGoogle {
 		fmt.Println(err)
 		return UserGoogle{}
 	}
-	fmt.Println(token)
 	client := config.Client(oauth2.NoContext, token)
 	response, err := client.Get("https://www.googleapis.com/oauth2/v2/userinfo")
 	if err != nil {
@@ -151,8 +143,6 @@ func getInfoGoogle(r *http.Request) UserGoogle {
 		return UserGoogle{}
 	}
 	body, err := ioutil.ReadAll(response.Body)
-	fmt.Println("---------------")
-	fmt.Println(body)
 
 	var usergoogle UserGoogle
 	err = json.Unmarshal(body, &usergoogle)
@@ -160,10 +150,6 @@ func getInfoGoogle(r *http.Request) UserGoogle {
 		fmt.Println(err)
 		return UserGoogle{}
 	}
-
-	fmt.Println("------)")
-	fmt.Println(usergoogle)
-	fmt.Println("------)")
 	return usergoogle
 }
 
@@ -208,7 +194,6 @@ func checkInputNotValid(email string, pseudo string) bool {
 	if email == "" && pseudo == "" {
 		return true
 	}
-	fmt.Println("email : ", email, ", pseudo : ", pseudo)
 	return false
 }
 
@@ -244,7 +229,7 @@ func getUserGithub(r *http.Request) User {
 
 	UserGithub, _, err := client.Users.Get(ctx, "")
 	if err != nil {
-		fmt.Println("Erreur lors de la récupération des informations d'utilisateur:", err)
+		fmt.Println("error to get user github :", err)
 	}
 	return convGithubToUser(UserGithub, client)
 }

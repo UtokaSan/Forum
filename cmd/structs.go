@@ -39,6 +39,10 @@ type Comment struct {
 	Text      string `json:"text"`
 }
 
+type CommentJson struct {
+	Comment []Comment `json:"comment"`
+}
+
 type Login struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
@@ -56,6 +60,7 @@ type AdminPanel struct {
 type Input struct {
 	ID int `json:"id"`
 }
+
 type TakePostId struct {
 	Info []map[string]interface{} `json:"info"`
 }

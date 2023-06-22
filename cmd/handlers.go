@@ -55,6 +55,7 @@ func loginHandlers(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, r)
 	}
 }
+
 func postHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/post" {
 		errorHandler(w, r, http.StatusNotFound)
@@ -134,7 +135,6 @@ func takeInfoGoogle(w http.ResponseWriter, r *http.Request) {
 	for _, user := range user {
 		if user.Email == usergoogle.Email {
 			if user.Ban == 0 {
-				fmt.Println(createToken(user))
 				w.WriteHeader(http.StatusOK)
 				return
 			} else {

@@ -107,37 +107,50 @@ func postLikeOrDislike(w http.ResponseWriter, r *http.Request) {
 }
 
 func editPost(w http.ResponseWriter, r *http.Request) {
+	const secretToken = "token-user"
+	token := getSession(r)
+	tokenJWT := checkJWT(secretToken, token)
+	dataUser := getData(tokenJWT)
 
-	//const secretToken = "token-user"
-	//token := getSession(r)
-	//tokenJWT := checkJWT(secretToken, token)
-	//dataUser := getData(tokenJWT)
-
-	var dataUser DataTokenJWT
-	dataUser.UserRole = 3
-	dataUser.UserId = 2
-
-	post := readOnePostById(2)
+	data := getDataEditPost(r)
+	post := readOnePostById(data.ID)
 
 	if dataUser.UserRole >= 3 {
 		fmt.Println("Admin")
-		postEdit := editedPost(r, post)
+		postEdit := changedDataPost(post, data)
 		if postEdit.ID == -1 {
-			println("C'est de la merde")
+			println("it's no change post with data post")
 			return
 		}
-		fmt.Println("postEdit")
+		updatePost(postEdit)
+	} else if dataUser.UserId == post.IDCreator {
+		fmt.Println("user")
+		postEdit := changedDataPost(post, data)
+		if postEdit.ID == -1 {
+			println("it's no change post with data post")
+			return
+		}
 		updatePost(postEdit)
 
-		fmt.Println(postEdit)
-
-	} else if dataUser.UserId == 2 {
-		fmt.Println("User")
-
 	} else {
-
-		fmt.Println("Mec user Other")
-
-		// REFUSE
+		return
 	}
+}
+
+func getComments(w http.ResponseWriter, r *http.Request) {
+	data := getDataComments(r)
+	if data.ID == -1 {
+		w.WriteHeader(200)
+		w.Write([]byte("Error to get data"))
+		return
+	}
+	comments := takeComments(data.ID)
+
+	jsonData, err := json.Marshal(comments)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	w.WriteHeader(200)
+	w.Write(jsonData)
 }
