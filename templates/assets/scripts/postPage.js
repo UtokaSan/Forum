@@ -42,6 +42,7 @@ function envoyerDislike() {
     sendData('dislike');
 }
 function sendData (formDataSend) {
+
     const data = {
         reactions: formDataSend,
         post_id: param1Value,
@@ -69,3 +70,36 @@ function sendData (formDataSend) {
             console.error('Error:', error);
         });
 }
+
+const editPostSubmit = document.querySelector('.editForm');
+
+editPostSubmit.addEventListener('submit', function(event) {
+    event.preventDefault()
+    fetch("/api/editPost", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id:parseInt(url.searchParams.get('id')),
+            title: document.querySelector('#title').value,
+            texte: document.querySelector('#message').value
+        }),
+    })
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 400) {
+                    alert("tu n'as pas le droit de faire ça");
+                } else {
+                    console.log("problem");
+                }
+            } else {
+                // location.reload();
+                alert("test");
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+})

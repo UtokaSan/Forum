@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-const port = ":3001"
+const port = ":8080"
 
 func Runner() {
 	server := http.NewServeMux()
@@ -45,6 +45,7 @@ func routes(server *http.ServeMux) {
 	server.HandleFunc("/api/display-post", displayPostVisible)
 	server.HandleFunc("/api/createcomment", createComment)
 	server.HandleFunc("/api/editPost", editPost)
+	server.HandleFunc("/api/getComments", getComments)
 	server.HandleFunc("/api/takepostid", sendDataPostWithId)
 	server.HandleFunc("/api/likeordislike", postLikeOrDislike)
 }

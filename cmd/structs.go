@@ -17,12 +17,12 @@ func (u User) Read(p []byte) (n int, err error) {
 }
 
 type Post struct {
-	ID          int
+	ID          int `json:"ID"`
 	IDCreator   int
 	NameCreator string
 	Photo       string
-	Title       string
-	Texte       string
+	Title       string `json:"title"`
+	Texte       string `json:"texte"`
 	Hidden      int
 	Like        int
 	Dislike     int

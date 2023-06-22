@@ -141,6 +141,8 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 		updatePost(postEdit)
 
 	} else {
+		w.WriteHeader(500)
+		w.Write([]byte("Interdit de changer"))
 		return
 	}
 }
