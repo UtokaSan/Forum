@@ -40,6 +40,7 @@ func callbackLoginGithub(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error with Get User")
 	}
 	CreateUserGithub(w, r, user)
+
 }
 
 func loginGithub(w http.ResponseWriter, r *http.Request) {

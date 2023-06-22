@@ -38,7 +38,7 @@ func authGuestSecurity(next http.HandlerFunc) http.HandlerFunc {
 
 func authUserSecurity(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		//var secretToken = "token-user"
+		var secretToken = "token-user"
 		token := getSession(r)
 
 		println("token : " + token)
@@ -56,7 +56,7 @@ func authUserSecurity(next http.HandlerFunc) http.HandlerFunc {
 			session.Save(r, w)
 			fmt.Println("session : ", session)
 		}
-		tokenJWT := checkJWT("", token)
+		tokenJWT := checkJWT(secretToken, token)
 		dataUser := getData(tokenJWT)
 
 		if dataUser.UserRole >= 1 {

@@ -1,4 +1,5 @@
 const form = document.querySelector('form');
+const loginButtonGoogle = document.querySelector('#googleLogin');
 
 form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -35,3 +36,9 @@ form.addEventListener('submit', function(event) {
         });
 });
 
+loginButtonGoogle.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    window.location.href = "http://localhost:8080/api/loginGoogle";
+
+} )
