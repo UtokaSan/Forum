@@ -115,6 +115,15 @@ img {
     box-shadow: 4px 0 10px rgb(255, 0, 0);
 }
 
+#commentWrite {
+    display: flex;
+}
+
+.submit {
+    margin-top: 3vh;
+    height: 5vh;
+}
+
 .underPageContentSecond input {
     width: 95%;
     height: 2vh;
@@ -122,7 +131,8 @@ img {
     border: 1px solid #ea5353;
     border-radius: 5vw;
     background-color: rgba(87, 87, 87, 0.68);
-    color: darkred;
+    color: white;
+    margin-top: 3vh;
 }
 
 .Title {
@@ -257,3 +267,4 @@ display: flex;
     background-color: rgba(77, 83, 81, 0.12);
     border-radius: 10px;
 }
+
