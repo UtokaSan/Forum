@@ -54,7 +54,7 @@ fetch("/api/display-post", {
             newDiv.appendChild(anchorElement);
             let categoryDiv
             console.log(newDiv.classList.contains('Drogue'))
-            if (newDiv.classList.contains('ChatGénéral')) {
+            if (newDiv.classList.contains('Chat_Général')) {
                 document.getElementById("contenu1").appendChild(newDiv);
             } else if (newDiv.classList.contains('Drogue')) {
                 document.getElementById("contenu2").appendChild(newDiv);
