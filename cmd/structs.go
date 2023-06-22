@@ -73,6 +73,7 @@ type AdminPanelChange struct {
 	RoleAdminUser string `json:"role-admin-user"`
 	RoleModoUser  string `json:"role-modo-user"`
 	DeletePost    string `json:"delete-post"`
+	HiddenPost    string `json:"hidden-post"`
 }
 
 type Register struct {

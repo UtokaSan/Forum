@@ -152,6 +152,22 @@ func uploadImage(w http.ResponseWriter, r *http.Request) string {
 	return message
 }
 
+func updateHiddenPost(post Post) {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer db.Close()
+	query := "UPDATE posts SET hidden = ? WHERE title = ?"
+	_, err = db.Exec(query, post.Hidden, post.Title)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("Post updated successfully")
+}
+
 func testMethod(w http.ResponseWriter, r *http.Request, method string) bool {
 	if r.Method != method {
 		return true
