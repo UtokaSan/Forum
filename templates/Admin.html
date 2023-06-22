@@ -15,6 +15,7 @@
   <button class="onglet" onclick="afficherContenu(event, 'contenu3')">Unban User</button>
   <button class="onglet" onclick="afficherContenu(event, 'contenu4')">Ban User</button>
   <button class="onglet" onclick="afficherContenu(event, 'contenu5')">Supprimer un Post</button>
+  <button class="onglet" onclick="afficherContenu(event, 'contenu6')">Afficher Post</button>
 </div>
 
 <form onsubmit="submitForm(event)">
@@ -49,6 +50,13 @@
   <div id="contenu5" class="contenu-onglet">
     <h1>Supprimer un Post</h1>
     <select id="delete-post">
+      <option value="">Select a Post</option>
+    </select>
+  </div>
+
+  <div id="contenu6" class="contenu-onglet">
+    <h1>Afficher post</h1>
+    <select id="hidden-post">
       <option value="">Select a Post</option>
     </select>
   </div>

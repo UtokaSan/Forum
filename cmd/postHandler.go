@@ -24,6 +24,7 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 		Texte:     r.FormValue("messageContent"),
 		Photo:     image,
 		IDCreator: dataUser.UserId,
+		Hidden:    1,
 	})
 	w.WriteHeader(http.StatusOK)
 }

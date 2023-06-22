@@ -18,6 +18,8 @@ function submitForm (event) {
     const selectRoleAdmin = document.querySelector("#role-admin-user").value;
     const selectRoleModo = document.querySelector("#role-modo-user").value;
     const selectDeletePost = document.querySelector("#delete-post").value;
+    const selectHiddenPost = document.querySelector("#hidden-post").value;
+
     let formData = {}
     if (selectUnBanUser !== "") {
         formData["key"] = "unban-user"
@@ -38,6 +40,10 @@ function submitForm (event) {
     if (selectDeletePost !== "") {
         formData["key"] = "delete-post"
         formData["delete-post"] = selectDeletePost
+    }
+    if (selectHiddenPost !== "") {
+        formData["key"] = "hidden-post"
+        formData["hidden-post"] = selectHiddenPost
     }
     fetch("/api/adminpanel", {
         method: "POST",
@@ -69,6 +75,7 @@ fetch("/api/catch-info-admin", {
         const selectRoleAdmin = document.querySelector("#role-admin-user");
         const selectRoleModo = document.querySelector("#role-modo-user");
         const selectDeletePost = document.querySelector("#delete-post");
+        const selectHiddenPost = document.querySelector("#hidden-post");
         for (let i = 0; i < data.account.length; i++) {
             const option = document.createElement("option")
             if (data.account[i].ban === 1) {
@@ -87,6 +94,11 @@ fetch("/api/catch-info-admin", {
             const option = document.createElement("option");
             option.text = data.postUnHidden[i].title;
             selectDeletePost.appendChild(option);
+        }
+        for (let i = 0; i < data.postHidden.length; i++) {
+            const option = document.createElement("option");
+            option.text = data.postHidden[i].title;
+            selectHiddenPost.appendChild(option);
         }
         for (let i = 0; i < data.account.length; i++) {
             const option = document.createElement("option");

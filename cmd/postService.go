@@ -112,6 +112,7 @@ func takePostHidden() []map[string]interface{} {
 		}
 		postData := make(map[string]interface{})
 		postData["id"] = post.ID
+		postData["title"] = post.Title
 		postData["texte"] = post.Texte
 		postData["categorie"] = post.Categorie
 		result = append(result, postData)

@@ -55,5 +55,10 @@ func adminPanel(w http.ResponseWriter, r *http.Request) {
 		deletePost(Post{
 			Title: change.DeletePost,
 		})
+	case "hidden-post":
+		updateHiddenPost(Post{
+			Title:  change.HiddenPost,
+			Hidden: 0,
+		})
 	}
 }
