@@ -106,7 +106,7 @@ func adminHandlers(w http.ResponseWriter, r *http.Request) {
 }
 
 func takeInfoGoogle(w http.ResponseWriter, r *http.Request) {
-	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint)
+	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint, "http://localhost:8080/api/callbacklogingoogle")
 	code := r.URL.Query().Get("code")
 	token, err := config.Exchange(oauth2.NoContext, code)
 	if err != nil {

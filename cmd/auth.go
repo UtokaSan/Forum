@@ -19,7 +19,7 @@ import (
 )
 
 func loginGoogle(w http.ResponseWriter, r *http.Request) {
-	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint)
+	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint, "http://localhost:8080/api/callbacklogingoogle")
 
 	url := config.AuthCodeURL("state", oauth2.AccessTypeOffline)
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
@@ -49,16 +49,16 @@ func loginGithub(w http.ResponseWriter, r *http.Request) {
 		AuthURL:  "https://github.com/login/oauth/authorize",
 	}
 
-	config := getConfig("2289380b3bb541be1a3a", "81443484b632c86271768c67ee7a4da0c6e8ee0e", []string{"user:email"}, endpoint)
+	config := getConfig("2289380b3bb541be1a3a", "81443484b632c86271768c67ee7a4da0c6e8ee0e", []string{"user:email"}, endpoint, "http://localhost:8080/api/callbacklogingithub")
 	url := config.AuthCodeURL("state", oauth2.AccessTypeOnline)
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
 
-func getConfig(clientID string, clientSecret string, auth []string, endpoint oauth2.Endpoint) *oauth2.Config {
+func getConfig(clientID string, clientSecret string, auth []string, endpoint oauth2.Endpoint, url string) *oauth2.Config {
 	config := &oauth2.Config{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		RedirectURL:  "http://localhost:8080/api/callbacklogingithub",
+		RedirectURL:  url,
 		Scopes:       auth,
 		Endpoint:     endpoint,
 	}
@@ -130,7 +130,7 @@ func cookieOrSession(w http.ResponseWriter, r *http.Request, userlogin string, t
 
 func getInfoGoogle(r *http.Request) UserGoogle {
 	fmt.Println("--------------")
-	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint)
+	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint, "http://localhost:8080/api/callbacklogingoogle")
 	code := r.URL.Query().Get("code")
 	token, err := config.Exchange(oauth2.NoContext, code)
 	if err != nil {
@@ -156,7 +156,7 @@ func getInfoGoogle(r *http.Request) UserGoogle {
 
 func getInfoGithub(r *http.Request) UserGoogle {
 	fmt.Println("--------------")
-	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint)
+	config := getConfig("116188844729-bpmpofo72u5vdhdt43qif41lmppqejuh.apps.googleusercontent.com", "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", []string{"https://www.googleapis.com/auth/userinfo.email"}, google.Endpoint, "http://localhost:8080/api/callbacklogingoogle")
 	code := r.URL.Query().Get("code")
 	token, err := config.Exchange(oauth2.NoContext, code)
 	if err != nil {
@@ -215,7 +215,7 @@ func getUserGithub(r *http.Request) User {
 		AuthURL:  "https://github.com/login/oauth/authorize",
 	}
 
-	config := getConfig("2289380b3bb541be1a3a", "81443484b632c86271768c67ee7a4da0c6e8ee0e", []string{"user:email"}, endpoint)
+	config := getConfig("2289380b3bb541be1a3a", "81443484b632c86271768c67ee7a4da0c6e8ee0e", []string{"user:email"}, endpoint, "http://localhost:8080/api/callbacklogingithub")
 
 	ctx := context.Background()
 	token, err := config.Exchange(ctx, code)
